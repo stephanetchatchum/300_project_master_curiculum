@@ -626,6 +626,7 @@ const PHASES = [
 const TOTAL_PROJECTS = 286;
 let projectData = {};
 let allProjects = [];
+let openPhases = new Set();
 
 window.addEventListener('DOMContentLoaded', loadData);
 
@@ -671,15 +672,12 @@ function updateStats() {
 }
 
 function togglePhase(phaseId) {
-    const content = document.getElementById('content-' + phaseId);
-    const arrow = document.getElementById('arrow-' + phaseId);
-    if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        arrow.style.transform = 'rotate(90deg)';
+    if (openPhases.has(phaseId)) {
+        openPhases.delete(phaseId);
     } else {
-        content.classList.add('hidden');
-        arrow.style.transform = 'rotate(0deg)';
+        openPhases.add(phaseId);
     }
+    render();
 }
 
 function render() {
@@ -709,8 +707,11 @@ function render() {
                     <span class="phase-arrow" id="arrow-${phase.id}">▶</span>
                 </div>
             </div>
-            <div id="content-${phase.id}" class="hidden"></div>
+            <div id="content-${phase.id}" class="${openPhases.has(phase.id) ? '' : 'hidden'}"></div>
         `;
+
+        const arrowEl = phaseEl.querySelector(`#arrow-${phase.id}`);
+        if (openPhases.has(phase.id)) arrowEl.style.transform = 'rotate(90deg)';
 
         const contentDiv = phaseEl.querySelector(`#content-${phase.id}`);
 
