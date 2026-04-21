@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>300-Project Master Curriculum</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
+
+        header { background: linear-gradient(135deg, #161b22 0%, #1a1f2b 100%); padding: 2rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #30363d; }
+        h1 { font-size: 28px; color: #58a6ff; margin-bottom: 0.25rem; }
+        .subtitle { color: #8b949e; font-size: 14px; margin-bottom: 1.5rem; }
+        .mission { background: #1a2332; border-left: 3px solid #58a6ff; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 13px; color: #79c0ff; margin-bottom: 1.5rem; font-style: italic; }
+
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+        .stat-card { background: #161b22; padding: 1rem; border-radius: 8px; border: 1px solid #30363d; text-align: center; }
+        .stat-label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #58a6ff; }
+        .stat-value.green { color: #3fb950; }
+        .stat-value.amber { color: #d29922; }
+        .stat-value.purple { color: #bc8cff; }
+
+        .progress-bar { width: 100%; height: 8px; background: #21262d; border-radius: 4px; overflow: hidden; margin: 1rem 0; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #238636, #3fb950); transition: width 0.5s ease; border-radius: 4px; }
+
+        .search-container { margin-bottom: 1.5rem; display: flex; gap: 8px; }
+        .search-input { flex: 1; padding: 0.6rem 1rem; font-size: 14px; border: 1px solid #30363d; border-radius: 8px; background: #0d1117; color: #c9d1d9; outline: none; }
+        .search-input:focus { border-color: #58a6ff; box-shadow: 0 0 0 3px rgba(88,166,255,0.1); }
+        .search-input::placeholder { color: #484f58; }
+        .filter-select { padding: 0.6rem; border: 1px solid #30363d; border-radius: 8px; background: #0d1117; color: #c9d1d9; font-size: 14px; cursor: pointer; outline: none; }
+
+        .button-group { display: flex; gap: 8px; margin-top: 1rem; flex-wrap: wrap; }
+        .btn { padding: 0.5rem 1rem; border: 1px solid #30363d; background: #21262d; border-radius: 6px; cursor: pointer; font-size: 13px; color: #c9d1d9; transition: all 0.2s; }
+        .btn:hover { background: #30363d; border-color: #58a6ff; }
+        .btn.danger { border-color: #f85149; color: #f85149; }
+        .btn.danger:hover { background: #3d1214; }
+
+        .protocol-box { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+        .protocol-box h2 { font-size: 16px; color: #58a6ff; margin-bottom: 1rem; }
+        .protocol-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+        .protocol-step { background: #0d1117; padding: 0.75rem; border-radius: 8px; text-align: center; border: 1px solid #30363d; }
+        .protocol-step .step-num { font-size: 20px; font-weight: 700; color: #3fb950; }
+        .protocol-step .step-name { font-size: 11px; color: #8b949e; margin-top: 2px; }
+        .protocol-step .step-time { font-size: 10px; color: #484f58; margin-top: 2px; }
+
+        .phase { background: #161b22; margin-bottom: 1.5rem; border-radius: 12px; overflow: hidden; border: 1px solid #30363d; }
+        .phase-header { padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .phase-header:hover { background: #1c2128; }
+        .phase-title { font-size: 15px; font-weight: 600; color: #c9d1d9; }
+        .phase-title .phase-tag { font-size: 11px; padding: 2px 8px; border-radius: 12px; margin-right: 8px; font-weight: 500; }
+        .phase-progress { display: flex; align-items: center; gap: 12px; }
+        .phase-pct { font-size: 13px; color: #8b949e; }
+        .phase-bar { width: 100px; height: 4px; background: #21262d; border-radius: 2px; overflow: hidden; }
+        .phase-bar-fill { height: 100%; background: #3fb950; transition: width 0.3s; }
+        .phase-arrow { color: #484f58; transition: transform 0.3s; font-size: 12px; }
+
+        .tier { border-top: 1px solid #21262d; }
+        .tier-header { padding: 0.75rem 1.5rem; background: #0d1117; display: flex; justify-content: space-between; align-items: center; }
+        .tier-title { font-size: 13px; font-weight: 500; color: #8b949e; }
+        .tier-count { font-size: 12px; color: #484f58; }
+        .tier-math { font-size: 11px; color: #bc8cff; background: #1e1535; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+
+        .projects { list-style: none; padding: 0; }
+        .project { padding: 0.6rem 1.5rem; border-top: 1px solid #161b22; display: flex; align-items: flex-start; gap: 10px; transition: background 0.2s; }
+        .project:hover { background: #1c2128; }
+        .project.completed { background: #122117; }
+        .project.in-progress { background: #2a1f0a; }
+
+        .project-select { min-width: 32px; width: 32px; height: 32px; padding: 0; border: 2px solid #30363d; border-radius: 50%; background: transparent; cursor: pointer; font-size: 14px; color: #c9d1d9; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; appearance: none; -webkit-appearance: none; text-align: center; }
+        .project-select.completed { background: #238636; border-color: #238636; color: white; }
+        .project-select.in-progress { background: #9e6a03; border-color: #9e6a03; color: white; }
+
+        .project-content { flex: 1; min-width: 0; }
+        .project-name { font-size: 13px; font-weight: 500; color: #c9d1d9; }
+        .project-desc { font-size: 12px; color: #8b949e; margin-top: 2px; }
+        .project-concepts { font-size: 11px; color: #58a6ff; margin-top: 3px; }
+        .project-exercise { font-size: 11px; color: #3fb950; margin-top: 2px; font-style: italic; }
+        .project-id { font-size: 11px; color: #484f58; flex-shrink: 0; min-width: 30px; text-align: right; padding-top: 2px; }
+
+        .hidden { display: none; }
+
+        .footer { text-align: center; margin-top: 3rem; padding: 2rem; color: #484f58; font-size: 12px; border-top: 1px solid #21262d; }
+        .footer a { color: #58a6ff; text-decoration: none; }
+
+        input[type="file"] { display: none; }
+
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .protocol-steps { grid-template-columns: repeat(3, 1fr); }
+            .phase-bar { width: 60px; }
+            .project { padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>300-Project Master Curriculum</h1>
+        <p class="subtitle">CLI → Web → Physics → Games → AI/ML → African Impact → Capstones</p>
+        <div class="mission">"Participate in new discoveries, and develop my continent." — Your mission drives every project.</div>
+
+        <div class="stats">
+            <div class="stat-card"><div class="stat-label">Progress</div><div class="stat-value" id="overall-pct">0%</div></div>
+            <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green" id="completed-count">0</div></div>
+            <div class="stat-card"><div class="stat-label">In Progress</div><div class="stat-value amber" id="in-progress-count">0</div></div>
+            <div class="stat-card"><div class="stat-label">Remaining</div><div class="stat-value purple" id="remaining-count">286</div></div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" id="overall-bar" style="width:0%"></div></div>
+
+        <div class="search-container">
+            <input type="text" id="search" class="search-input" placeholder="Search 300 projects...">
+            <select id="status-filter" class="filter-select">
+                <option value="all">All</option>
+                <option value="not-started">Not Started</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+
+        <div class="button-group">
+            <button class="btn" onclick="exportData()">Export Progress</button>
+            <button class="btn" onclick="document.getElementById('import-file').click()">Import Progress</button>
+            <button class="btn danger" onclick="resetData()">Reset All</button>
+            <input type="file" id="import-file" accept=".json">
+        </div>
+    </header>
+
+    <div class="protocol-box">
+        <h2>The Learning Protocol (Every Project)</h2>
+        <div class="protocol-steps">
+            <div class="protocol-step"><div class="step-num">1</div><div class="step-name">Concept</div><div class="step-time">5 min</div></div>
+            <div class="protocol-step"><div class="step-num">2</div><div class="step-name">Plan</div><div class="step-time">10-20 min</div></div>
+            <div class="protocol-step"><div class="step-num">3</div><div class="step-name">Build</div><div class="step-time">60+ min</div></div>
+            <div class="protocol-step"><div class="step-num">4</div><div class="step-name">Understand</div><div class="step-time">20 min</div></div>
+            <div class="protocol-step"><div class="step-num">5</div><div class="step-name">Rest</div><div class="step-time">1+ day</div></div>
+            <div class="protocol-step"><div class="step-num">6</div><div class="step-name">Exercise</div><div class="step-time">30-60 min</div></div>
+            <div class="protocol-step"><div class="step-num">7</div><div class="step-name">Reflect</div><div class="step-time">10 min</div></div>
+        </div>
+    </div>
+
+    <div id="phases-container"></div>
+
+    <div class="footer">
+        <p>Progress saved automatically to your browser's localStorage</p>
+        <p>Built for a future African tech leader. Every project counts.</p>
+    </div>
+</div>
+
+<script>
+const PHASES = [
+    {
+        id: "p1", name: "Phase 1: Foundations", color: "#58a6ff",
+        tiers: [
+            {
+                name: "CLI & Python Core",
+                math: "Logic & Algorithms",
+                projects: [
+                    { name: "Hello World CLI", desc: "Input/output, print formatting, user interaction", concepts: "print(), input(), f-strings, type conversion", exercise: "Twist: Build a multilingual greeter (English, French, Kinyarwanda)" },
+                    { name: "Temperature Converter", desc: "Functions, type conversion, formula application", concepts: "def, return, float(), round()", exercise: "Twist: Add Kelvin and Rankine, plus unit auto-detection" },
+                    { name: "Number Guessing Game", desc: "Loops, conditionals, random generation", concepts: "while, if/elif/else, random.randint(), break", exercise: "Twist: AI guesses YOUR number using binary search" },
+                    { name: "Calculator with History", desc: "Lists, user input parsing, operation dispatch", concepts: "lists, append(), split(), eval safety", exercise: "Twist: Add parentheses support and undo functionality" },
+                    { name: "File Word Counter", desc: "File I/O, string methods, text analysis", concepts: "open(), read(), split(), Counter", exercise: "Twist: Count word frequency across multiple files, output CSV" },
+                    { name: "Contact Book (CLI)", desc: "Dictionaries, CRUD operations, search", concepts: "dict, keys(), values(), json.dump()", exercise: "Twist: Add groups, favorites, and export to vCard format" },
+                    { name: "Todo List (CLI)", desc: "Lists, file persistence, status management", concepts: "list operations, JSON persistence, datetime", exercise: "Twist: Add priorities, due dates, and overdue alerts" },
+                    { name: "Password Generator", desc: "Random selection, string manipulation, security", concepts: "random.choice(), string module, secrets", exercise: "Twist: Add passphrase mode and password strength meter" },
+                    { name: "Expense Tracker (CLI)", desc: "Data aggregation, categories, monthly reports", concepts: "dictionaries, sum(), groupby logic", exercise: "Twist: Add budget limits and overspend warnings per category" },
+                    { name: "Quiz Game", desc: "Data structures, scoring, question randomization", concepts: "lists of dicts, random.shuffle(), score tracking", exercise: "Twist: Add timed questions and difficulty scaling" },
+                    { name: "Hangman Game", desc: "Game loop, string manipulation, ASCII art", concepts: "sets, string indexing, game state", exercise: "Twist: Add word categories and hint system" },
+                    { name: "Rock Paper Scissors (with AI)", desc: "Conditionals, simple strategy, win tracking", concepts: "if/else chains, random.choice(), statistics", exercise: "Twist: AI learns your patterns using frequency analysis" },
+                    { name: "Student Grade Manager", desc: "Classes, methods, data organization", concepts: "class, __init__, methods, __str__", exercise: "Twist: Add GPA calculation and grade distribution chart (text-based)" },
+                    { name: "Library Book System", desc: "OOP, inheritance, polymorphism", concepts: "inheritance, super(), isinstance()", exercise: "Twist: Add different media types (DVD, magazine) with shared interface" },
+                    { name: "Personal Diary (CLI)", desc: "File I/O, datetime, search functionality", concepts: "datetime, os.path, text search", exercise: "Twist: Add mood tracking and monthly mood summary" },
+                    { name: "CSV Data Analyzer", desc: "CSV parsing, statistics, data cleaning", concepts: "csv module, statistics module, data validation", exercise: "Twist: Handle malformed CSV files gracefully with error reporting" },
+                    { name: "Markdown Note-Taking App", desc: "File parsing, search/filter, organization", concepts: "regex basics, os.walk(), file organization", exercise: "Twist: Add tags, cross-references between notes" },
+                    { name: "Password Manager (encrypted)", desc: "Security basics, hashing, encrypted storage", concepts: "hashlib, base64, getpass, file encryption", exercise: "Twist: Add master password with salt + key derivation" },
+                    { name: "Stock Price Fetcher (API)", desc: "HTTP requests, JSON parsing, API keys", concepts: "requests, json, API authentication", exercise: "Twist: Add price alerts and historical comparison" },
+                    { name: "Web Scraper (basic)", desc: "HTML parsing, data extraction, automation", concepts: "BeautifulSoup, requests, CSS selectors", exercise: "Twist: Scrape multiple pages with pagination handling" },
+                    { name: "Unit Converter Suite", desc: "Modular design, dictionaries, extensibility", concepts: "function dispatch, conversion tables, modules", exercise: "Twist: Add custom unit definitions loaded from config file" },
+                    { name: "Flashcard Study App", desc: "Spaced repetition logic, learning science", concepts: "datetime intervals, scoring algorithms, JSON", exercise: "Twist: Implement Leitner box system with stats dashboard" },
+                    { name: "Pomodoro Timer (CLI)", desc: "Time management, threading basics, signals", concepts: "time.sleep(), threading, signal handling", exercise: "Twist: Add session logging and daily productivity report" },
+                    { name: "Personal Budget Tracker", desc: "Data aggregation, reports, projections", concepts: "monthly grouping, averages, trend analysis", exercise: "Twist: Add savings goals and projected timeline to reach them" },
+                    { name: "Bash Script Collection", desc: "Shell scripting, automation, system tools", concepts: "bash syntax, pipes, grep, awk, cron", exercise: "Twist: Create an installer script that sets up your dev environment" },
+                ]
+            },
+            {
+                name: "Math & Logic Foundations",
+                math: "Number Theory, Linear Algebra, Algorithms",
+                projects: [
+                    { name: "Prime Number Generator", desc: "Number theory, Sieve of Eratosthenes, optimization", concepts: "modulo, sieve algorithm, time complexity O(n log log n)", exercise: "Twist: Visualize prime spirals (Ulam spiral)" },
+                    { name: "Matrix Calculator", desc: "2D arrays, linear algebra operations", concepts: "nested lists, dot product, transpose, determinant", exercise: "Twist: Add matrix inverse and solve Ax = b" },
+                    { name: "Fibonacci & Sequences", desc: "Recursion, dynamic programming, sequences", concepts: "recursion, memoization, generators", exercise: "Twist: Implement Lucas numbers and Golden Ratio convergence" },
+                    { name: "Sorting Algorithm Visualizer", desc: "Comparison of sort algorithms, complexity", concepts: "bubble, merge, quick sort, O(n) analysis", exercise: "Twist: Add radix sort and compare all with timing" },
+                    { name: "Binary Search Implementation", desc: "Divide and conquer, logarithmic time", concepts: "binary search, O(log n), edge cases", exercise: "Twist: Search in rotated sorted array" },
+                    { name: "Statistics Calculator", desc: "Descriptive statistics from scratch", concepts: "mean, median, mode, std dev, variance", exercise: "Twist: Add confidence intervals and hypothesis testing" },
+                    { name: "Probability Simulator", desc: "Monte Carlo methods, combinatorics", concepts: "random sampling, law of large numbers", exercise: "Twist: Simulate Monty Hall problem, prove the solution" },
+                    { name: "Graph Data Structure", desc: "Nodes, edges, traversal algorithms", concepts: "adjacency list, BFS, DFS, connected components", exercise: "Twist: Find shortest path in a weighted graph (Dijkstra)" },
+                    { name: "Stack & Queue from Scratch", desc: "Abstract data types, LIFO/FIFO", concepts: "push, pop, enqueue, dequeue, overflow", exercise: "Twist: Implement a priority queue" },
+                    { name: "Linked List from Scratch", desc: "Node-based structures, pointer logic", concepts: "Node class, insert, delete, traverse, reverse", exercise: "Twist: Detect cycle in linked list (Floyd's algorithm)" },
+                    { name: "Binary Tree Implementation", desc: "Tree structures, recursive traversal", concepts: "insert, search, inorder/preorder/postorder", exercise: "Twist: Implement AVL tree with self-balancing" },
+                    { name: "Hash Table from Scratch", desc: "Hashing, collision resolution strategies", concepts: "hash functions, chaining, open addressing", exercise: "Twist: Benchmark your hash table vs Python's built-in dict" },
+                    { name: "Set Operations Visualizer", desc: "Set theory, Venn diagrams (text-based)", concepts: "union, intersection, difference, symmetric diff", exercise: "Twist: Apply to real data (find common words in two books)" },
+                    { name: "Complex Number Calculator", desc: "Imaginary numbers, polar form", concepts: "a+bi, magnitude, phase, multiplication", exercise: "Twist: Visualize complex plane transformations" },
+                    { name: "Polynomial Solver", desc: "Roots, factoring, evaluation", concepts: "Horner's method, quadratic formula, Newton's method", exercise: "Twist: Plot polynomials and highlight roots" },
+                    { name: "Linear Equation Solver", desc: "Systems of equations, Gaussian elimination", concepts: "row reduction, back substitution, pivoting", exercise: "Twist: Solve 4x4 and 5x5 systems, detect no-solution cases" },
+                    { name: "Numerical Differentiation", desc: "Limits, rate of change, approximation", concepts: "forward/backward/central difference, h→0", exercise: "Twist: Differentiate real functions and compare to analytical" },
+                    { name: "Numerical Integration", desc: "Area under curves, approximation methods", concepts: "Riemann sums, trapezoidal rule, Simpson's rule", exercise: "Twist: Integrate sin(x) from 0 to pi, compare accuracy" },
+                    { name: "Trigonometry Visualizer", desc: "Unit circle, sin/cos/tan relationships", concepts: "radians, unit circle, identities, matplotlib", exercise: "Twist: Animate a point moving around the unit circle" },
+                    { name: "Fractal Generator (Mandelbrot)", desc: "Complex iteration, escape time algorithm", concepts: "z = z² + c, iteration count, color mapping", exercise: "Twist: Add Julia set generation and zoom functionality" },
+                    { name: "Chaos Game (Sierpinski)", desc: "Randomness producing order, emergence", concepts: "random points, midpoint rule, attractors", exercise: "Twist: Generalize to n-gon chaos game" },
+                    { name: "Random Walk Simulator", desc: "Stochastic processes, diffusion", concepts: "random steps, displacement, statistics", exercise: "Twist: 2D random walk with boundary absorption" },
+                    { name: "Logic Gate Simulator", desc: "Boolean algebra, digital circuits", concepts: "AND, OR, NOT, XOR, truth tables", exercise: "Twist: Build a half-adder and full-adder from gates" },
+                    { name: "Caesar & Vigenere Cipher", desc: "Modular arithmetic, cryptography basics", concepts: "modulo, character shifting, key-based encryption", exercise: "Twist: Implement frequency analysis to crack Caesar cipher" },
+                    { name: "Combinatorics Calculator", desc: "Permutations, combinations, counting", concepts: "nPr, nCr, factorial, Pascal's triangle", exercise: "Twist: Solve real probability problems (poker hands, lottery)" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p2", name: "Phase 2: Web & Data", color: "#3fb950",
+        tiers: [
+            {
+                name: "Web Foundations",
+                math: "Logic, State Machines",
+                projects: [
+                    { name: "Personal Portfolio Website", desc: "HTML/CSS/JS, responsive design, SEO", concepts: "semantic HTML, CSS Grid/Flexbox, meta tags", exercise: "Twist: Add a blog section with markdown rendering" },
+                    { name: "JavaScript Calculator", desc: "DOM manipulation, event handling, state", concepts: "querySelector, addEventListener, eval alternatives", exercise: "Twist: Add scientific functions (sin, cos, log)" },
+                    { name: "Interactive Quiz App (JS)", desc: "State management, scoring, timer", concepts: "DOM updates, setInterval, object arrays", exercise: "Twist: Add leaderboard with localStorage" },
+                    { name: "Weather Dashboard", desc: "API integration, fetch, async/await", concepts: "fetch(), JSON, async/await, error handling", exercise: "Twist: Add 5-day forecast and location auto-detect" },
+                    { name: "Currency Converter (live API)", desc: "REST APIs, real-time data, caching", concepts: "API keys, exchange rates, localStorage cache", exercise: "Twist: Add historical rate chart" },
+                    { name: "Todo App (JavaScript)", desc: "CRUD, localStorage, DOM rendering", concepts: "createElement, localStorage, event delegation", exercise: "Twist: Add drag-and-drop reordering" },
+                    { name: "Countdown Timer", desc: "Time calculations, intervals, DOM updates", concepts: "setInterval, Date objects, clearInterval", exercise: "Twist: Add multiple named timers running simultaneously" },
+                    { name: "Image Gallery with Lightbox", desc: "CSS Grid, modal, keyboard navigation", concepts: "CSS Grid, position:fixed, keydown events", exercise: "Twist: Add slideshow mode with auto-advance" },
+                    { name: "Form Validation System", desc: "Regex, real-time feedback, UX", concepts: "regex patterns, blur/input events, aria", exercise: "Twist: Validate international phone numbers and emails" },
+                    { name: "Markdown Preview Editor", desc: "Real-time parsing, split view, syntax", concepts: "innerHTML, regex parsing, contenteditable", exercise: "Twist: Add code syntax highlighting" },
+                    { name: "Dark Mode Toggle", desc: "CSS variables, theme persistence", concepts: "CSS custom properties, localStorage, prefers-color-scheme", exercise: "Twist: Add 3+ themes (dark, light, solarized, high-contrast)" },
+                    { name: "Search & Filter UI", desc: "Client-side filtering, debounce, UX", concepts: "filter(), debounce, highlight matching text", exercise: "Twist: Add multi-field search with AND/OR logic" },
+                    { name: "Infinite Scroll Page", desc: "Lazy loading, Intersection Observer", concepts: "IntersectionObserver, pagination, throttle", exercise: "Twist: Add scroll position memory on back navigation" },
+                    { name: "Drag & Drop Interface", desc: "HTML5 drag API, list reordering", concepts: "dragstart, dragover, drop, dataTransfer", exercise: "Twist: Build a Kanban board with drag between columns" },
+                    { name: "Accessible Website (WCAG)", desc: "Screen readers, aria labels, keyboard nav", concepts: "aria-label, role, tabindex, focus management", exercise: "Twist: Audit an existing site and fix all violations" },
+                    { name: "CSS Animation Gallery", desc: "Keyframes, transitions, transforms", concepts: "@keyframes, transition, transform, will-change", exercise: "Twist: Create a loading animation library (5+ spinners)" },
+                    { name: "Mobile-First Responsive Design", desc: "Media queries, viewport, touch", concepts: "min-width queries, rem/em, touch events", exercise: "Twist: Build a responsive email template" },
+                    { name: "Landing Page with Scroll Effects", desc: "Parallax, reveal on scroll", concepts: "IntersectionObserver, transform, opacity", exercise: "Twist: Add smooth scroll navigation with active section highlight" },
+                    { name: "Keyboard Shortcut Handler", desc: "Key mapping, command palette", concepts: "keydown, key combos, command registry", exercise: "Twist: Build a VS Code-style command palette (Ctrl+Shift+P)" },
+                    { name: "Progressive Web App (PWA)", desc: "Service workers, manifest, offline", concepts: "service worker lifecycle, cache API, manifest.json", exercise: "Twist: Add push notifications and background sync" },
+                ]
+            },
+            {
+                name: "Backend & Databases",
+                math: "Set Theory, Relational Algebra",
+                projects: [
+                    { name: "Flask Hello World API", desc: "Routes, HTTP methods, JSON responses", concepts: "Flask, @app.route, request, jsonify", exercise: "Twist: Add request logging middleware" },
+                    { name: "Flask Todo API (CRUD)", desc: "Full REST API, SQLAlchemy, persistence", concepts: "SQLAlchemy, CRUD endpoints, status codes", exercise: "Twist: Add pagination and sorting" },
+                    { name: "PostgreSQL Schema Design", desc: "Normalization, indexing, constraints", concepts: "1NF-3NF, foreign keys, indexes, EXPLAIN", exercise: "Twist: Design a social media schema (users, posts, likes, follows)" },
+                    { name: "User Authentication (JWT)", desc: "Password hashing, tokens, sessions", concepts: "bcrypt, JWT encode/decode, middleware", exercise: "Twist: Add refresh tokens and token revocation" },
+                    { name: "File Upload Service", desc: "Multipart forms, storage, validation", concepts: "multipart/form-data, file validation, storage", exercise: "Twist: Add image resizing and thumbnail generation" },
+                    { name: "Django REST Notes App", desc: "DRF, serializers, viewsets", concepts: "ModelSerializer, ViewSet, Router", exercise: "Twist: Add shared notes with user permissions" },
+                    { name: "Blog API with Comments", desc: "One-to-many relationships, nested data", concepts: "ForeignKey, nested serializers, pagination", exercise: "Twist: Add threaded/nested comments" },
+                    { name: "Inventory Management API", desc: "Permissions, soft deletes, audit trail", concepts: "role-based access, is_deleted flag, timestamps", exercise: "Twist: Add stock alerts and reorder suggestions" },
+                    { name: "Real-Time Chat Backend", desc: "WebSockets, rooms, message history", concepts: "Flask-SocketIO, rooms, events, persistence", exercise: "Twist: Add typing indicators and read receipts" },
+                    { name: "Task Queue System", desc: "Async jobs, scheduling, workers", concepts: "Celery, Redis, periodic tasks, retries", exercise: "Twist: Add email notification worker" },
+                ]
+            },
+            {
+                name: "Full-Stack Integration",
+                math: "State Machines, Graph Theory",
+                projects: [
+                    { name: "React Todo App", desc: "Components, state, hooks", concepts: "useState, useEffect, props, lifting state", exercise: "Twist: Add categories and drag-and-drop reordering" },
+                    { name: "React E-Commerce Page", desc: "Product listing, filtering, cart state", concepts: "useReducer, context, filtering logic", exercise: "Twist: Add wishlist and price comparison" },
+                    { name: "React + Flask Blog", desc: "Full-stack, auth flow, API integration", concepts: "axios, CORS, JWT in React, protected routes", exercise: "Twist: Add markdown editor and image upload" },
+                    { name: "React Data Dashboard", desc: "Charts, real data, responsive layout", concepts: "Recharts, data fetching, responsive grid", exercise: "Twist: Add date range picker and CSV export" },
+                    { name: "React Kanban Board", desc: "Drag and drop, column state, persistence", concepts: "react-beautiful-dnd, useReducer, localStorage", exercise: "Twist: Add swimlanes and WIP limits" },
+                    { name: "React Expense Splitter", desc: "Multi-user calculations, fairness", concepts: "forms, computed values, PDF export", exercise: "Twist: Add recurring expenses and settlement suggestions" },
+                    { name: "React Real-Time Chat", desc: "WebSocket client, message rendering", concepts: "socket.io-client, useEffect cleanup, scrolling", exercise: "Twist: Add emoji picker and message reactions" },
+                    { name: "Admin Dashboard (React)", desc: "CRUD tables, pagination, bulk actions", concepts: "table components, pagination logic, modals", exercise: "Twist: Add role-based views and audit log" },
+                    { name: "OAuth 2.0 Login Flow", desc: "Google/GitHub auth, session management", concepts: "OAuth flow, redirect URI, token storage", exercise: "Twist: Add multiple providers and account linking" },
+                    { name: "GraphQL API + Client", desc: "Schema design, queries, mutations", concepts: "typeDefs, resolvers, Apollo Client, useQuery", exercise: "Twist: Add subscriptions for real-time updates" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p3", name: "Phase 3: Scientific Computing", color: "#bc8cff",
+        tiers: [
+            {
+                name: "Physics Foundations",
+                math: "Calculus, Trigonometry, Linear Algebra",
+                projects: [
+                    { name: "Vector Math Visualizer", desc: "2D vectors, operations, interactive matplotlib", concepts: "magnitude, dot product, cross product, angle", exercise: "Twist: Add vector projection and Gram-Schmidt visualization" },
+                    { name: "Projectile Motion Simulator", desc: "Kinematics, trajectory, gravity", concepts: "x(t), y(t), v0*cos/sin, parabolic arc", exercise: "Twist: Add air resistance (drag force proportional to v²)" },
+                    { name: "Pendulum Simulator", desc: "ODE, numerical integration, animation", concepts: "θ̈ = -(g/L)sin(θ), Euler method, energy", exercise: "Twist: Double pendulum (chaotic motion)" },
+                    { name: "Particle System (n-body)", desc: "Gravitational attraction, force accumulation", concepts: "F = Gm1m2/r², vector forces, O(n²)", exercise: "Twist: Add Barnes-Hut optimization O(n log n)" },
+                    { name: "Wave Equation Solver (1D)", desc: "Finite differences, standing waves", concepts: "PDE discretization, boundary conditions, Laplacian", exercise: "Twist: 2D wave equation with interactive disturbance" },
+                    { name: "Heat Diffusion Simulation", desc: "Thermal conduction, boundary conditions", concepts: "heat equation, explicit/implicit schemes", exercise: "Twist: Add heat sources and sinks, insulation boundaries" },
+                    { name: "Orbital Mechanics (Kepler)", desc: "Elliptical orbits, energy conservation", concepts: "Runge-Kutta, orbital elements, vis-viva", exercise: "Twist: Hohmann transfer orbit calculator" },
+                    { name: "Collision Detection Suite", desc: "AABB, circle, polygon, raycasting", concepts: "bounding boxes, separating axis theorem", exercise: "Twist: Add spatial partitioning (quadtree)" },
+                    { name: "Fluid Dynamics (Shallow Water)", desc: "Grid-based fluid, wave propagation", concepts: "conservation laws, finite volume method", exercise: "Twist: Add obstacles and dam break scenario" },
+                    { name: "Cellular Automaton", desc: "Conway's Game of Life, emergence", concepts: "grid rules, neighbor counting, generations", exercise: "Twist: Implement Langton's Ant and compare emergence" },
+                    { name: "Spring & Damping System", desc: "Hooke's law, energy dissipation", concepts: "F = -kx - bv, damped oscillation", exercise: "Twist: Coupled springs (two masses connected)" },
+                    { name: "Simple Harmonic Motion", desc: "Oscillation, phase, amplitude", concepts: "x = A*cos(ωt + φ), energy exchange", exercise: "Twist: Visualize Lissajous curves (two SHM combined)" },
+                    { name: "Friction Models", desc: "Static, kinetic, rolling friction", concepts: "μs, μk, normal force, friction cone", exercise: "Twist: Simulate block on inclined plane with variable angle" },
+                    { name: "Buoyancy & Fluid Resistance", desc: "Archimedes' principle, drag forces", concepts: "displaced volume, drag coefficient, terminal velocity", exercise: "Twist: Simulate a submarine with depth control" },
+                    { name: "Elastic & Inelastic Collisions", desc: "Momentum conservation, energy", concepts: "p = mv, coefficient of restitution", exercise: "Twist: Pool/billiards table simulator" },
+                ]
+            },
+            {
+                name: "Physics Engines",
+                math: "Differential Equations, Numerical Methods",
+                projects: [
+                    { name: "2D Rigid Body Physics Engine", desc: "Mass, velocity, forces, integration", concepts: "Euler/Verlet integration, force accumulation", exercise: "Twist: Add torque and rotational dynamics" },
+                    { name: "Constraint Solver (Verlet)", desc: "Position-based dynamics, stability", concepts: "Verlet integration, distance constraints, iterations", exercise: "Twist: Build a bridge stress simulator" },
+                    { name: "Rope/Chain Simulator", desc: "Constraint chains, tension", concepts: "linked particles, distance constraints", exercise: "Twist: Add breakable joints (snap under tension)" },
+                    { name: "Cloth Simulation", desc: "Mass-spring model, wind forces", concepts: "structural/shear/bend springs, wind vector", exercise: "Twist: Add tearing (remove springs under stress)" },
+                    { name: "Soft Body Physics", desc: "Deformable objects, pressure", concepts: "internal pressure, spring networks", exercise: "Twist: Simulate a bouncing jelly cube" },
+                    { name: "Ragdoll Physics", desc: "Joint constraints, articulated bodies", concepts: "ball/hinge joints, angular limits", exercise: "Twist: Add ragdoll with user-controlled limb forces" },
+                    { name: "Impact & Impulse Resolution", desc: "Collision response, restitution", concepts: "impulse = F*dt, normal/tangent decomposition", exercise: "Twist: Stack of boxes with realistic settling" },
+                    { name: "Vehicle Suspension", desc: "Springs, damping, terrain response", concepts: "spring-damper system, wheel contact", exercise: "Twist: Off-road vehicle on bumpy terrain" },
+                    { name: "Procedural Terrain Generation", desc: "Noise functions, erosion", concepts: "Perlin/Simplex noise, hydraulic erosion", exercise: "Twist: Add biome assignment based on height/moisture" },
+                    { name: "Ocean Waves (Gerstner)", desc: "FFT-based waves, realistic water", concepts: "Gerstner wave equation, FFT, displacement", exercise: "Twist: Add floating objects that bob on waves" },
+                    { name: "Smoke & Fire Simulation", desc: "Advection, diffusion, temperature", concepts: "grid-based fluid, buoyancy, dissipation", exercise: "Twist: Add fuel source and flame color temperature" },
+                    { name: "Fluid Solver (Eulerian)", desc: "Navier-Stokes basics, pressure", concepts: "advection, diffusion, pressure projection", exercise: "Twist: Interactive fluid with mouse forces" },
+                    { name: "Hair/Rope Physics", desc: "Strand dynamics, follow-the-leader", concepts: "chain of particles, length constraints", exercise: "Twist: Add wind and collision with head/sphere" },
+                    { name: "Bouncing Ball (Advanced)", desc: "Energy loss, spin, material properties", concepts: "coefficient of restitution, spin, rolling", exercise: "Twist: Pinball machine with flippers and bumpers" },
+                    { name: "Destruction Physics", desc: "Fracture, Voronoi, breaking geometry", concepts: "Voronoi decomposition, stress threshold", exercise: "Twist: Destructible building with structural supports" },
+                ]
+            },
+            {
+                name: "Advanced Simulations",
+                math: "PDEs, Statistics, Dynamical Systems",
+                projects: [
+                    { name: "Weather System Simulator", desc: "Wind, pressure, temperature coupling", concepts: "pressure gradient, Coriolis effect, advection", exercise: "Twist: Add cloud formation and precipitation" },
+                    { name: "Crowd Simulation (Boids)", desc: "Steering behaviors, emergence", concepts: "separation, alignment, cohesion, obstacles", exercise: "Twist: Add panic mode and bottleneck evacuation" },
+                    { name: "Traffic Flow Model", desc: "Vehicle interactions, congestion", concepts: "car-following model, lane changing, throughput", exercise: "Twist: Add traffic lights with optimization" },
+                    { name: "Ecosystem Simulation", desc: "Predator/prey, population dynamics", concepts: "Lotka-Volterra, carrying capacity, birth/death", exercise: "Twist: Add a third species and food web" },
+                    { name: "Pandemic Spread Simulator", desc: "SIR/SEIR model, spatial transmission", concepts: "infection rate, recovery rate, R0, herd immunity", exercise: "Twist: Add vaccination campaigns and quarantine zones" },
+                    { name: "Forest Fire Spread", desc: "Cellular automaton, probability, wind", concepts: "ignition probability, wind direction, firebreaks", exercise: "Twist: Add firefighting units with strategy" },
+                    { name: "River & Erosion", desc: "Hydraulic erosion, terrain deformation", concepts: "water flow, sediment transport, deposition", exercise: "Twist: Simulate dam construction and flood control" },
+                    { name: "Galaxy Formation", desc: "N-body gravity at massive scale", concepts: "dark matter halo, disk formation, rotation", exercise: "Twist: Galaxy collision merger simulation" },
+                    { name: "Molecular Dynamics", desc: "Particle interactions, thermodynamics", concepts: "Lennard-Jones potential, temperature, phase", exercise: "Twist: Simulate phase transition (solid→liquid→gas)" },
+                    { name: "Earthquake Simulation", desc: "Stress accumulation, fault rupture", concepts: "elastic rebound, wave propagation, magnitude", exercise: "Twist: Add building response and damage assessment" },
+                    { name: "Brain Neural Activity", desc: "Hodgkin-Huxley neuron model", concepts: "ion channels, action potential, voltage gating", exercise: "Twist: Network of neurons with synaptic connections" },
+                    { name: "Chemical Reaction Network", desc: "Reaction-diffusion, Turing patterns", concepts: "rate equations, diffusion, pattern formation", exercise: "Twist: Generate animal coat patterns (leopard spots)" },
+                    { name: "Space Debris Tracking", desc: "Orbital decay, collision probability", concepts: "Keplerian elements, conjunction analysis", exercise: "Twist: Propose debris removal mission trajectory" },
+                    { name: "Monte Carlo Simulation", desc: "Random sampling, statistical estimation", concepts: "random numbers, convergence, confidence intervals", exercise: "Twist: Estimate pi using random points in circle" },
+                    { name: "Chaos & Bifurcation", desc: "Lorenz attractor, logistic map", concepts: "sensitivity to initial conditions, strange attractors", exercise: "Twist: Build interactive bifurcation diagram with zoom" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p4", name: "Phase 4: Mobile & Game Dev", color: "#f0883e",
+        tiers: [
+            {
+                name: "Mobile Foundations",
+                math: "State Machines, Algorithms",
+                projects: [
+                    { name: "React Native Counter App", desc: "Navigation, state, basic UI", concepts: "useState, TouchableOpacity, StyleSheet", exercise: "Twist: Add multiple counters with reset and history" },
+                    { name: "React Native Todo", desc: "AsyncStorage, persistence, lists", concepts: "FlatList, AsyncStorage, CRUD", exercise: "Twist: Add swipe-to-delete and section headers" },
+                    { name: "React Native Movie Browser", desc: "API calls, FlatList, detail screens", concepts: "fetch, navigation params, loading states", exercise: "Twist: Add favorites with offline access" },
+                    { name: "React Native Health Tracker", desc: "Device sensors, data logging", concepts: "Accelerometer, step counting, charts", exercise: "Twist: Add weekly goals and streak tracking" },
+                    { name: "React Native Expense Tracker", desc: "Charts, date pickers, exports", concepts: "react-native-chart-kit, DateTimePicker", exercise: "Twist: Add receipt photo capture and OCR" },
+                    { name: "React Native Offline Notes", desc: "Local-first sync, conflict resolution", concepts: "WatermelonDB or Realm, sync strategies", exercise: "Twist: Add markdown support and note sharing" },
+                    { name: "React Native Authentication", desc: "JWT tokens, secure storage", concepts: "SecureStore, token refresh, protected routes", exercise: "Twist: Add biometric authentication (fingerprint/face)" },
+                    { name: "React Native Weather App", desc: "Location services, API, maps", concepts: "Geolocation, MapView, weather API", exercise: "Twist: Add weather-based outfit suggestions" },
+                    { name: "React Native Food Delivery PoC", desc: "Maps, real-time location, ordering", concepts: "MapView, markers, real-time updates", exercise: "Twist: Add driver tracking with live location" },
+                    { name: "React Native Multi-Language", desc: "i18n, locale switching, RTL", concepts: "i18next, locale detection, RTL layout", exercise: "Twist: Add Kinyarwanda and dynamic font sizing" },
+                ]
+            },
+            {
+                name: "Game Dev Foundations",
+                math: "Vectors, Matrices, Physics",
+                projects: [
+                    { name: "2D Platformer (Unity)", desc: "Physics, collision, player input", concepts: "Rigidbody2D, Collider2D, Input system", exercise: "Twist: Add wall jumping and dash mechanic" },
+                    { name: "Puzzle Game", desc: "Match-3 or Sokoban, game state, win", concepts: "grid logic, pattern matching, undo", exercise: "Twist: Add level editor for custom puzzles" },
+                    { name: "Top-Down RPG Starter", desc: "Movement, basic combat, NPCs", concepts: "tilemap, raycasting, state machine", exercise: "Twist: Add stealth mechanics (line of sight)" },
+                    { name: "Dialogue System for RPGs", desc: "Branching narrative, state machine", concepts: "dialogue tree, conditions, consequences", exercise: "Twist: Add voice line triggers and emotion system" },
+                    { name: "Inventory & Equipment", desc: "Data-driven design, item slots", concepts: "ScriptableObjects, drag-drop UI, stats", exercise: "Twist: Add crafting recipes and item rarity" },
+                    { name: "Procedural Dungeon Generator", desc: "BSP trees, room placement", concepts: "Binary Space Partition, corridors, spawning", exercise: "Twist: Add themed rooms and difficulty scaling" },
+                    { name: "Turn-Based Battle System", desc: "Game loop, action queue, UI", concepts: "command pattern, initiative, damage calc", exercise: "Twist: Add elemental weaknesses and combo attacks" },
+                    { name: "First-Person Controller", desc: "Camera, input, physics", concepts: "CharacterController, mouse look, gravity", exercise: "Twist: Add crouching, sprinting, and head bob" },
+                    { name: "Third-Person Camera", desc: "Follow, orbit, collision avoidance", concepts: "Cinemachine, raycasting, smoothing", exercise: "Twist: Add lock-on targeting system" },
+                    { name: "Particle Effects Editor", desc: "VFX, parameters, real-time preview", concepts: "Particle System, emission, lifetime, color", exercise: "Twist: Create spell effect library (fire, ice, lightning)" },
+                    { name: "Audio Manager", desc: "Spatial audio, mixing, music", concepts: "AudioSource, AudioMixer, 3D sound", exercise: "Twist: Add adaptive music that changes with gameplay" },
+                    { name: "UI Menus & Settings", desc: "Responsive game UI, options", concepts: "Canvas, anchoring, PlayerPrefs", exercise: "Twist: Add accessibility options (colorblind, text size)" },
+                    { name: "Save/Load System", desc: "Serialization, persistence, slots", concepts: "JSON serialization, file I/O, save slots", exercise: "Twist: Add auto-save and cloud save simulation" },
+                    { name: "Simple Multiplayer (LAN)", desc: "Netcode basics, sync, lobby", concepts: "NetworkManager, RPC, state sync", exercise: "Twist: Add chat and player ready system" },
+                    { name: "Physics-Based Platformer", desc: "Custom physics engine + game", concepts: "Your physics engine integrated with gameplay", exercise: "Twist: Add physics puzzles (weight, momentum)" },
+                ]
+            },
+            {
+                name: "Advanced Game Systems",
+                math: "Graph Theory, Optimization",
+                projects: [
+                    { name: "Vehicle Physics Game", desc: "Car simulation, traction, drift", concepts: "wheel physics, engine curves, steering", exercise: "Twist: Add motorcycle with lean mechanics" },
+                    { name: "Destruction Physics Game", desc: "Fracture, debris, chain reaction", concepts: "Voronoi, structural integrity, forces", exercise: "Twist: Add repair mechanic (reverse destruction)" },
+                    { name: "Dynamic Weather System", desc: "Visual + gameplay weather effects", concepts: "particle systems, lighting, gameplay modifiers", exercise: "Twist: Weather affects NPC behavior and quest availability" },
+                    { name: "Shader Programming Basics", desc: "Vertex, fragment shaders, effects", concepts: "HLSL/GLSL, UV mapping, normal maps", exercise: "Twist: Create a toon/cel shader and water shader" },
+                    { name: "Quest System", desc: "Objectives, tracking, branching", concepts: "quest states, prerequisites, rewards", exercise: "Twist: Add dynamic quests generated from world state" },
+                    { name: "Crafting System", desc: "Recipes, resources, discovery", concepts: "recipe database, ingredient matching, UI", exercise: "Twist: Add experimentation (unknown recipe discovery)" },
+                    { name: "Economy System", desc: "Supply, demand, trading, NPCs", concepts: "price curves, merchant inventory, inflation", exercise: "Twist: Add stock market with player manipulation" },
+                    { name: "Faction & Reputation", desc: "Relationships, consequences, alliances", concepts: "reputation values, faction reactions, diplomacy", exercise: "Twist: Add faction wars triggered by player actions" },
+                    { name: "Procedural Animation", desc: "IK, gait cycles, natural movement", concepts: "inverse kinematics, foot placement, blending", exercise: "Twist: Add creature animation (4+ legs, spider, horse)" },
+                    { name: "Modding Support System", desc: "Plugin architecture, user content", concepts: "asset bundles, scripting API, mod loader", exercise: "Twist: Add mod workshop with sharing and ratings" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p5", name: "Phase 5: AI & Machine Learning", color: "#f85149",
+        tiers: [
+            {
+                name: "Classical ML",
+                math: "Statistics, Linear Algebra, Calculus",
+                projects: [
+                    { name: "Linear Regression from Scratch", desc: "Gradient descent, cost function, fitting", concepts: "MSE, learning rate, convergence, R²", exercise: "Twist: Predict Kigali rental prices from real data" },
+                    { name: "Logistic Regression", desc: "Binary classification, sigmoid, decision boundary", concepts: "sigmoid, cross-entropy, threshold tuning", exercise: "Twist: Classify SMS as spam/ham from African dataset" },
+                    { name: "K-Means Clustering", desc: "Unsupervised learning, centroids", concepts: "initialization, assignment, update, elbow method", exercise: "Twist: Segment Rwandan census data by region" },
+                    { name: "Decision Tree & Random Forest", desc: "Tree-based learning, ensembles", concepts: "entropy, information gain, bagging, feature importance", exercise: "Twist: Predict student performance from attendance data" },
+                    { name: "Support Vector Machine", desc: "Margin maximization, kernel trick", concepts: "hyperplane, support vectors, RBF kernel", exercise: "Twist: Classify handwritten digits (MNIST subset)" },
+                    { name: "PCA (Dimensionality Reduction)", desc: "Variance, eigenvectors, visualization", concepts: "covariance matrix, eigendecomposition, scree plot", exercise: "Twist: Reduce and visualize high-dimensional face data" },
+                    { name: "Time Series Forecasting", desc: "ARIMA, trend, seasonality", concepts: "autocorrelation, differencing, seasonal decomp", exercise: "Twist: Forecast Kigali temperature or rainfall" },
+                    { name: "Anomaly Detection", desc: "Isolation Forest, outlier scoring", concepts: "isolation trees, contamination, thresholds", exercise: "Twist: Detect fraudulent transactions in payment data" },
+                    { name: "Text Classification", desc: "NLP, Naive Bayes, bag-of-words", concepts: "tokenization, TF-IDF, Bayes theorem", exercise: "Twist: Classify news articles by category (African news)" },
+                    { name: "Recommender System", desc: "Collaborative filtering, similarity", concepts: "user-item matrix, cosine similarity, SVD", exercise: "Twist: Recommend African music based on listening history" },
+                    { name: "NLP Pipeline", desc: "Tokenization, embeddings, sentiment", concepts: "word2vec, spaCy, sentiment scoring", exercise: "Twist: Sentiment analysis on Rwandan social media posts" },
+                    { name: "Audio Feature Extraction", desc: "Spectrograms, MFCC, classification", concepts: "FFT, mel scale, librosa, audio features", exercise: "Twist: Classify African instruments from audio samples" },
+                    { name: "Image Classification (CNN)", desc: "Convolutional layers, pooling, training", concepts: "convolution, stride, padding, softmax", exercise: "Twist: Classify African wildlife from photos" },
+                    { name: "Object Detection", desc: "Bounding boxes, YOLO architecture", concepts: "anchor boxes, non-max suppression, mAP", exercise: "Twist: Detect and count vehicles in Kigali traffic footage" },
+                    { name: "Generative Model (VAE/GAN)", desc: "Latent space, generation, training", concepts: "encoder/decoder, discriminator/generator, loss", exercise: "Twist: Generate African textile patterns" },
+                ]
+            },
+            {
+                name: "AI Agent Systems",
+                math: "Graph Theory, Optimization, Game Theory",
+                projects: [
+                    { name: "Pathfinding AI (A*)", desc: "Graph search, heuristics, optimality", concepts: "open/closed sets, g+h cost, admissible heuristic", exercise: "Twist: Pathfind on actual Kigali road network data" },
+                    { name: "Behavior Tree System", desc: "Hierarchical decisions, composites", concepts: "selector, sequence, decorator, blackboard", exercise: "Twist: Build AI guard with patrol, investigate, attack" },
+                    { name: "Genetic Algorithm", desc: "Evolution, fitness, crossover, mutation", concepts: "population, selection, crossover, elitism", exercise: "Twist: Evolve optimal antenna shapes or bridge designs" },
+                    { name: "Q-Learning (Gridworld)", desc: "Value iteration, exploration vs exploitation", concepts: "Q-table, epsilon-greedy, reward shaping", exercise: "Twist: Train agent to navigate maze with traps" },
+                    { name: "Neural Network from Scratch", desc: "Backpropagation, no frameworks", concepts: "forward pass, chain rule, weight updates", exercise: "Twist: Train on XOR, then iris dataset" },
+                    { name: "Evolutionary AI (NEAT)", desc: "Neuroevolution, topology mutation", concepts: "genome, speciation, complexification", exercise: "Twist: Evolve AI to play Flappy Bird clone" },
+                    { name: "Swarm Intelligence", desc: "Ant Colony Optimization, pheromones", concepts: "pheromone trails, evaporation, reinforcement", exercise: "Twist: Solve traveling salesman for Rwandan cities" },
+                    { name: "Particle Swarm Optimization", desc: "Collective intelligence, parameter tuning", concepts: "personal/global best, velocity update", exercise: "Twist: Optimize neural network hyperparameters" },
+                    { name: "Flocking & Steering", desc: "Multi-agent coordination, emergence", concepts: "Reynolds rules, obstacle avoidance, leader", exercise: "Twist: Simulate bird migration patterns" },
+                    { name: "NPC Decision Making", desc: "Utility AI, scoring, goal-driven", concepts: "utility functions, action scoring, priorities", exercise: "Twist: Build a Sims-like NPC with needs and personality" },
+                    { name: "ML for Physics Prediction", desc: "Neural net learns physical systems", concepts: "training on simulation data, generalization", exercise: "Twist: Predict pendulum motion from initial conditions" },
+                    { name: "Inverse Kinematics", desc: "Character animation, joint solving", concepts: "CCD, FABRIK, joint limits", exercise: "Twist: Robot arm reaches for moving target" },
+                    { name: "Multi-Agent RL", desc: "Competition and cooperation", concepts: "independent Q-learning, shared reward", exercise: "Twist: Predator-prey training (wolves hunt deer)" },
+                    { name: "Goal-Oriented Action Planning", desc: "Planning AI, world state, preconditions", concepts: "world state, actions, planner, A* on actions", exercise: "Twist: NPC plans daily routine (eat, work, sleep, socialize)" },
+                    { name: "Influence Maps", desc: "Tactical AI, spatial reasoning", concepts: "heat maps, threat assessment, territory", exercise: "Twist: RTS-style AI that controls territory" },
+                ]
+            },
+            {
+                name: "Deep Learning",
+                math: "Linear Algebra, Calculus, Information Theory",
+                projects: [
+                    { name: "CNN (PyTorch)", desc: "CIFAR-10, ResNet basics, training", concepts: "DataLoader, Conv2d, BatchNorm, SGD", exercise: "Twist: Train on African sign language dataset" },
+                    { name: "RNN / LSTM", desc: "Sequence modeling, time series", concepts: "hidden state, gates, vanishing gradients", exercise: "Twist: Generate Kinyarwanda text character-by-character" },
+                    { name: "Transformer Architecture", desc: "Self-attention, multi-head, position encoding", concepts: "attention, Q/K/V, positional encoding", exercise: "Twist: Build a mini translator (English → French)" },
+                    { name: "Fine-Tuned LLM (Claude API)", desc: "Domain-specific knowledge, prompting", concepts: "system prompts, few-shot, RAG basics", exercise: "Twist: Build a Rwanda travel guide chatbot" },
+                    { name: "Vision Transformer (ViT)", desc: "Image patches as tokens, classification", concepts: "patch embedding, class token, attention maps", exercise: "Twist: Classify satellite images of African terrain" },
+                    { name: "Diffusion Model", desc: "Noise schedule, denoising, generation", concepts: "forward/reverse process, U-Net, sampling", exercise: "Twist: Generate African landscape art" },
+                    { name: "Reinforcement Learning (PPO)", desc: "Policy optimization, advantage estimation", concepts: "policy gradient, clipping, GAE", exercise: "Twist: Train agent for African board game (Mancala)" },
+                    { name: "Multi-Modal Model", desc: "Vision + language, image captioning", concepts: "cross-attention, CLIP, contrastive learning", exercise: "Twist: Caption African wildlife photos" },
+                    { name: "Graph Neural Network", desc: "Node classification, message passing", concepts: "adjacency matrix, aggregation, GCN layers", exercise: "Twist: Predict protein properties from molecular graphs" },
+                    { name: "Production ML Pipeline", desc: "Training → inference → monitoring → retrain", concepts: "MLflow, model versioning, drift detection", exercise: "Twist: Deploy a model with A/B testing" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p6", name: "Phase 6: Systems & Infrastructure", color: "#79c0ff",
+        tiers: [
+            {
+                name: "DevOps & Systems",
+                math: "Queueing Theory, Optimization",
+                projects: [
+                    { name: "Docker-ize Existing App", desc: "Containers, multi-stage builds, compose", concepts: "Dockerfile, docker-compose, volumes, networks", exercise: "Twist: Multi-container app (web + db + cache + worker)" },
+                    { name: "CI/CD Pipeline", desc: "Auto-test, build, deploy on push", concepts: "GitHub Actions, workflows, artifacts, secrets", exercise: "Twist: Add staging environment with approval gates" },
+                    { name: "Load Balancer", desc: "Multiple servers, round-robin, health checks", concepts: "Nginx, upstream, health_check, sticky sessions", exercise: "Twist: Add blue-green deployment switching" },
+                    { name: "Database Backup & Recovery", desc: "Automated backups, restore testing", concepts: "pg_dump, cron, S3, point-in-time recovery", exercise: "Twist: Add disaster recovery drill automation" },
+                    { name: "Monitoring & Logging", desc: "Metrics, dashboards, alerting", concepts: "Prometheus, Grafana, ELK, alert rules", exercise: "Twist: Add custom business metrics dashboard" },
+                    { name: "Kubernetes Deployment", desc: "Container orchestration, scaling", concepts: "pods, services, deployments, ingress", exercise: "Twist: Add horizontal pod autoscaler" },
+                    { name: "Redis Caching Layer", desc: "Performance, cache strategies, invalidation", concepts: "cache-aside, TTL, cache stampede prevention", exercise: "Twist: Benchmark before/after with load testing" },
+                    { name: "API Rate Limiting", desc: "Token bucket, fairness, abuse prevention", concepts: "sliding window, token bucket, Redis counters", exercise: "Twist: Add tiered rate limits by API key" },
+                    { name: "CDN Integration", desc: "Edge delivery, cache headers, performance", concepts: "Cache-Control, ETag, edge locations", exercise: "Twist: Measure performance improvement with analytics" },
+                    { name: "Disaster Recovery Playbook", desc: "Documentation, runbooks, testing", concepts: "RTO, RPO, failover procedures, communication", exercise: "Twist: Run a chaos engineering experiment" },
+                ]
+            },
+            {
+                name: "Advanced Architecture",
+                math: "Distributed Systems Theory",
+                projects: [
+                    { name: "Microservices Architecture", desc: "Service decomposition, messaging", concepts: "API gateway, service discovery, eventual consistency", exercise: "Twist: Add circuit breaker pattern" },
+                    { name: "Event-Driven System", desc: "Event sourcing, CQRS, audit trails", concepts: "event store, projections, command/query separation", exercise: "Twist: Add event replay for debugging" },
+                    { name: "Real-Time Analytics Pipeline", desc: "Stream processing, aggregation", concepts: "Kafka, windowing, exactly-once processing", exercise: "Twist: Real-time dashboard of streaming data" },
+                    { name: "Payment Integration (Pesapal)", desc: "African payments, webhooks, security", concepts: "payment flow, IPN, reconciliation, PCI", exercise: "Twist: Add multi-currency support (RWF, KES, USD)" },
+                    { name: "Search Engine (Elasticsearch)", desc: "Full-text search, facets, relevance", concepts: "inverted index, analyzers, boosting, aggregations", exercise: "Twist: Build a product search with autocomplete" },
+                    { name: "Video Streaming PoC", desc: "Encoding, adaptive bitrate, delivery", concepts: "HLS, transcoding, CDN, buffer management", exercise: "Twist: Add live streaming support" },
+                    { name: "Geolocation & Route Optimization", desc: "Maps, shortest path, delivery", concepts: "Haversine, graph algorithms, TSP approximation", exercise: "Twist: Optimize delivery routes in Kigali" },
+                    { name: "IoT Dashboard", desc: "Sensor data, real-time, alerts", concepts: "MQTT, time-series DB, WebSocket updates", exercise: "Twist: Add predictive maintenance alerts" },
+                    { name: "Fraud Detection Pipeline", desc: "ML + rules, streaming, real-time", concepts: "feature engineering, online learning, rules engine", exercise: "Twist: Add explainable AI for flagged transactions" },
+                    { name: "Knowledge Graph", desc: "Entity relationships, semantic search", concepts: "triples, SPARQL, graph embeddings, Neo4j", exercise: "Twist: Build a Rwandan cultural knowledge graph" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p7", name: "Phase 7: African Impact & Research", color: "#3fb950",
+        tiers: [
+            {
+                name: "Climate & Environment",
+                math: "PDEs, Statistics, Optimization",
+                projects: [
+                    { name: "Climate Impact Simulator", desc: "Sea-level rise, storm frequency, damage prediction", concepts: "GIS data, risk modeling, monte carlo", exercise: "Twist: Add evacuation route optimizer" },
+                    { name: "Drought & Crop Yield Predictor", desc: "Climate patterns, agricultural planning", concepts: "time series, satellite data, regression", exercise: "Twist: Add crop recommendation engine" },
+                    { name: "Urban Heat Analyzer", desc: "Urbanization heat islands, risk zones", concepts: "spatial analysis, temperature modeling, GIS", exercise: "Twist: Recommend green space placement" },
+                    { name: "Deforestation Tracker", desc: "Satellite imagery, change detection", concepts: "image differencing, classification, NDVI", exercise: "Twist: Predict future deforestation patterns" },
+                    { name: "Air Quality Monitor", desc: "Sensor data, pollution modeling, alerts", concepts: "AQI, interpolation, health thresholds", exercise: "Twist: Add source attribution modeling" },
+                    { name: "Water Resource Optimizer", desc: "Hydrology, allocation, sustainability", concepts: "flow networks, optimization, constraints", exercise: "Twist: Multi-stakeholder water sharing simulator" },
+                    { name: "Renewable Energy Site Selector", desc: "Solar/wind potential, terrain analysis", concepts: "GIS, solar irradiance, wind rose data", exercise: "Twist: Add cost-benefit analysis and ROI projection" },
+                    { name: "Carbon Footprint Calculator", desc: "Lifecycle analysis, emissions tracking", concepts: "emission factors, scope 1/2/3, visualization", exercise: "Twist: Add reduction strategy recommendations" },
+                ]
+            },
+            {
+                name: "Healthcare & Education",
+                math: "Statistics, Probability, ML",
+                projects: [
+                    { name: "Disease Progression Simulator", desc: "Cancer/disease stages, visual teaching", concepts: "Markov chains, state transitions, visualization", exercise: "Twist: Add treatment response modeling" },
+                    { name: "Student Dropout Predictor", desc: "Attendance, grades, early warning", concepts: "classification, feature engineering, intervention", exercise: "Twist: Add personalized intervention suggestions" },
+                    { name: "Education Policy Simulator", desc: "Investment outcomes, scenario modeling", concepts: "agent-based modeling, policy variables, outcomes", exercise: "Twist: Compare Rwanda vs Kenya education investments" },
+                    { name: "Public Health Dashboard", desc: "Disease tracking, outbreak detection", concepts: "time series, anomaly detection, geographic viz", exercise: "Twist: Add contact tracing network visualization" },
+                    { name: "Medical Image Classifier", desc: "X-ray/scan analysis, CNN application", concepts: "transfer learning, data augmentation, sensitivity", exercise: "Twist: Add Grad-CAM for explainable diagnoses" },
+                    { name: "Drug Interaction Checker", desc: "Knowledge graph, safety validation", concepts: "graph database, rule engine, contraindications", exercise: "Twist: Add traditional medicine interactions" },
+                    { name: "Mental Health Screening Tool", desc: "Questionnaire, scoring, referral", concepts: "validated instruments, scoring algorithms, privacy", exercise: "Twist: Add multilingual support (Kinyarwanda, French)" },
+                    { name: "Nutrition Planner (Local Foods)", desc: "African foods database, diet optimization", concepts: "nutritional data, linear programming, meal plans", exercise: "Twist: Add budget constraints and local market prices" },
+                ]
+            },
+            {
+                name: "Governance, Economics & Space",
+                math: "Optimization, Game Theory, Orbital Mechanics",
+                projects: [
+                    { name: "Public Service Complaint Analyzer", desc: "NLP categorization, priority routing", concepts: "text classification, sentiment, topic modeling", exercise: "Twist: Add trend analysis and department performance scoring" },
+                    { name: "Election Claims Fact-Triage", desc: "Speech analysis, claim extraction, flagging", concepts: "NER, claim detection, source matching", exercise: "Twist: Add real-time live debate analysis" },
+                    { name: "Local Job Market Predictor", desc: "Economic analysis, trend forecasting", concepts: "time series, economic indicators, sector analysis", exercise: "Twist: Add skills gap analysis and training recommendations" },
+                    { name: "Entrepreneur Opportunity Map", desc: "Business gap analysis, location intelligence", concepts: "spatial analysis, demand modeling, competition", exercise: "Twist: Add startup success probability scoring" },
+                    { name: "Poverty-Reduction Simulator", desc: "Policy intervention modeling, outcomes", concepts: "agent-based model, income distribution, Gini", exercise: "Twist: Compare cash transfer vs education investment" },
+                    { name: "Smart City Traffic Predictor", desc: "Road patterns, congestion, AI optimization", concepts: "graph neural networks, flow optimization", exercise: "Twist: Design optimal bus routes for Kigali" },
+                    { name: "Infrastructure Failure Warning", desc: "Risk detection, predictive maintenance", concepts: "sensor fusion, degradation models, alerts", exercise: "Twist: Add bridge/road inspection prioritization" },
+                    { name: "Orbital Mechanics + AI Planner", desc: "Spacecraft trajectory optimization", concepts: "Hohmann transfers, delta-v, fuel optimization", exercise: "Twist: Plan multi-planet mission (gravity assists)" },
+                    { name: "Satellite Collision Prediction", desc: "Orbital simulation, conjunction analysis", concepts: "TLE data, propagation, probability of collision", exercise: "Twist: Propose avoidance maneuver and fuel cost" },
+                    { name: "AI Space Weather Predictor", desc: "Solar activity, radiation forecasting", concepts: "NASA data, time series, solar cycle patterns", exercise: "Twist: Add satellite vulnerability assessment" },
+                    { name: "Multi-Agent Disaster Simulator", desc: "Pre/post disaster response modeling", concepts: "multi-agent systems, resource allocation, triage", exercise: "Twist: Optimize evacuation for Kigali flood scenario" },
+                    { name: "Earth Evolution Simulator", desc: "Planetary modeling, geological time", concepts: "plate tectonics, climate models, extinction events", exercise: "Twist: Add human civilization impact modeling" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p8", name: "Phase 8: Advanced Math & Scientific Computing", color: "#d2a8ff",
+        tiers: [
+            {
+                name: "Advanced Mathematics",
+                math: "Everything",
+                projects: [
+                    { name: "Finite Element Method (FEM)", desc: "Mesh generation, weak formulation, solving", concepts: "triangulation, basis functions, stiffness matrix", exercise: "Twist: Simulate stress in a bridge structure" },
+                    { name: "Computational Fluid Dynamics", desc: "Navier-Stokes 2D, pressure correction", concepts: "staggered grid, SIMPLE algorithm, vorticity", exercise: "Twist: Simulate airflow around an airfoil" },
+                    { name: "FFT Exploration", desc: "Frequency domain, filtering, analysis", concepts: "DFT, butterfly, convolution theorem", exercise: "Twist: Build an audio equalizer" },
+                    { name: "Spectral Methods for PDEs", desc: "Fourier basis, high-order accuracy", concepts: "spectral differentiation, Chebyshev polynomials", exercise: "Twist: Solve Burgers equation with shock" },
+                    { name: "Adaptive Mesh Refinement", desc: "Dynamic grid refinement, error estimation", concepts: "error indicators, h-refinement, tree structures", exercise: "Twist: Track shock wave with adaptive resolution" },
+                    { name: "Particle-in-Cell Simulation", desc: "Plasma dynamics, electromagnetic fields", concepts: "charge deposition, field solve, particle push", exercise: "Twist: Simulate plasma wake in accelerator" },
+                    { name: "Stochastic Differential Equations", desc: "Brownian motion, noise, financial modeling", concepts: "Wiener process, Ito calculus, Euler-Maruyama", exercise: "Twist: Model stock prices with geometric Brownian motion" },
+                    { name: "Optimization Algorithms", desc: "Gradient descent, Newton, BFGS, convergence", concepts: "line search, Hessian, quasi-Newton, constraints", exercise: "Twist: Optimize a real engineering design problem" },
+                    { name: "Symbolic Math Engine", desc: "Computer algebra, simplification", concepts: "expression trees, differentiation rules, pattern matching", exercise: "Twist: Build a step-by-step equation solver with explanations" },
+                    { name: "Differential Geometry Viz", desc: "Curvature, geodesics, manifolds", concepts: "Gaussian curvature, parallel transport, surfaces", exercise: "Twist: Visualize shortest paths on a torus" },
+                    { name: "Quantum Mechanics Simulator", desc: "Schrödinger equation, probability densities", concepts: "wave function, potential wells, tunneling", exercise: "Twist: Simulate quantum tunneling through a barrier" },
+                    { name: "Graph Theory Algorithms", desc: "Advanced graph problems, network analysis", concepts: "max flow, min cut, matching, centrality", exercise: "Twist: Analyze a real social network dataset" },
+                    { name: "N-Body (Barnes-Hut)", desc: "O(n log n) gravity simulation", concepts: "octree, multipole expansion, approximation", exercise: "Twist: Simulate galaxy cluster with 100k+ particles" },
+                    { name: "Multigrid Solver", desc: "Hierarchical refinement, fast PDE solving", concepts: "restriction, prolongation, V-cycle, smoothing", exercise: "Twist: Solve Poisson equation on 1M+ grid" },
+                    { name: "Tensor Calculus Visualizer", desc: "Tensors, contraction, transformation", concepts: "index notation, metric tensor, Christoffel symbols", exercise: "Twist: Visualize spacetime curvature near a mass" },
+                ]
+            }
+        ]
+    },
+    {
+        id: "p9", name: "Phase 9: Personal Capstones", color: "#f0883e",
+        tiers: [
+            {
+                name: "AI Me (Personal AI Avatar)",
+                math: "Deep Learning, Signal Processing",
+                projects: [
+                    { name: "AI Me: Voice Synthesis", desc: "Clone your voice, text-to-speech", concepts: "voice cloning, TTS, audio processing", exercise: "Final: Test with 10 people, measure recognition rate" },
+                    { name: "AI Me: Visual Avatar", desc: "Deepfake/avatar generation from photos", concepts: "face generation, expression mapping, rendering", exercise: "Final: Real-time avatar that mirrors your expressions" },
+                    { name: "AI Me: Personality Engine", desc: "Fine-tuned LLM with your personality", concepts: "personal data training, style transfer, guardrails", exercise: "Final: Blind test — can friends tell AI from real you?" },
+                    { name: "AI Me: Full Integration", desc: "Voice + visual + personality combined", concepts: "multimodal integration, latency, coherence", exercise: "Final: Deploy and have it handle a real conversation" },
+                ]
+            },
+            {
+                name: "African Life Game (GTA/Sims Style)",
+                math: "Procedural Generation, Agent AI, Economics",
+                projects: [
+                    { name: "African Game: World Generation", desc: "Procedural Africa, countries, regions", concepts: "PCG, terrain, population distribution, culture", exercise: "Final: Generate 5 distinct African regions with unique feel" },
+                    { name: "African Game: Character System", desc: "Birth, status, identity, traits", concepts: "character generation, social systems, randomization", exercise: "Final: Create 100 unique characters with believable backgrounds" },
+                    { name: "African Game: Economy & Society", desc: "Jobs, money, relationships, daily life", concepts: "economic simulation, social networks, time system", exercise: "Final: Simulate one game-year with emergent stories" },
+                    { name: "African Game: Full Prototype", desc: "Playable vertical slice, 30 min gameplay", concepts: "all systems integrated, polish, testing", exercise: "Final: 5 playtesters give feedback, iterate" },
+                ]
+            },
+            {
+                name: "Ashes of Ikarra (Ultimate Game Project)",
+                math: "Everything — Physics, AI, Procedural Gen, ML",
+                projects: [
+                    { name: "Ashes of Ikarra: Custom Physics", desc: "Your physics engine integrated into game", concepts: "rigid body, collision, particles, environment", exercise: "Final: Physics puzzle that showcases your engine" },
+                    { name: "Ashes of Ikarra: AI Systems", desc: "NPC behavior, combat AI, world AI", concepts: "behavior trees, utility AI, GOAP, faction AI", exercise: "Final: NPCs that players describe as 'alive'" },
+                    { name: "Ashes of Ikarra: Procedural World", desc: "Terrain, dungeons, encounters, weather", concepts: "noise, BSP, biomes, dynamic events", exercise: "Final: World that feels different each playthrough" },
+                    { name: "Ashes of Ikarra: Narrative Engine", desc: "Branching story, memory mechanic, choices", concepts: "story graph, consequence tracking, player agency", exercise: "Final: Story that players discuss and debate" },
+                    { name: "Ashes of Ikarra: Playable Chapter 1", desc: "30-60 min gameplay, full experience", concepts: "all systems, polish, audio, UI, testing", exercise: "Final: Ship it. Get real player feedback." },
+                ]
+            }
+        ]
+    }
+];
+
+const TOTAL_PROJECTS = 286;
+let projectData = {};
+let allProjects = [];
+
+window.addEventListener('DOMContentLoaded', loadData);
+
+function loadData() {
+    const saved = localStorage.getItem('curriculum-300-v2');
+    if (saved) projectData = JSON.parse(saved);
+
+    let id = 1;
+    for (let phase of PHASES) {
+        for (let tier of phase.tiers) {
+            for (let proj of tier.projects) {
+                if (!projectData[id]) projectData[id] = 'not-started';
+                allProjects.push({ id, phaseId: phase.id, phaseName: phase.name, phaseColor: phase.color, tierName: tier.name, tierMath: tier.math, ...proj });
+                id++;
+            }
+        }
+    }
+    render();
+}
+
+function saveData() { localStorage.setItem('curriculum-300-v2', JSON.stringify(projectData)); updateStats(); }
+
+function cycleStatus(id) {
+    const order = ['not-started', 'in-progress', 'completed'];
+    const current = projectData[id] || 'not-started';
+    const next = order[(order.indexOf(current) + 1) % 3];
+    projectData[id] = next;
+    saveData();
+    render();
+}
+
+function updateStats() {
+    const vals = Object.values(projectData);
+    const completed = vals.filter(s => s === 'completed').length;
+    const inProgress = vals.filter(s => s === 'in-progress').length;
+    const remaining = TOTAL_PROJECTS - completed - inProgress;
+    const pct = Math.round((completed / TOTAL_PROJECTS) * 100);
+    document.getElementById('overall-pct').textContent = pct + '%';
+    document.getElementById('overall-bar').style.width = pct + '%';
+    document.getElementById('completed-count').textContent = completed;
+    document.getElementById('in-progress-count').textContent = inProgress;
+    document.getElementById('remaining-count').textContent = remaining;
+}
+
+function togglePhase(phaseId) {
+    const content = document.getElementById('content-' + phaseId);
+    const arrow = document.getElementById('arrow-' + phaseId);
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.style.transform = 'rotate(90deg)';
+    } else {
+        content.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
+    }
+}
+
+function render() {
+    const search = document.getElementById('search').value.toLowerCase();
+    const statusFilter = document.getElementById('status-filter').value;
+    const container = document.getElementById('phases-container');
+    container.innerHTML = '';
+
+    for (let phase of PHASES) {
+        const phaseProjects = allProjects.filter(p => p.phaseId === phase.id);
+        const phaseCompleted = phaseProjects.filter(p => projectData[p.id] === 'completed').length;
+        const phasePct = Math.round((phaseCompleted / phaseProjects.length) * 100);
+
+        let filteredPhaseProjects = phaseProjects;
+        if (search) filteredPhaseProjects = phaseProjects.filter(p => p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search) || p.concepts.toLowerCase().includes(search));
+        if (statusFilter !== 'all') filteredPhaseProjects = filteredPhaseProjects.filter(p => projectData[p.id] === statusFilter);
+        if ((search || statusFilter !== 'all') && filteredPhaseProjects.length === 0) continue;
+
+        const phaseEl = document.createElement('div');
+        phaseEl.className = 'phase';
+        phaseEl.innerHTML = `
+            <div class="phase-header" onclick="togglePhase('${phase.id}')">
+                <div class="phase-title"><span class="phase-tag" style="background:${phase.color}20;color:${phase.color};border:1px solid ${phase.color}40;">${phaseProjects.length} projects</span>${phase.name}</div>
+                <div class="phase-progress">
+                    <span class="phase-pct">${phaseCompleted}/${phaseProjects.length} (${phasePct}%)</span>
+                    <div class="phase-bar"><div class="phase-bar-fill" style="width:${phasePct}%;background:${phase.color}"></div></div>
+                    <span class="phase-arrow" id="arrow-${phase.id}">▶</span>
+                </div>
+            </div>
+            <div id="content-${phase.id}" class="hidden"></div>
+        `;
+
+        const contentDiv = phaseEl.querySelector(`#content-${phase.id}`);
+
+        // Group by tier
+        const tiers = {};
+        for (let p of filteredPhaseProjects) {
+            if (!tiers[p.tierName]) tiers[p.tierName] = { math: p.tierMath, projects: [] };
+            tiers[p.tierName].projects.push(p);
+        }
+
+        for (let [tierName, tierData] of Object.entries(tiers)) {
+            const tierCompleted = tierData.projects.filter(p => projectData[p.id] === 'completed').length;
+            const tierEl = document.createElement('div');
+            tierEl.className = 'tier';
+            tierEl.innerHTML = `
+                <div class="tier-header">
+                    <div><span class="tier-title">${tierName}</span><span class="tier-math">${tierData.math}</span></div>
+                    <span class="tier-count">${tierCompleted}/${tierData.projects.length}</span>
+                </div>
+                <ul class="projects"></ul>
+            `;
+
+            const ul = tierEl.querySelector('.projects');
+            for (let proj of tierData.projects) {
+                const status = projectData[proj.id];
+                const li = document.createElement('li');
+                li.className = `project ${status}`;
+
+                const btn = document.createElement('button');
+                btn.className = `project-select ${status}`;
+                btn.textContent = status === 'completed' ? '✓' : status === 'in-progress' ? '→' : '';
+                btn.onclick = () => cycleStatus(proj.id);
+
+                const content = document.createElement('div');
+                content.className = 'project-content';
+                content.innerHTML = `
+                    <div class="project-name">${proj.name}</div>
+                    <div class="project-desc">${proj.desc}</div>
+                    <div class="project-concepts">Concepts: ${proj.concepts}</div>
+                    <div class="project-exercise">${proj.exercise}</div>
+                `;
+
+                const idSpan = document.createElement('span');
+                idSpan.className = 'project-id';
+                idSpan.textContent = `#${proj.id}`;
+
+                li.appendChild(btn);
+                li.appendChild(content);
+                li.appendChild(idSpan);
+                ul.appendChild(li);
+            }
+            contentDiv.appendChild(tierEl);
+        }
+
+        container.appendChild(phaseEl);
+    }
+    updateStats();
+}
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('status-filter').addEventListener('change', render);
+
+function exportData() {
+    const data = { exported: new Date().toISOString(), version: '300-v2', projects: projectData };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `curriculum-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+}
+
+function importData() { document.getElementById('import-file').click(); }
+
+document.getElementById('import-file').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const data = JSON.parse(event.target.result);
+            projectData = data.projects;
+            saveData();
+            render();
+            alert('Progress imported!');
+        } catch (err) { alert('Error: ' + err.message); }
+    };
+    reader.readAsText(file);
+});
+
+function resetData() {
+    if (confirm('Reset ALL progress? This cannot be undone.')) {
+        projectData = {};
+        localStorage.removeItem('curriculum-300-v2');
+        location.reload();
+    }
+}
+</script>
+</body>
+</html>
