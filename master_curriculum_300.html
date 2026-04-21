@@ -106,7 +106,7 @@
             <div class="stat-card"><div class="stat-label">Progress</div><div class="stat-value" id="overall-pct">0%</div></div>
             <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value green" id="completed-count">0</div></div>
             <div class="stat-card"><div class="stat-label">In Progress</div><div class="stat-value amber" id="in-progress-count">0</div></div>
-            <div class="stat-card"><div class="stat-label">Remaining</div><div class="stat-value purple" id="remaining-count">286</div></div>
+            <div class="stat-card"><div class="stat-label">Remaining</div><div class="stat-value purple" id="remaining-count">300</div></div>
         </div>
 
         <div class="progress-bar"><div class="progress-fill" id="overall-bar" style="width:0%"></div></div>
@@ -488,6 +488,9 @@ const PHASES = [
                     { name: "API Rate Limiting", desc: "Token bucket, fairness, abuse prevention", concepts: "sliding window, token bucket, Redis counters", exercise: "Twist: Add tiered rate limits by API key" },
                     { name: "CDN Integration", desc: "Edge delivery, cache headers, performance", concepts: "Cache-Control, ETag, edge locations", exercise: "Twist: Measure performance improvement with analytics" },
                     { name: "Disaster Recovery Playbook", desc: "Documentation, runbooks, testing", concepts: "RTO, RPO, failover procedures, communication", exercise: "Twist: Run a chaos engineering experiment" },
+                    { name: "Terraform Infrastructure as Code", desc: "Declarative infrastructure, state management", concepts: "HCL, providers, state files, plan/apply", exercise: "Twist: Multi-environment setup (dev/staging/prod)" },
+                    { name: "Secret Management (Vault)", desc: "Secure credential storage, rotation", concepts: "HashiCorp Vault, encryption, access policies, audit", exercise: "Twist: Auto-rotate database credentials on schedule" },
+                    { name: "Performance Testing Suite", desc: "Load testing, bottleneck identification", concepts: "Locust/k6, latency percentiles, throughput, profiling", exercise: "Twist: Generate performance regression report with graphs" },
                 ]
             },
             {
@@ -504,6 +507,8 @@ const PHASES = [
                     { name: "IoT Dashboard", desc: "Sensor data, real-time, alerts", concepts: "MQTT, time-series DB, WebSocket updates", exercise: "Twist: Add predictive maintenance alerts" },
                     { name: "Fraud Detection Pipeline", desc: "ML + rules, streaming, real-time", concepts: "feature engineering, online learning, rules engine", exercise: "Twist: Add explainable AI for flagged transactions" },
                     { name: "Knowledge Graph", desc: "Entity relationships, semantic search", concepts: "triples, SPARQL, graph embeddings, Neo4j", exercise: "Twist: Build a Rwandan cultural knowledge graph" },
+                    { name: "Message Queue System (RabbitMQ)", desc: "Async messaging, pub/sub, reliability", concepts: "exchanges, queues, routing keys, dead letter, ack", exercise: "Twist: Build order processing pipeline with retry logic" },
+                    { name: "Multi-Tenant SaaS Architecture", desc: "Tenant isolation, shared infrastructure", concepts: "schema-per-tenant, row-level security, billing", exercise: "Twist: Add tenant-specific customization and white-labeling" },
                 ]
             }
         ]
@@ -523,6 +528,8 @@ const PHASES = [
                     { name: "Water Resource Optimizer", desc: "Hydrology, allocation, sustainability", concepts: "flow networks, optimization, constraints", exercise: "Twist: Multi-stakeholder water sharing simulator" },
                     { name: "Renewable Energy Site Selector", desc: "Solar/wind potential, terrain analysis", concepts: "GIS, solar irradiance, wind rose data", exercise: "Twist: Add cost-benefit analysis and ROI projection" },
                     { name: "Carbon Footprint Calculator", desc: "Lifecycle analysis, emissions tracking", concepts: "emission factors, scope 1/2/3, visualization", exercise: "Twist: Add reduction strategy recommendations" },
+                    { name: "Biodiversity Tracker", desc: "Species monitoring, habitat analysis, conservation", concepts: "species classification, GIS, population modeling", exercise: "Twist: Add poaching risk prediction and patrol routing" },
+                    { name: "Soil Health Monitor", desc: "Agricultural soil analysis, nutrient tracking", concepts: "sensor data, nutrient cycles, pH modeling, yield correlation", exercise: "Twist: Add fertilizer recommendation engine for Rwandan crops" },
                 ]
             },
             {
@@ -537,6 +544,8 @@ const PHASES = [
                     { name: "Drug Interaction Checker", desc: "Knowledge graph, safety validation", concepts: "graph database, rule engine, contraindications", exercise: "Twist: Add traditional medicine interactions" },
                     { name: "Mental Health Screening Tool", desc: "Questionnaire, scoring, referral", concepts: "validated instruments, scoring algorithms, privacy", exercise: "Twist: Add multilingual support (Kinyarwanda, French)" },
                     { name: "Nutrition Planner (Local Foods)", desc: "African foods database, diet optimization", concepts: "nutritional data, linear programming, meal plans", exercise: "Twist: Add budget constraints and local market prices" },
+                    { name: "Telemedicine Platform Prototype", desc: "Remote consultation, scheduling, records", concepts: "WebRTC, appointment system, medical records, HIPAA", exercise: "Twist: Add AI symptom pre-screening triage" },
+                    { name: "Epidemic Early Warning System", desc: "Outbreak detection, spatial spread tracking", concepts: "anomaly detection, sentinel surveillance, R0 estimation", exercise: "Twist: Add social media signal monitoring for outbreak rumors" },
                 ]
             },
             {
@@ -581,6 +590,11 @@ const PHASES = [
                     { name: "N-Body (Barnes-Hut)", desc: "O(n log n) gravity simulation", concepts: "octree, multipole expansion, approximation", exercise: "Twist: Simulate galaxy cluster with 100k+ particles" },
                     { name: "Multigrid Solver", desc: "Hierarchical refinement, fast PDE solving", concepts: "restriction, prolongation, V-cycle, smoothing", exercise: "Twist: Solve Poisson equation on 1M+ grid" },
                     { name: "Tensor Calculus Visualizer", desc: "Tensors, contraction, transformation", concepts: "index notation, metric tensor, Christoffel symbols", exercise: "Twist: Visualize spacetime curvature near a mass" },
+                    { name: "Bayesian Inference Engine", desc: "Prior, likelihood, posterior, MCMC sampling", concepts: "Bayes theorem, conjugate priors, Metropolis-Hastings", exercise: "Twist: Apply to real-world A/B testing with decision framework" },
+                    { name: "Topological Data Analysis", desc: "Persistent homology, shape of data", concepts: "simplicial complexes, Betti numbers, persistence diagrams", exercise: "Twist: Find hidden structure in high-dimensional African census data" },
+                    { name: "Wavelet Transform Analyzer", desc: "Time-frequency analysis, signal processing", concepts: "Haar, Daubechies wavelets, multiresolution, denoising", exercise: "Twist: Denoise and analyze seismic data from East African Rift" },
+                    { name: "Numerical Relativity (Simple)", desc: "Einstein field equations, spacetime curvature", concepts: "metric tensor, geodesics, Schwarzschild solution", exercise: "Twist: Simulate light bending around a black hole" },
+                    { name: "Category Theory Visualizer", desc: "Functors, morphisms, composition", concepts: "objects, arrows, commutative diagrams, natural transformations", exercise: "Twist: Map category theory concepts to programming patterns" },
                 ]
             }
         ]
@@ -623,7 +637,7 @@ const PHASES = [
     }
 ];
 
-const TOTAL_PROJECTS = 286;
+const TOTAL_PROJECTS = 300;
 let projectData = {};
 let allProjects = [];
 let openPhases = new Set();
