@@ -8,7 +8,7 @@ try:
     while True:
 
         # Ask the user to enter a math operation, 'history', or 'quit', and normalize to lowercase
-        choice = input("Enter operation (or 'history'/'quit'): ").lower()
+        choice = input("Enter operation (or 'history'/'undo'/'quit'): ").lower()
 
         # If the user types 'quit', exit the loop
         if choice == "quit":
@@ -28,6 +28,8 @@ try:
             # If the history list is empty, let the user know
             else:
                 print("No history yet")
+        # elif choice == "undo":
+
 
         # Otherwise, treat the input as a math expression to evaluate
         else:
