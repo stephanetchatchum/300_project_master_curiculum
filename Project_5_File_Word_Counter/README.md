@@ -11,19 +11,19 @@ This project analyzes text files to count words and identify the most frequently
 
 ## Running the Project
 
-### Exercise Version (Single File)
-```bash
-python exercise.py
-```
-
-### Main Version (Multiple Files)
+### Main Version (Single File)
 ```bash
 python main.py
 ```
 
+### Exercise Version (Multiple Files)
+```bash
+python exercise.py
+```
+
 ## Example Usage
 
-**Single file:**
+**Single file (main.py):**
 ```
 Enter the file name: 
 sample.txt
@@ -36,7 +36,7 @@ Most common words:
 5. code - 4 times
 ```
 
-**Multiple files (main.py only):**
+**Multiple files (exercise.py):**
 ```
 Enter the file names(Separate with comma): 
 file1.txt, file2.txt
