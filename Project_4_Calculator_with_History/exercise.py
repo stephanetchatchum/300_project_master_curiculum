@@ -28,8 +28,11 @@ try:
             # If the history list is empty, let the user know
             else:
                 print("No history yet")
-        # elif choice == "undo":
-
+        elif choice == "undo":
+            if history:
+                del history[-1]
+            else:
+                print("Nothing to undo!")
 
         # Otherwise, treat the input as a math expression to evaluate
         else:
