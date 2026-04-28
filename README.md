@@ -1,8 +1,10 @@
-# 300-Project Master Curriculum
+# 300-Project Master Curriculum (Space Edition)
 
 > *"Participate in new discoveries, and develop my continent."*
 
-**CLI -> Web -> Physics -> Games -> AI/ML -> African Impact -> Capstones**
+**CLI -> Web -> Physics & Space -> Strategic Games -> AI/ML for Space -> African Impact -> Capstones**
+
+A space-focused portfolio designed for SpaceX, NASA, ESA, and African space initiatives. Foundational CS skills serve a clear mission: contribute to humanity's expansion into space, and bring space-tech home to develop Africa.
 
 ---
 
@@ -84,390 +86,415 @@
 
 ---
 
-## Phase 2: Web & Data (40 projects)
+## Phase 2: Web & Data (Essentials) (20 projects)
 
-### Web Foundations (Math: Logic, State Machines)
-
-| # | Project | Description | Key Concepts | Exercise Twist |
-|---|---------|-------------|--------------|----------------|
-| 51 | Personal Portfolio Website | HTML/CSS/JS, responsive design, SEO | semantic HTML, CSS Grid/Flexbox, meta tags | Add a blog section with markdown rendering |
-| 52 | JavaScript Calculator | DOM manipulation, event handling, state | querySelector, addEventListener, eval alternatives | Add scientific functions (sin, cos, log) |
-| 53 | Interactive Quiz App (JS) | State management, scoring, timer | DOM updates, setInterval, object arrays | Add leaderboard with localStorage |
-| 54 | Weather Dashboard | API integration, fetch, async/await | fetch(), JSON, async/await, error handling | Add 5-day forecast and location auto-detect |
-| 55 | Currency Converter (live API) | REST APIs, real-time data, caching | API keys, exchange rates, localStorage cache | Add historical rate chart |
-| 56 | Todo App (JavaScript) | CRUD, localStorage, DOM rendering | createElement, localStorage, event delegation | Add drag-and-drop reordering |
-| 57 | Countdown Timer | Time calculations, intervals, DOM updates | setInterval, Date objects, clearInterval | Add multiple named timers running simultaneously |
-| 58 | Image Gallery with Lightbox | CSS Grid, modal, keyboard navigation | CSS Grid, position:fixed, keydown events | Add slideshow mode with auto-advance |
-| 59 | Form Validation System | Regex, real-time feedback, UX | regex patterns, blur/input events, aria | Validate international phone numbers and emails |
-| 60 | Markdown Preview Editor | Real-time parsing, split view, syntax | innerHTML, regex parsing, contenteditable | Add code syntax highlighting |
-| 61 | Dark Mode Toggle | CSS variables, theme persistence | CSS custom properties, localStorage, prefers-color-scheme | Add 3+ themes (dark, light, solarized, high-contrast) |
-| 62 | Search & Filter UI | Client-side filtering, debounce, UX | filter(), debounce, highlight matching text | Add multi-field search with AND/OR logic |
-| 63 | Infinite Scroll Page | Lazy loading, Intersection Observer | IntersectionObserver, pagination, throttle | Add scroll position memory on back navigation |
-| 64 | Drag & Drop Interface | HTML5 drag API, list reordering | dragstart, dragover, drop, dataTransfer | Build a Kanban board with drag between columns |
-| 65 | Accessible Website (WCAG) | Screen readers, aria labels, keyboard nav | aria-label, role, tabindex, focus management | Audit an existing site and fix all violations |
-| 66 | CSS Animation Gallery | Keyframes, transitions, transforms | @keyframes, transition, transform, will-change | Create a loading animation library (5+ spinners) |
-| 67 | Mobile-First Responsive Design | Media queries, viewport, touch | min-width queries, rem/em, touch events | Build a responsive email template |
-| 68 | Landing Page with Scroll Effects | Parallax, reveal on scroll | IntersectionObserver, transform, opacity | Add smooth scroll navigation with active section highlight |
-| 69 | Keyboard Shortcut Handler | Key mapping, command palette | keydown, key combos, command registry | Build a VS Code-style command palette (Ctrl+Shift+P) |
-| 70 | Progressive Web App (PWA) | Service workers, manifest, offline | service worker lifecycle, cache API, manifest.json | Add push notifications and background sync |
-
-### Backend & Databases (Math: Set Theory, Relational Algebra)
+### Web Foundations (Curated) (Math: Logic, State Machines)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 71 | Flask Hello World API | Routes, HTTP methods, JSON responses | Flask, @app.route, request, jsonify | Add request logging middleware |
-| 72 | Flask Todo API (CRUD) | Full REST API, SQLAlchemy, persistence | SQLAlchemy, CRUD endpoints, status codes | Add pagination and sorting |
-| 73 | PostgreSQL Schema Design | Normalization, indexing, constraints | 1NF-3NF, foreign keys, indexes, EXPLAIN | Design a social media schema (users, posts, likes, follows) |
-| 74 | User Authentication (JWT) | Password hashing, tokens, sessions | bcrypt, JWT encode/decode, middleware | Add refresh tokens and token revocation |
-| 75 | File Upload Service | Multipart forms, storage, validation | multipart/form-data, file validation, storage | Add image resizing and thumbnail generation |
-| 76 | Django REST Notes App | DRF, serializers, viewsets | ModelSerializer, ViewSet, Router | Add shared notes with user permissions |
-| 77 | Blog API with Comments | One-to-many relationships, nested data | ForeignKey, nested serializers, pagination | Add threaded/nested comments |
-| 78 | Inventory Management API | Permissions, soft deletes, audit trail | role-based access, is_deleted flag, timestamps | Add stock alerts and reorder suggestions |
-| 79 | Real-Time Chat Backend | WebSockets, rooms, message history | Flask-SocketIO, rooms, events, persistence | Add typing indicators and read receipts |
-| 80 | Task Queue System | Async jobs, scheduling, workers | Celery, Redis, periodic tasks, retries | Add email notification worker |
+| 51 | Personal Portfolio Website | HTML/CSS/JS, responsive design, SEO — your space portfolio home | semantic HTML, CSS Grid/Flexbox, meta tags | Add a projects gallery with space simulations embedded |
+| 52 | JavaScript Calculator | DOM manipulation, event handling, state | querySelector, addEventListener, eval alternatives | Add scientific functions (sin, cos, log) for physics calcs |
+| 53 | Weather Dashboard | API integration, fetch, async/await | fetch(), JSON, async/await, error handling | Add space weather (solar wind, geomagnetic index) |
+| 54 | Currency Converter (live API) | REST APIs, real-time data, caching | API keys, exchange rates, localStorage cache | Add historical rate chart |
+| 55 | Form Validation System | Regex, real-time feedback, UX | regex patterns, blur/input events, aria | Validate international phone numbers and emails |
+| 56 | Markdown Preview Editor | Real-time parsing, split view, syntax | innerHTML, regex parsing, contenteditable | Add code syntax highlighting and LaTeX formula rendering |
+| 57 | Search & Filter UI | Client-side filtering, debounce, UX | filter(), debounce, highlight matching text | Add multi-field search with AND/OR logic |
+| 58 | Mobile-First Responsive Design | Media queries, viewport, touch | min-width queries, rem/em, touch events | Build a responsive science publication template |
 
-### Full-Stack Integration (Math: State Machines, Graph Theory)
+### Backend & APIs (Curated) (Math: Set Theory, Relational Algebra)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 81 | React Todo App | Components, state, hooks | useState, useEffect, props, lifting state | Add categories and drag-and-drop reordering |
-| 82 | React E-Commerce Page | Product listing, filtering, cart state | useReducer, context, filtering logic | Add wishlist and price comparison |
-| 83 | React + Flask Blog | Full-stack, auth flow, API integration | axios, CORS, JWT in React, protected routes | Add markdown editor and image upload |
-| 84 | React Data Dashboard | Charts, real data, responsive layout | Recharts, data fetching, responsive grid | Add date range picker and CSV export |
-| 85 | React Kanban Board | Drag and drop, column state, persistence | react-beautiful-dnd, useReducer, localStorage | Add swimlanes and WIP limits |
-| 86 | React Expense Splitter | Multi-user calculations, fairness | forms, computed values, PDF export | Add recurring expenses and settlement suggestions |
-| 87 | React Real-Time Chat | WebSocket client, message rendering | socket.io-client, useEffect cleanup, scrolling | Add emoji picker and message reactions |
-| 88 | Admin Dashboard (React) | CRUD tables, pagination, bulk actions | table components, pagination logic, modals | Add role-based views and audit log |
-| 89 | OAuth 2.0 Login Flow | Google/GitHub auth, session management | OAuth flow, redirect URI, token storage | Add multiple providers and account linking |
-| 90 | GraphQL API + Client | Schema design, queries, mutations | typeDefs, resolvers, Apollo Client, useQuery | Add subscriptions for real-time updates |
+| 59 | Flask Hello World API | Routes, HTTP methods, JSON responses | Flask, @app.route, request, jsonify | Add request logging middleware |
+| 60 | Flask CRUD API | Full REST API, SQLAlchemy, persistence | SQLAlchemy, CRUD endpoints, status codes | Build an API serving NASA exoplanet data |
+| 61 | PostgreSQL Schema Design | Normalization, indexing, constraints | 1NF-3NF, foreign keys, indexes, EXPLAIN | Design schema for a satellite tracking database |
+| 62 | User Authentication (JWT) | Password hashing, tokens, sessions | bcrypt, JWT encode/decode, middleware | Add refresh tokens and token revocation |
+| 63 | Real-Time Chat Backend | WebSockets, rooms, message history | Flask-SocketIO, rooms, events, persistence | Build a mission control chat with telemetry feed |
+| 64 | Task Queue System | Async jobs, scheduling, workers | Celery, Redis, periodic tasks, retries | Schedule periodic orbital propagation jobs |
+
+### Full-Stack Integration (Space-Focused) (Math: State Machines, Graph Theory)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 65 | React Dashboard (Hooks Intro) | Components, state, hooks | useState, useEffect, props, lifting state | Build a science instrument readout dashboard |
+| 66 | React Data Dashboard with Charts | Charts, real data, responsive layout | Recharts, data fetching, responsive grid | Visualize SpaceX launch statistics |
+| 67 | React + Flask Full-Stack App | Full-stack, auth flow, API integration | axios, CORS, JWT in React, protected routes | Build a personal science notebook with images and equations |
+| 68 | Streamlit Scientific Dashboard | Rapid Python web apps for science | Streamlit widgets, caching, plotly integration | Build an interactive orbit explorer |
+| 69 | Real-Time Telemetry Viewer | WebSocket client, live data streams | socket.io-client, live charts, scrolling | Stream simulated satellite telemetry to dashboard |
+| 70 | OAuth + GitHub Integration | Auth flow, third-party APIs, user data | OAuth flow, token storage, GitHub API | Auto-publish your space simulations to GitHub Pages |
 
 ---
 
-## Phase 3: Scientific Computing (45 projects)
+## Phase 3: Physics & Space (65 projects)
 
-### Physics Foundations (Math: Calculus, Trigonometry, Linear Algebra)
-
-| # | Project | Description | Key Concepts | Exercise Twist |
-|---|---------|-------------|--------------|----------------|
-| 91 | Vector Math Visualizer | 2D vectors, operations, interactive matplotlib | magnitude, dot product, cross product, angle | Add vector projection and Gram-Schmidt visualization |
-| 92 | Projectile Motion Simulator | Kinematics, trajectory, gravity | x(t), y(t), v0*cos/sin, parabolic arc | Add air resistance (drag force proportional to v^2) |
-| 93 | Pendulum Simulator | ODE, numerical integration, animation | angular acceleration = -(g/L)sin(angle), Euler method, energy | Double pendulum (chaotic motion) |
-| 94 | Particle System (n-body) | Gravitational attraction, force accumulation | F = Gm1m2/r^2, vector forces, O(n^2) | Add Barnes-Hut optimization O(n log n) |
-| 95 | Wave Equation Solver (1D) | Finite differences, standing waves | PDE discretization, boundary conditions, Laplacian | 2D wave equation with interactive disturbance |
-| 96 | Heat Diffusion Simulation | Thermal conduction, boundary conditions | heat equation, explicit/implicit schemes | Add heat sources and sinks, insulation boundaries |
-| 97 | Orbital Mechanics (Kepler) | Elliptical orbits, energy conservation | Runge-Kutta, orbital elements, vis-viva | Hohmann transfer orbit calculator |
-| 98 | Collision Detection Suite | AABB, circle, polygon, raycasting | bounding boxes, separating axis theorem | Add spatial partitioning (quadtree) |
-| 99 | Fluid Dynamics (Shallow Water) | Grid-based fluid, wave propagation | conservation laws, finite volume method | Add obstacles and dam break scenario |
-| 100 | Cellular Automaton | Conway's Game of Life, emergence | grid rules, neighbor counting, generations | Implement Langton's Ant and compare emergence |
-| 101 | Spring & Damping System | Hooke's law, energy dissipation | F = -kx - bv, damped oscillation | Coupled springs (two masses connected) |
-| 102 | Simple Harmonic Motion | Oscillation, phase, amplitude | x = A*cos(wt + phi), energy exchange | Visualize Lissajous curves (two SHM combined) |
-| 103 | Friction Models | Static, kinetic, rolling friction | us, uk, normal force, friction cone | Simulate block on inclined plane with variable angle |
-| 104 | Buoyancy & Fluid Resistance | Archimedes' principle, drag forces | displaced volume, drag coefficient, terminal velocity | Simulate a submarine with depth control |
-| 105 | Elastic & Inelastic Collisions | Momentum conservation, energy | p = mv, coefficient of restitution | Pool/billiards table simulator |
-
-### Physics Engines (Math: Differential Equations, Numerical Methods)
+### Numerical Methods Foundation (Math: Calculus, Linear Algebra, Numerical Analysis)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 106 | 2D Rigid Body Physics Engine | Mass, velocity, forces, integration | Euler/Verlet integration, force accumulation | Add torque and rotational dynamics |
-| 107 | Constraint Solver (Verlet) | Position-based dynamics, stability | Verlet integration, distance constraints, iterations | Build a bridge stress simulator |
-| 108 | Rope/Chain Simulator | Constraint chains, tension | linked particles, distance constraints | Add breakable joints (snap under tension) |
-| 109 | Cloth Simulation | Mass-spring model, wind forces | structural/shear/bend springs, wind vector | Add tearing (remove springs under stress) |
-| 110 | Soft Body Physics | Deformable objects, pressure | internal pressure, spring networks | Simulate a bouncing jelly cube |
-| 111 | Ragdoll Physics | Joint constraints, articulated bodies | ball/hinge joints, angular limits | Add ragdoll with user-controlled limb forces |
-| 112 | Impact & Impulse Resolution | Collision response, restitution | impulse = F*dt, normal/tangent decomposition | Stack of boxes with realistic settling |
-| 113 | Vehicle Suspension | Springs, damping, terrain response | spring-damper system, wheel contact | Off-road vehicle on bumpy terrain |
-| 114 | Procedural Terrain Generation | Noise functions, erosion | Perlin/Simplex noise, hydraulic erosion | Add biome assignment based on height/moisture |
-| 115 | Ocean Waves (Gerstner) | FFT-based waves, realistic water | Gerstner wave equation, FFT, displacement | Add floating objects that bob on waves |
-| 116 | Smoke & Fire Simulation | Advection, diffusion, temperature | grid-based fluid, buoyancy, dissipation | Add fuel source and flame color temperature |
-| 117 | Fluid Solver (Eulerian) | Navier-Stokes basics, pressure | advection, diffusion, pressure projection | Interactive fluid with mouse forces |
-| 118 | Hair/Rope Physics | Strand dynamics, follow-the-leader | chain of particles, length constraints | Add wind and collision with head/sphere |
-| 119 | Bouncing Ball (Advanced) | Energy loss, spin, material properties | coefficient of restitution, spin, rolling | Pinball machine with flippers and bumpers |
-| 120 | Destruction Physics | Fracture, Voronoi, breaking geometry | Voronoi decomposition, stress threshold | Destructible building with structural supports |
+| 71 | Bisection & Root Finding | Numerical equation solving, convergence | bisection method, fixed-point iteration | Find roots of polynomials with multiple solutions |
+| 72 | Newton-Raphson Method | Fast root finding using derivatives | tangent lines, convergence rate, Jacobian | Apply to solve Kepler's equation (orbital anomaly) |
+| 73 | Runge-Kutta ODE Solver (RK4) | Industry-standard numerical integration | 4th order accuracy, time stepping, stability | Compare RK4 vs Euler for orbital propagation accuracy |
+| 74 | Monte Carlo Integration | Statistical methods for high-dim integrals | random sampling, variance, convergence | Compute pi and verify convergence rate |
+| 75 | Gradient Descent from Scratch | Optimization fundamentals | partial derivatives, learning rate, momentum | Optimize a satellite trajectory for minimum fuel |
+| 76 | FFT Implementation | Fast Fourier Transform, frequency analysis | DFT, butterfly algorithm, O(n log n) | Analyze frequencies in real exoplanet light curves |
+| 77 | Eigenvalue Solver | Power iteration, dominant eigenvectors | iteration, normalization, convergence | Find principal axes of an asteroid shape |
+| 78 | Interpolation Methods | Linear, polynomial, spline interpolation | Lagrange polynomials, cubic splines | Smooth gappy satellite telemetry data |
+| 79 | Least Squares Fitting | Curve fitting to data, normal equations | minimize SSE, design matrix, regression | Fit Kepler's third law to real planetary data |
+| 80 | Adaptive Step ODE Solver | Variable timestep, error control | RK45, error estimation, step size adjustment | Efficiently propagate highly elliptical orbits |
+| 81 | Boundary Value Problem Solver | Two-point BVPs, shooting method | shooting method, finite differences, relaxation | Solve trajectory with start/end constraints |
+| 82 | Sparse Linear Solver (CG) | Conjugate gradient for large systems | Krylov subspaces, preconditioning, iterations | Solve large gravity field problem |
 
-### Advanced Simulations (Math: PDEs, Statistics, Dynamical Systems)
+### Classical Mechanics & Dynamics (Math: Calculus, Vectors, Differential Equations)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 121 | Weather System Simulator | Wind, pressure, temperature coupling | pressure gradient, Coriolis effect, advection | Add cloud formation and precipitation |
-| 122 | Crowd Simulation (Boids) | Steering behaviors, emergence | separation, alignment, cohesion, obstacles | Add panic mode and bottleneck evacuation |
-| 123 | Traffic Flow Model | Vehicle interactions, congestion | car-following model, lane changing, throughput | Add traffic lights with optimization |
-| 124 | Ecosystem Simulation | Predator/prey, population dynamics | Lotka-Volterra, carrying capacity, birth/death | Add a third species and food web |
-| 125 | Pandemic Spread Simulator | SIR/SEIR model, spatial transmission | infection rate, recovery rate, R0, herd immunity | Add vaccination campaigns and quarantine zones |
-| 126 | Forest Fire Spread | Cellular automaton, probability, wind | ignition probability, wind direction, firebreaks | Add firefighting units with strategy |
-| 127 | River & Erosion | Hydraulic erosion, terrain deformation | water flow, sediment transport, deposition | Simulate dam construction and flood control |
-| 128 | Galaxy Formation | N-body gravity at massive scale | dark matter halo, disk formation, rotation | Galaxy collision merger simulation |
-| 129 | Molecular Dynamics | Particle interactions, thermodynamics | Lennard-Jones potential, temperature, phase | Simulate phase transition (solid to liquid to gas) |
-| 130 | Earthquake Simulation | Stress accumulation, fault rupture | elastic rebound, wave propagation, magnitude | Add building response and damage assessment |
-| 131 | Brain Neural Activity | Hodgkin-Huxley neuron model | ion channels, action potential, voltage gating | Network of neurons with synaptic connections |
-| 132 | Chemical Reaction Network | Reaction-diffusion, Turing patterns | rate equations, diffusion, pattern formation | Generate animal coat patterns (leopard spots) |
-| 133 | Space Debris Tracking | Orbital decay, collision probability | Keplerian elements, conjunction analysis | Propose debris removal mission trajectory |
-| 134 | Monte Carlo Simulation | Random sampling, statistical estimation | random numbers, convergence, confidence intervals | Estimate pi using random points in circle |
-| 135 | Chaos & Bifurcation | Lorenz attractor, logistic map | sensitivity to initial conditions, strange attractors | Build interactive bifurcation diagram with zoom |
+| 83 | Vector Math Visualizer (3D) | 3D vectors, operations, interactive plot | magnitude, dot/cross product, 3D matplotlib | Visualize satellite orientation in 3D space |
+| 84 | Projectile Motion (with drag) | Kinematics, air resistance, real-world motion | x(t), y(t), drag force, terminal velocity | Simulate rocket launch through atmosphere |
+| 85 | Pendulum Simulator | ODE, numerical integration, animation | angular acceleration, Euler method, energy | Double pendulum showing chaotic motion |
+| 86 | Spring-Mass Oscillator | Hooke's law, damping, resonance | F = -kx - bv, damped oscillation, driving force | Coupled oscillators (resonant tuning) |
+| 87 | 2-Body Gravity Simulation | Newtonian gravity, orbital motion | F = Gm1m2/r^2, energy conservation, RK4 | Earth-Moon system with realistic parameters |
+| 88 | N-Body Gravity (Naive) | Multiple bodies, force accumulation | pairwise forces, O(n^2), animation | Simulate inner solar system with all 4 rocky planets |
+| 89 | 3-Body Problem | Chaotic dynamics, Lagrange points | non-integrability, sensitivity to initial conditions | Simulate Sun-Earth-Moon and find figure-8 orbit |
+| 90 | Tidal Forces Simulator | Differential gravity, tidal bulges | gradient of gravitational field, Roche limit | Compute tides for Earth-Moon-Sun system |
+| 91 | Precession of Perihelion | Subtle orbital effects, GR corrections | Newtonian + correction terms, secular changes | Reproduce Mercury's perihelion precession |
+| 92 | Binary Star System | Two-mass orbits, common center | reduced mass, mass ratio, period | Simulate eclipsing binary and produce light curve |
+| 93 | Coupled Oscillators (Normal Modes) | Multiple springs, eigenvalue problem | eigenvalues = frequencies, eigenvectors = modes | Find normal modes of a CO2 molecule analog |
+| 94 | Rigid Body Dynamics (3D) | Rotation, angular momentum, inertia tensor | Euler equations, inertia tensor, gyroscope | Simulate spinning satellite stability (intermediate axis) |
+| 95 | Lagrangian Mechanics Solver | Generalized coordinates, Euler-Lagrange | Lagrangian L = T - V, equations of motion | Solve double pendulum via Lagrangian (no Cartesian forces) |
+| 96 | Hamiltonian Mechanics Toolkit | Phase space, canonical equations | Hamiltonian, symplectic integrators, conservation | Use symplectic integrator for long-term solar system stability |
+| 97 | Roche Limit Calculator | Tidal disruption of moons/asteroids | tidal vs self-gravity, fluid vs rigid limits | Compute Roche limit for famous moons (Io, Phobos) |
+
+### Orbital Mechanics & Spaceflight (Math: Differential Equations, Numerical Methods, Vector Calculus)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 98 | Kepler's Laws Demonstrator | Elliptical orbits, areal velocity, period | semi-major axis, eccentricity, T^2 ~ a^3 | Verify all 3 laws with simulation data |
+| 99 | Orbital Elements Converter | State vectors <-> Keplerian elements | a, e, i, Omega, omega, nu | Parse real TLE data from NORAD |
+| 100 | Orbit Propagator | Forward in time orbit prediction | Kepler's equation, mean anomaly, RK4 | Predict ISS position 24 hours ahead |
+| 101 | Hohmann Transfer Calculator | Optimal 2-burn transfers between orbits | delta-v budget, transfer ellipse, timing | Plan Earth-to-Mars Hohmann transfer with launch window |
+| 102 | Bi-Elliptic Transfer | Advanced 3-burn transfers | when bi-elliptic beats Hohmann (high ratio) | Compare delta-v for LEO to GEO transfers |
+| 103 | Inclination Change Maneuver | Plane change, delta-v cost | trigonometry of velocity vectors, expensive! | Find optimal altitude for plane change |
+| 104 | Escape Velocity Calculator | Energy to leave gravitational well | kinetic = potential, hyperbolic trajectory | Calculate v-infinity for interplanetary missions |
+| 105 | Lagrange Points Finder | L1-L5 equilibrium points in 3-body system | rotating frame, effective potential | Visualize JWST's orbit at Sun-Earth L2 |
+| 106 | Gravity Assist Maneuver | Slingshot trajectories, energy gain | frame transformation, hyperbolic flyby | Replicate Voyager 2's grand tour |
+| 107 | Atmospheric Drag Modeling | Orbital decay due to drag | exponential atmosphere, ballistic coefficient | Predict ISS reboost frequency |
+| 108 | Solar Radiation Pressure | Photon momentum, orbital perturbation | force from photons, area-to-mass ratio | Design a solar sail trajectory |
+| 109 | Station-Keeping Simulator | Maintaining orbit against perturbations | control loops, fuel budgets, dead-bands | Keep a GEO satellite in slot for 1 simulated year |
+| 110 | Reentry Dynamics | Atmospheric reentry, heating, deceleration | ballistic vs lifting reentry, peak g-forces | Simulate Apollo capsule reentry profile |
+| 111 | Launch Trajectory Optimizer | Gravity turn, multi-stage rockets | Tsiolkovsky equation, staging, optimization | Optimize Falcon 9 ascent profile |
+| 112 | Interplanetary Transfer Orbit | Patched conics, sphere of influence | C3 energy, departure/arrival, timing | Plan a Jupiter mission with realistic constraints |
+| 113 | Lambert's Problem Solver | Find orbit between two points/times | iterative solution, time-of-flight, transfer orbits | Plan a rendezvous mission to a moving target |
+| 114 | Three-Burn Plane Change | Combined plane change with Hohmann | delta-v optimization, multi-burn | Compare cost: combined vs separate maneuvers |
+| 115 | J2 Perturbation Effects | Earth's oblateness on orbits | J2 zonal harmonic, secular drift, sun-synchronous | Design a sun-synchronous orbit for Earth observation |
+| 116 | CR3BP Trajectory Designer | Circular Restricted 3-Body Problem | rotating frame, Jacobi constant, manifolds | Design a low-energy lunar transfer |
+
+### Space Visualization & Real Data (Math: Data Analysis, 3D Graphics, Statistics)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 117 | Solar System Visualizer | All 8 planets, accurate orbits, animation | matplotlib animation, scaled distances, orbital data | Add dwarf planets and major moons |
+| 118 | ISS Real-Time Tracker | Live position, ground track, pass predictions | TLE parsing, SGP4 propagator, geo coordinates | Predict next 5 visible passes from your location (Kigali) |
+| 119 | Satellite Constellation Visualizer | Many satellites, coverage analysis | multi-satellite orbits, ground coverage, gaps | Visualize Starlink constellation with real data |
+| 120 | Asteroid Trajectory Tracker | NEO orbits, close approaches, hazard analysis | JPL Horizons data, impact probability | Identify next 5 closest NEO approaches to Earth |
+| 121 | Space Debris Analyzer | NORAD catalog, conjunction analysis | TLE database, collision probability, risk | Identify highest-risk satellites for collision |
+| 122 | 3D Orbital Animation (Plotly) | Interactive 3D orbits in browser | Plotly 3D, camera controls, animation frames | Build interactive Mars mission trajectory viewer |
+| 123 | Exoplanet Database Explorer | NASA Exoplanet Archive analysis | data filtering, classification, statistics | Find exoplanets in habitable zones similar to Earth |
+| 124 | Kepler Light Curve Analyzer | Real Kepler data, transit detection | time series, periodicity, signal-to-noise | Discover a new transit signal in archive data |
+| 125 | GAIA Star Catalog Visualizer | Galactic structure from real data | parallax distance, proper motion, HR diagram | Map stars within 100 light-years of Earth in 3D |
+| 126 | Lunar Topography (DEM) | Real lunar elevation data | elevation grids, contour maps, slope analysis | Find optimal lunar base sites (sunlight, slope, near ice) |
+| 127 | Mars Terrain Visualizer | MOLA data, 3D Mars rendering | elevation data, color mapping, 3D plots | Plan a rover route across Valles Marineris |
+| 128 | Solar Activity Tracker | Sunspots, solar cycle, geomagnetic index | NOAA data, cycle 24/25, prediction | Predict next solar maximum and impact on satellites |
+| 129 | Galaxy Collision Simulator | N-body merger of galaxies | dark matter, dynamical friction, tidal tails | Reproduce Milky Way - Andromeda future merger |
+| 130 | Cosmic Microwave Background Map | Real Planck/WMAP data, power spectrum | spherical harmonics, multipole expansion | Compute angular power spectrum from CMB map |
+| 131 | Real-Time Space Weather Dashboard | NOAA SWPC live data, alerts | API integration, alerts, dashboard | Add prediction of auroral oval expansion |
+| 132 | Pulsar Timing Visualizer | Real pulsar data, timing residuals | barycentric correction, glitches, gravitational waves | Look for evidence of nano-Hz gravitational waves |
+| 133 | Aurora Forecast Tool | Real-time auroral oval prediction | Kp index, OVATION model, geomagnetic activity | Predict aurora visibility for your location |
+| 134 | Planetary Atmosphere Profiler | Pressure, temperature, composition vs altitude | hydrostatic equilibrium, scale height, mixing | Compare atmospheres of Earth, Venus, Mars, Titan |
+| 135 | Spacecraft Telemetry Replay | Real mission data playback (Voyager, Cassini) | data formats (PDS), parsing, visualization | Replay Cassini's Saturn approach |
 
 ---
 
-## Phase 4: Mobile & Game Dev (35 projects)
+## Phase 4: Game Dev (Strategic 15) (15 projects)
 
-### Mobile Foundations (Math: State Machines, Algorithms)
-
-| # | Project | Description | Key Concepts | Exercise Twist |
-|---|---------|-------------|--------------|----------------|
-| 136 | React Native Counter App | Navigation, state, basic UI | useState, TouchableOpacity, StyleSheet | Add multiple counters with reset and history |
-| 137 | React Native Todo | AsyncStorage, persistence, lists | FlatList, AsyncStorage, CRUD | Add swipe-to-delete and section headers |
-| 138 | React Native Movie Browser | API calls, FlatList, detail screens | fetch, navigation params, loading states | Add favorites with offline access |
-| 139 | React Native Health Tracker | Device sensors, data logging | Accelerometer, step counting, charts | Add weekly goals and streak tracking |
-| 140 | React Native Expense Tracker | Charts, date pickers, exports | react-native-chart-kit, DateTimePicker | Add receipt photo capture and OCR |
-| 141 | React Native Offline Notes | Local-first sync, conflict resolution | WatermelonDB or Realm, sync strategies | Add markdown support and note sharing |
-| 142 | React Native Authentication | JWT tokens, secure storage | SecureStore, token refresh, protected routes | Add biometric authentication (fingerprint/face) |
-| 143 | React Native Weather App | Location services, API, maps | Geolocation, MapView, weather API | Add weather-based outfit suggestions |
-| 144 | React Native Food Delivery PoC | Maps, real-time location, ordering | MapView, markers, real-time updates | Add driver tracking with live location |
-| 145 | React Native Multi-Language | i18n, locale switching, RTL | i18next, locale detection, RTL layout | Add Kinyarwanda and dynamic font sizing |
-
-### Game Dev Foundations (Math: Vectors, Matrices, Physics)
+### Foundation Skills (transferable to simulations) (Math: Vectors, Matrices, Game Loop)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 146 | 2D Platformer (Unity) | Physics, collision, player input | Rigidbody2D, Collider2D, Input system | Add wall jumping and dash mechanic |
-| 147 | Puzzle Game | Match-3 or Sokoban, game state, win | grid logic, pattern matching, undo | Add level editor for custom puzzles |
-| 148 | Top-Down RPG Starter | Movement, basic combat, NPCs | tilemap, raycasting, state machine | Add stealth mechanics (line of sight) |
-| 149 | Dialogue System for RPGs | Branching narrative, state machine | dialogue tree, conditions, consequences | Add voice line triggers and emotion system |
-| 150 | Inventory & Equipment | Data-driven design, item slots | ScriptableObjects, drag-drop UI, stats | Add crafting recipes and item rarity |
-| 151 | Procedural Dungeon Generator | BSP trees, room placement | Binary Space Partition, corridors, spawning | Add themed rooms and difficulty scaling |
-| 152 | Turn-Based Battle System | Game loop, action queue, UI | command pattern, initiative, damage calc | Add elemental weaknesses and combo attacks |
-| 153 | First-Person Controller | Camera, input, physics | CharacterController, mouse look, gravity | Add crouching, sprinting, and head bob |
-| 154 | Third-Person Camera | Follow, orbit, collision avoidance | Cinemachine, raycasting, smoothing | Add lock-on targeting system |
-| 155 | Particle Effects Editor | VFX, parameters, real-time preview | Particle System, emission, lifetime, color | Create spell effect library (fire, ice, lightning) |
-| 156 | Audio Manager | Spatial audio, mixing, music | AudioSource, AudioMixer, 3D sound | Add adaptive music that changes with gameplay |
-| 157 | UI Menus & Settings | Responsive game UI, options | Canvas, anchoring, PlayerPrefs | Add accessibility options (colorblind, text size) |
-| 158 | Save/Load System | Serialization, persistence, slots | JSON serialization, file I/O, save slots | Add auto-save and cloud save simulation |
-| 159 | Simple Multiplayer (LAN) | Netcode basics, sync, lobby | NetworkManager, RPC, state sync | Add chat and player ready system |
-| 160 | Physics-Based Platformer | Custom physics engine + game | Your physics engine integrated with gameplay | Add physics puzzles (weight, momentum) |
+| 136 | Pygame Setup & Game Loop | Window, sprites, input handling, FPS | event loop, dt, sprite class, blit | Build a foundation you'll reuse in physics demos |
+| 137 | 2D Platformer (Unity OR Pygame) | Physics, collision, player input | Rigidbody, colliders, input system | Add wall jumping and dash mechanic |
+| 138 | Top-Down Movement & Camera | Smooth movement, camera follow, tilemap | tilemap, raycasting, camera lerp | Mars rover navigation with tile-based terrain |
+| 139 | First-Person Controller | Camera, input, physics | CharacterController, mouse look, gravity | Lunar surface walker with low gravity |
+| 140 | Particle Effects System | VFX, parameters, real-time preview | particle emitters, lifetime, color over time | Build rocket exhaust and explosion effects |
+| 141 | Audio Manager (Spatial) | 3D sound, mixing, music | AudioSource, AudioMixer, 3D sound falloff | Spatial audio for spacecraft (ambient hum, alerts) |
+| 142 | UI Menus & HUD | Responsive game UI, HUD overlays | Canvas, anchoring, data binding | Mission control HUD (telemetry, fuel, alerts) |
+| 143 | Save/Load System (JSON) | Serialization, persistence, slots | JSON serialization, file I/O, save slots | Save/load a multi-day space mission state |
 
-### Advanced Game Systems (Math: Graph Theory, Optimization)
+### Advanced Systems (for simulations & research) (Math: Graph Theory, Procedural Gen, Shaders)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 161 | Vehicle Physics Game | Car simulation, traction, drift | wheel physics, engine curves, steering | Add motorcycle with lean mechanics |
-| 162 | Destruction Physics Game | Fracture, debris, chain reaction | Voronoi, structural integrity, forces | Add repair mechanic (reverse destruction) |
-| 163 | Dynamic Weather System | Visual + gameplay weather effects | particle systems, lighting, gameplay modifiers | Weather affects NPC behavior and quest availability |
-| 164 | Shader Programming Basics | Vertex, fragment shaders, effects | HLSL/GLSL, UV mapping, normal maps | Create a toon/cel shader and water shader |
-| 165 | Quest System | Objectives, tracking, branching | quest states, prerequisites, rewards | Add dynamic quests generated from world state |
-| 166 | Crafting System | Recipes, resources, discovery | recipe database, ingredient matching, UI | Add experimentation (unknown recipe discovery) |
-| 167 | Economy System | Supply, demand, trading, NPCs | price curves, merchant inventory, inflation | Add stock market with player manipulation |
-| 168 | Faction & Reputation | Relationships, consequences, alliances | reputation values, faction reactions, diplomacy | Add faction wars triggered by player actions |
-| 169 | Procedural Animation | IK, gait cycles, natural movement | inverse kinematics, foot placement, blending | Add creature animation (4+ legs, spider, horse) |
-| 170 | Modding Support System | Plugin architecture, user content | asset bundles, scripting API, mod loader | Add mod workshop with sharing and ratings |
+| 144 | Procedural Terrain Generation | Noise-based terrain, biomes | Perlin/Simplex noise, height maps, erosion | Generate procedural Mars-like terrain |
+| 145 | Shader Programming (GLSL) | Vertex, fragment shaders, effects | GLSL, UV mapping, lighting | Build a real-time atmosphere shader for planets |
+| 146 | 3D Rendering with PyOpenGL | Low-level 3D graphics from scratch | vertex buffers, transformation matrices, projections | Render a rotating Earth with day/night sides |
+| 147 | Custom 2D Physics Engine | Mass, velocity, forces, integration | Verlet integration, force accumulation, collisions | Use it to power a 2D orbital sim |
+| 148 | Lunar Lander Game | Classic physics game, fuel management | thrust, gravity, landing zones, scoring | Train an RL agent to land it (used in Phase 5) |
+| 149 | Kerbal-Style Rocket Sandbox | Build & launch rockets, multi-stage | thrust curves, staging, atmosphere, orbit | Reach orbit with realistic thrust-to-weight ratios |
+| 150 | Solar System Sandbox Game | Interactive n-body explorer (game-ified) | real-time physics, time controls, prediction | Player can place planets and watch chaos unfold |
 
 ---
 
-## Phase 5: AI & Machine Learning (40 projects)
+## Phase 5: AI / ML & Space ML (50 projects)
 
-### Classical ML (Math: Statistics, Linear Algebra, Calculus)
-
-| # | Project | Description | Key Concepts | Exercise Twist |
-|---|---------|-------------|--------------|----------------|
-| 171 | Linear Regression from Scratch | Gradient descent, cost function, fitting | MSE, learning rate, convergence, R^2 | Predict Kigali rental prices from real data |
-| 172 | Logistic Regression | Binary classification, sigmoid, decision boundary | sigmoid, cross-entropy, threshold tuning | Classify SMS as spam/ham from African dataset |
-| 173 | K-Means Clustering | Unsupervised learning, centroids | initialization, assignment, update, elbow method | Segment Rwandan census data by region |
-| 174 | Decision Tree & Random Forest | Tree-based learning, ensembles | entropy, information gain, bagging, feature importance | Predict student performance from attendance data |
-| 175 | Support Vector Machine | Margin maximization, kernel trick | hyperplane, support vectors, RBF kernel | Classify handwritten digits (MNIST subset) |
-| 176 | PCA (Dimensionality Reduction) | Variance, eigenvectors, visualization | covariance matrix, eigendecomposition, scree plot | Reduce and visualize high-dimensional face data |
-| 177 | Time Series Forecasting | ARIMA, trend, seasonality | autocorrelation, differencing, seasonal decomp | Forecast Kigali temperature or rainfall |
-| 178 | Anomaly Detection | Isolation Forest, outlier scoring | isolation trees, contamination, thresholds | Detect fraudulent transactions in payment data |
-| 179 | Text Classification | NLP, Naive Bayes, bag-of-words | tokenization, TF-IDF, Bayes theorem | Classify news articles by category (African news) |
-| 180 | Recommender System | Collaborative filtering, similarity | user-item matrix, cosine similarity, SVD | Recommend African music based on listening history |
-| 181 | NLP Pipeline | Tokenization, embeddings, sentiment | word2vec, spaCy, sentiment scoring | Sentiment analysis on Rwandan social media posts |
-| 182 | Audio Feature Extraction | Spectrograms, MFCC, classification | FFT, mel scale, librosa, audio features | Classify African instruments from audio samples |
-| 183 | Image Classification (CNN) | Convolutional layers, pooling, training | convolution, stride, padding, softmax | Classify African wildlife from photos |
-| 184 | Object Detection | Bounding boxes, YOLO architecture | anchor boxes, non-max suppression, mAP | Detect and count vehicles in Kigali traffic footage |
-| 185 | Generative Model (VAE/GAN) | Latent space, generation, training | encoder/decoder, discriminator/generator, loss | Generate African textile patterns |
-
-### AI Agent Systems (Math: Graph Theory, Optimization, Game Theory)
+### Classical ML Foundations (Math: Statistics, Linear Algebra, Calculus)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 186 | Pathfinding AI (A*) | Graph search, heuristics, optimality | open/closed sets, g+h cost, admissible heuristic | Pathfind on actual Kigali road network data |
-| 187 | Behavior Tree System | Hierarchical decisions, composites | selector, sequence, decorator, blackboard | Build AI guard with patrol, investigate, attack |
-| 188 | Genetic Algorithm | Evolution, fitness, crossover, mutation | population, selection, crossover, elitism | Evolve optimal antenna shapes or bridge designs |
-| 189 | Q-Learning (Gridworld) | Value iteration, exploration vs exploitation | Q-table, epsilon-greedy, reward shaping | Train agent to navigate maze with traps |
-| 190 | Neural Network from Scratch | Backpropagation, no frameworks | forward pass, chain rule, weight updates | Train on XOR, then iris dataset |
-| 191 | Evolutionary AI (NEAT) | Neuroevolution, topology mutation | genome, speciation, complexification | Evolve AI to play Flappy Bird clone |
-| 192 | Swarm Intelligence | Ant Colony Optimization, pheromones | pheromone trails, evaporation, reinforcement | Solve traveling salesman for Rwandan cities |
-| 193 | Particle Swarm Optimization | Collective intelligence, parameter tuning | personal/global best, velocity update | Optimize neural network hyperparameters |
-| 194 | Flocking & Steering | Multi-agent coordination, emergence | Reynolds rules, obstacle avoidance, leader | Simulate bird migration patterns |
-| 195 | NPC Decision Making | Utility AI, scoring, goal-driven | utility functions, action scoring, priorities | Build a Sims-like NPC with needs and personality |
-| 196 | ML for Physics Prediction | Neural net learns physical systems | training on simulation data, generalization | Predict pendulum motion from initial conditions |
-| 197 | Inverse Kinematics | Character animation, joint solving | CCD, FABRIK, joint limits | Robot arm reaches for moving target |
-| 198 | Multi-Agent RL | Competition and cooperation | independent Q-learning, shared reward | Predator-prey training (wolves hunt deer) |
-| 199 | Goal-Oriented Action Planning | Planning AI, world state, preconditions | world state, actions, planner, A* on actions | NPC plans daily routine (eat, work, sleep, socialize) |
-| 200 | Influence Maps | Tactical AI, spatial reasoning | heat maps, threat assessment, territory | RTS-style AI that controls territory |
+| 151 | Linear Regression from Scratch | Gradient descent, cost function, fitting | MSE, learning rate, convergence, R^2 | Predict planet mass from radius using exoplanet data |
+| 152 | Logistic Regression | Binary classification, sigmoid, decision boundary | sigmoid, cross-entropy, threshold tuning | Classify exoplanets as habitable/non-habitable |
+| 153 | K-Means Clustering | Unsupervised learning, centroids | initialization, assignment, update, elbow method | Cluster stars in HR diagram (main sequence, giants, dwarfs) |
+| 154 | Decision Tree & Random Forest | Tree-based learning, ensembles | entropy, information gain, bagging, feature importance | Classify galaxies by morphology (elliptical, spiral, irregular) |
+| 155 | Support Vector Machine | Margin maximization, kernel trick | hyperplane, support vectors, RBF kernel | Classify variable star types |
+| 156 | PCA (Dimensionality Reduction) | Variance, eigenvectors, visualization | covariance matrix, eigendecomposition, scree plot | Reduce stellar spectra to 2D for visualization |
+| 157 | Time Series Forecasting | ARIMA, trend, seasonality | autocorrelation, differencing, seasonal decomp | Predict solar cycle activity |
+| 158 | Anomaly Detection | Isolation Forest, outlier scoring | isolation trees, contamination, thresholds | Detect unusual satellite telemetry signatures |
+| 159 | Bayesian Inference | Prior, likelihood, posterior, MCMC | Bayes theorem, Metropolis-Hastings, conjugate priors | Estimate exoplanet orbital parameters with uncertainty |
+| 160 | Statistical Hypothesis Testing | p-values, t-tests, ANOVA | null hypothesis, significance, confidence intervals | Test if a star's brightness shows a real periodic signal |
+| 161 | Gaussian Process Regression | Probabilistic regression with uncertainty | kernels, marginal likelihood, posterior | Model exoplanet light curves with GP noise |
+| 162 | Hidden Markov Models | Probabilistic sequence models | Viterbi, Baum-Welch, forward-backward | Detect transient events in time-domain astronomy |
 
-### Deep Learning (Math: Linear Algebra, Calculus, Information Theory)
+### Neural Networks & Deep Learning (Math: Linear Algebra, Calculus, Information Theory)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 201 | CNN (PyTorch) | CIFAR-10, ResNet basics, training | DataLoader, Conv2d, BatchNorm, SGD | Train on African sign language dataset |
-| 202 | RNN / LSTM | Sequence modeling, time series | hidden state, gates, vanishing gradients | Generate Kinyarwanda text character-by-character |
-| 203 | Transformer Architecture | Self-attention, multi-head, position encoding | attention, Q/K/V, positional encoding | Build a mini translator (English to French) |
-| 204 | Fine-Tuned LLM (Claude API) | Domain-specific knowledge, prompting | system prompts, few-shot, RAG basics | Build a Rwanda travel guide chatbot |
-| 205 | Vision Transformer (ViT) | Image patches as tokens, classification | patch embedding, class token, attention maps | Classify satellite images of African terrain |
-| 206 | Diffusion Model | Noise schedule, denoising, generation | forward/reverse process, U-Net, sampling | Generate African landscape art |
-| 207 | Reinforcement Learning (PPO) | Policy optimization, advantage estimation | policy gradient, clipping, GAE | Train agent for African board game (Mancala) |
-| 208 | Multi-Modal Model | Vision + language, image captioning | cross-attention, CLIP, contrastive learning | Caption African wildlife photos |
-| 209 | Graph Neural Network | Node classification, message passing | adjacency matrix, aggregation, GCN layers | Predict protein properties from molecular graphs |
-| 210 | Production ML Pipeline | Training to inference to monitoring to retrain | MLflow, model versioning, drift detection | Deploy a model with A/B testing |
+| 163 | Neural Network from Scratch | Backpropagation, no frameworks | forward pass, chain rule, weight updates | Train on XOR, then expand to MNIST |
+| 164 | CNN (PyTorch) | CIFAR-10, ResNet basics, training | DataLoader, Conv2d, BatchNorm, SGD | Train on satellite imagery for cloud classification |
+| 165 | RNN / LSTM | Sequence modeling, time series | hidden state, gates, vanishing gradients | Predict orbital element evolution over time |
+| 166 | Transformer Architecture | Self-attention, multi-head, position encoding | attention, Q/K/V, positional encoding | Build a paper-summarization tool for arXiv astro-ph |
+| 167 | Vision Transformer (ViT) | Image patches as tokens, classification | patch embedding, class token, attention maps | Classify galaxy types from Hubble images |
+| 168 | Autoencoder & VAE | Latent space, reconstruction, generation | encoder/decoder, KL divergence, reparameterization | Compress and reconstruct stellar spectra |
+| 169 | GAN (Generative) | Adversarial training, generator/discriminator | minimax loss, mode collapse, training stability | Generate synthetic galaxy images for training data |
+| 170 | Diffusion Model | Noise schedule, denoising, generation | forward/reverse process, U-Net, sampling | Generate realistic deep-space telescope images |
+| 171 | Graph Neural Network | Node classification, message passing | adjacency matrix, aggregation, GCN layers | Predict galaxy properties from neighbor relationships |
+| 172 | LLM Fine-Tuning (Claude API) | Domain-specific knowledge, prompting | system prompts, few-shot, RAG basics | Build an astronomy research assistant for ALU |
+| 173 | Physics-Informed Neural Network (PINN) | Neural networks that respect physical laws | loss includes PDE residual, automatic differentiation | Solve heat equation with PINN, compare to FEM |
+
+### Space ML Applications (Math: ML + Physics + Statistics)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 174 | Exoplanet Classification (NN) | Predict planet properties from light curves | feature engineering, transit features, CNN on light curves | Reproduce Kepler-90i discovery (Google's NN result) |
+| 175 | Crater Detection on Planetary Surfaces | Object detection in space imagery | YOLO, bounding boxes, transfer learning | Detect craters in real Mars/Moon images |
+| 176 | Galaxy Morphology Classifier | CNN on galaxy images, Galaxy Zoo data | data augmentation, transfer learning, mAP | Use real Galaxy Zoo dataset for training |
+| 177 | Solar Flare Prediction | Time series classification of solar activity | feature extraction from magnetograms, LSTM | Predict X-class flares 24 hours in advance |
+| 178 | Supernova Discovery from Sky Surveys | Anomaly detection in transient data | image differencing, classification, real-time alerts | Process synthetic ZTF-like alerts |
+| 179 | Radio Signal SETI Analysis | ML for narrow-band signal detection | spectrograms, RFI rejection, anomaly detection | Process Breakthrough Listen sample data |
+| 180 | Asteroid Composition Classifier | Spectroscopic classification of asteroids | spectral features, taxonomic classes (S, C, X) | Identify potential mining-target asteroids |
+| 181 | Cloud Detection in Satellite Imagery | Pixel-level segmentation for Earth obs | U-Net, semantic segmentation, IoU | Process Sentinel-2 imagery over Africa |
+| 182 | Star Cluster Membership ML | Identify which stars belong to a cluster | clustering on 6D phase space (position+velocity) | Find new members of nearby open cluster |
+| 183 | Light Pollution Mapper | ML on night-sky imagery for pollution levels | image regression, ground truth from sensors | Map light pollution across East Africa |
+
+### Reinforcement Learning & Autonomous Systems (Math: Optimization, Markov Decision Processes)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 184 | Q-Learning (Gridworld) | Value iteration, exploration vs exploitation | Q-table, epsilon-greedy, reward shaping | Train agent to navigate maze with traps |
+| 185 | Deep Q-Network (DQN) | Function approximation for Q-values | experience replay, target network, Atari-like | Train DQN on Lunar Lander game from Phase 4 |
+| 186 | Policy Gradient (REINFORCE) | Direct policy optimization | policy networks, advantage, baseline | Optimize satellite attitude control policy |
+| 187 | PPO (Proximal Policy Optimization) | Stable, modern RL algorithm | clipping, advantage estimation, GAE | Train an autonomous landing agent |
+| 188 | Trajectory Optimization (RL) | RL for spacecraft trajectories | continuous control, fuel-optimal paths | Find optimal Earth-to-Mars trajectory autonomously |
+| 189 | Autonomous Rover Navigation | RL agent navigates terrain | perception, planning, obstacle avoidance | Navigate procedural Mars terrain from Phase 4 |
+| 190 | Docking Maneuver Controller | Automated rendezvous & docking | approach trajectory, soft contact, control loop | Replicate Crew Dragon ISS docking sequence |
+| 191 | Multi-Agent Constellation Control | Coordinated multi-satellite operation | multi-agent RL, cooperation, coverage | Optimize constellation handoff for ground station |
+| 192 | Mars Rover Path Planning (RL) | Long-horizon planning with energy constraints | hierarchical RL, energy budget, terrain costs | Plan multi-day rover traverse with solar charging |
+| 193 | Telescope Scheduling Optimizer | RL/optimization for observation scheduling | multi-objective optimization, time windows | Schedule observations for a small telescope network |
+
+### Production ML (Math: Engineering, Statistics)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 194 | Scientific ML Pipeline | Training to inference to monitoring to retrain | MLflow, model versioning, drift detection | Deploy a space weather predictor with monitoring |
+| 195 | Real-Time Inference Service | FastAPI + ML model in production | model loading, batching, latency | Serve exoplanet classifier as web API |
+| 196 | Hyperparameter Optimization | Bayesian opt, grid search, random search | Optuna, search spaces, pruning | Optimize CNN for galaxy classification |
+| 197 | Data Augmentation Pipeline | Synthetic data generation for training | image transforms, mixup, augmentation policies | Augment small space datasets to improve performance |
+| 198 | Explainable AI for Science | SHAP, LIME, attention visualization | feature attribution, counterfactuals | Explain why model classified a galaxy as merger |
+| 199 | Federated Learning Setup | Distributed training across institutions | client-server, gradient aggregation, privacy | Simulate multi-observatory ML training |
+| 200 | Active Learning Loop | Smart labeling with human-in-the-loop | uncertainty sampling, query strategies | Build active learning system for astronomical transient classification |
 
 ---
 
 ## Phase 6: Systems & Infrastructure (25 projects)
 
-### DevOps & Systems (Math: Queueing Theory, Optimization)
+### DevOps & Infrastructure (Math: Queueing Theory, Optimization)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 211 | Docker-ize Existing App | Containers, multi-stage builds, compose | Dockerfile, docker-compose, volumes, networks | Multi-container app (web + db + cache + worker) |
-| 212 | CI/CD Pipeline | Auto-test, build, deploy on push | GitHub Actions, workflows, artifacts, secrets | Add staging environment with approval gates |
-| 213 | Load Balancer | Multiple servers, round-robin, health checks | Nginx, upstream, health_check, sticky sessions | Add blue-green deployment switching |
-| 214 | Database Backup & Recovery | Automated backups, restore testing | pg_dump, cron, S3, point-in-time recovery | Add disaster recovery drill automation |
-| 215 | Monitoring & Logging | Metrics, dashboards, alerting | Prometheus, Grafana, ELK, alert rules | Add custom business metrics dashboard |
-| 216 | Kubernetes Deployment | Container orchestration, scaling | pods, services, deployments, ingress | Add horizontal pod autoscaler |
-| 217 | Redis Caching Layer | Performance, cache strategies, invalidation | cache-aside, TTL, cache stampede prevention | Benchmark before/after with load testing |
-| 218 | API Rate Limiting | Token bucket, fairness, abuse prevention | sliding window, token bucket, Redis counters | Add tiered rate limits by API key |
-| 219 | CDN Integration | Edge delivery, cache headers, performance | Cache-Control, ETag, edge locations | Measure performance improvement with analytics |
-| 220 | Disaster Recovery Playbook | Documentation, runbooks, testing | RTO, RPO, failover procedures, communication | Run a chaos engineering experiment |
-| 221 | Terraform Infrastructure as Code | Declarative infrastructure, state management | HCL, providers, state files, plan/apply | Multi-environment setup (dev/staging/prod) |
-| 222 | Secret Management (Vault) | Secure credential storage, rotation | HashiCorp Vault, encryption, access policies, audit | Auto-rotate database credentials on schedule |
-| 223 | Performance Testing Suite | Load testing, bottleneck identification | Locust/k6, latency percentiles, throughput, profiling | Generate performance regression report with graphs |
+| 201 | Docker-ize Existing App | Containers, multi-stage builds, compose | Dockerfile, docker-compose, volumes, networks | Containerize a space data pipeline |
+| 202 | CI/CD Pipeline | Auto-test, build, deploy on push | GitHub Actions, workflows, artifacts, secrets | Auto-deploy your space simulations to GitHub Pages |
+| 203 | Kubernetes Deployment | Container orchestration, scaling | pods, services, deployments, ingress | Run distributed N-body simulation on K8s |
+| 204 | Database Backup & Recovery | Automated backups, restore testing | pg_dump, cron, S3, point-in-time recovery | Backup and restore a satellite tracking database |
+| 205 | Monitoring & Logging | Metrics, dashboards, alerting | Prometheus, Grafana, ELK, alert rules | Monitor a simulated mission control system |
+| 206 | Redis Caching Layer | Performance, cache strategies, invalidation | cache-aside, TTL, cache stampede prevention | Cache satellite TLE data for fast lookups |
+| 207 | API Rate Limiting | Token bucket, fairness, abuse prevention | sliding window, token bucket, Redis counters | Protect a NASA-data-serving API |
+| 208 | Terraform Infrastructure as Code | Declarative infrastructure, state management | HCL, providers, state files, plan/apply | Provision a research compute cluster |
+| 209 | Performance Testing Suite | Load testing, bottleneck identification | Locust/k6, latency percentiles, throughput, profiling | Stress-test your N-body simulator at scale |
 
-### Advanced Architecture (Math: Distributed Systems Theory)
+### Real-Time & Embedded Systems (Math: Control Systems, Signal Processing)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 224 | Microservices Architecture | Service decomposition, messaging | API gateway, service discovery, eventual consistency | Add circuit breaker pattern |
-| 225 | Event-Driven System | Event sourcing, CQRS, audit trails | event store, projections, command/query separation | Add event replay for debugging |
-| 226 | Real-Time Analytics Pipeline | Stream processing, aggregation | Kafka, windowing, exactly-once processing | Real-time dashboard of streaming data |
-| 227 | Payment Integration (Pesapal) | African payments, webhooks, security | payment flow, IPN, reconciliation, PCI | Add multi-currency support (RWF, KES, USD) |
-| 228 | Search Engine (Elasticsearch) | Full-text search, facets, relevance | inverted index, analyzers, boosting, aggregations | Build a product search with autocomplete |
-| 229 | Video Streaming PoC | Encoding, adaptive bitrate, delivery | HLS, transcoding, CDN, buffer management | Add live streaming support |
-| 230 | Geolocation & Route Optimization | Maps, shortest path, delivery | Haversine, graph algorithms, TSP approximation | Optimize delivery routes in Kigali |
-| 231 | IoT Dashboard | Sensor data, real-time, alerts | MQTT, time-series DB, WebSocket updates | Add predictive maintenance alerts |
-| 232 | Fraud Detection Pipeline | ML + rules, streaming, real-time | feature engineering, online learning, rules engine | Add explainable AI for flagged transactions |
-| 233 | Knowledge Graph | Entity relationships, semantic search | triples, SPARQL, graph embeddings, Neo4j | Build a Rwandan cultural knowledge graph |
-| 234 | Message Queue System (RabbitMQ) | Async messaging, pub/sub, reliability | exchanges, queues, routing keys, dead letter, ack | Build order processing pipeline with retry logic |
-| 235 | Multi-Tenant SaaS Architecture | Tenant isolation, shared infrastructure | schema-per-tenant, row-level security, billing | Add tenant-specific customization and white-labeling |
+| 210 | Real-Time Data Pipeline | Stream processing, low-latency | Kafka, exactly-once, windowing | Process simulated satellite telemetry stream |
+| 211 | Embedded C: GPIO & Sensors | Microcontroller programming basics | Arduino/RPi, GPIO, I2C, sensors | Build a star tracker with photodiode and microcontroller |
+| 212 | PID Controller Implementation | Classical control theory | proportional, integral, derivative, tuning | Stabilize a simulated CubeSat attitude |
+| 213 | Kalman Filter from Scratch | Optimal state estimation | predict, update, covariance, observation model | Estimate satellite position from noisy GPS |
+| 214 | Extended Kalman Filter | Nonlinear state estimation | Jacobians, linearization, sensor fusion | Sensor fusion for spacecraft (IMU + GPS + star tracker) |
+| 215 | Signal Processing Toolkit | Filters, FFT, real signals | low/high/band pass filters, convolution, windowing | Process radio astronomy data with RFI removal |
+| 216 | WebSocket Real-Time System | Live data, push updates | WebSocket protocol, pub/sub, scaling | Build live mission control telemetry feed |
+
+### Distributed & Scalable Systems (Math: Distributed Systems, Probability)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 217 | Microservices Architecture | Service decomposition, messaging | API gateway, service discovery, eventual consistency | Decompose space data platform into services |
+| 218 | Event-Driven System | Event sourcing, CQRS, audit trails | event store, projections, command/query separation | Build mission event log with full replay |
+| 219 | GPU Computing (CUDA basics) | Parallel computing on GPUs | kernels, threads, blocks, memory hierarchy | Accelerate N-body simulation with CUDA |
+| 220 | MPI for Scientific Computing | Distributed parallel computing | MPI ranks, send/recv, broadcast, collective ops | Parallelize orbital propagation across nodes |
+| 221 | Knowledge Graph (Neo4j) | Entity relationships, semantic search | triples, Cypher, graph algorithms | Build a knowledge graph of space missions and discoveries |
+| 222 | Search Engine (Elasticsearch) | Full-text search, facets, relevance | inverted index, analyzers, boosting, aggregations | Search engine for arXiv astro-ph papers |
+| 223 | Time-Series Database (InfluxDB) | Optimized storage for time-stamped data | retention policies, downsampling, queries | Store years of solar wind data efficiently |
+| 224 | Multi-Tenant SaaS Platform | Tenant isolation, shared infrastructure | schema-per-tenant, row-level security, billing | Build a platform serving multiple research groups |
+| 225 | Distributed Training Setup | Multi-GPU/multi-node ML training | data parallelism, model parallelism, gradient sync | Train a large vision model on space imagery |
 
 ---
 
-## Phase 7: African Impact & Research (32 projects)
+## Phase 7: African Impact & Research (30 projects)
 
-### Climate & Environment (Math: PDEs, Statistics, Optimization)
-
-| # | Project | Description | Key Concepts | Exercise Twist |
-|---|---------|-------------|--------------|----------------|
-| 236 | Climate Impact Simulator | Sea-level rise, storm frequency, damage prediction | GIS data, risk modeling, monte carlo | Add evacuation route optimizer |
-| 237 | Drought & Crop Yield Predictor | Climate patterns, agricultural planning | time series, satellite data, regression | Add crop recommendation engine |
-| 238 | Urban Heat Analyzer | Urbanization heat islands, risk zones | spatial analysis, temperature modeling, GIS | Recommend green space placement |
-| 239 | Deforestation Tracker | Satellite imagery, change detection | image differencing, classification, NDVI | Predict future deforestation patterns |
-| 240 | Air Quality Monitor | Sensor data, pollution modeling, alerts | AQI, interpolation, health thresholds | Add source attribution modeling |
-| 241 | Water Resource Optimizer | Hydrology, allocation, sustainability | flow networks, optimization, constraints | Multi-stakeholder water sharing simulator |
-| 242 | Renewable Energy Site Selector | Solar/wind potential, terrain analysis | GIS, solar irradiance, wind rose data | Add cost-benefit analysis and ROI projection |
-| 243 | Carbon Footprint Calculator | Lifecycle analysis, emissions tracking | emission factors, scope 1/2/3, visualization | Add reduction strategy recommendations |
-| 244 | Biodiversity Tracker | Species monitoring, habitat analysis, conservation | species classification, GIS, population modeling | Add poaching risk prediction and patrol routing |
-| 245 | Soil Health Monitor | Agricultural soil analysis, nutrient tracking | sensor data, nutrient cycles, pH modeling, yield correlation | Add fertilizer recommendation engine for Rwandan crops |
-
-### Healthcare & Education (Math: Statistics, Probability, ML)
+### Climate, Earth & African Space (Math: PDEs, Statistics, Remote Sensing)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 246 | Disease Progression Simulator | Cancer/disease stages, visual teaching | Markov chains, state transitions, visualization | Add treatment response modeling |
-| 247 | Student Dropout Predictor | Attendance, grades, early warning | classification, feature engineering, intervention | Add personalized intervention suggestions |
-| 248 | Education Policy Simulator | Investment outcomes, scenario modeling | agent-based modeling, policy variables, outcomes | Compare Rwanda vs Kenya education investments |
-| 249 | Public Health Dashboard | Disease tracking, outbreak detection | time series, anomaly detection, geographic viz | Add contact tracing network visualization |
-| 250 | Medical Image Classifier | X-ray/scan analysis, CNN application | transfer learning, data augmentation, sensitivity | Add Grad-CAM for explainable diagnoses |
-| 251 | Drug Interaction Checker | Knowledge graph, safety validation | graph database, rule engine, contraindications | Add traditional medicine interactions |
-| 252 | Mental Health Screening Tool | Questionnaire, scoring, referral | validated instruments, scoring algorithms, privacy | Add multilingual support (Kinyarwanda, French) |
-| 253 | Nutrition Planner (Local Foods) | African foods database, diet optimization | nutritional data, linear programming, meal plans | Add budget constraints and local market prices |
-| 254 | Telemedicine Platform Prototype | Remote consultation, scheduling, records | WebRTC, appointment system, medical records, HIPAA | Add AI symptom pre-screening triage |
-| 255 | Epidemic Early Warning System | Outbreak detection, spatial spread tracking | anomaly detection, sentinel surveillance, R0 estimation | Add social media signal monitoring for outbreak rumors |
+| 226 | African Satellite Data Explorer | Analysis of African space program data (AfriSat, EgyptSat) | satellite data formats, GIS, time series | Track land use change over Rwanda from satellite data |
+| 227 | Climate Impact Simulator (Africa) | Sea-level rise, storm frequency, regional impact | GIS data, risk modeling, monte carlo | Project Lake Victoria water level changes |
+| 228 | Drought & Crop Yield Predictor | Climate patterns, agricultural planning | time series, satellite data, regression | Add crop recommendation engine for Rwandan farmers |
+| 229 | Deforestation Tracker (Africa) | Satellite imagery, change detection | image differencing, classification, NDVI | Monitor Congo Basin deforestation in real time |
+| 230 | Air Quality Monitor | Sensor data, pollution modeling, alerts | AQI, interpolation, health thresholds | Build pollution map for Kigali with source attribution |
+| 231 | Renewable Energy Site Selector | Solar/wind potential, terrain analysis | GIS, solar irradiance, wind rose data | Map best solar sites across East African Community |
+| 232 | Flood Risk Mapping (Rwanda) | Hydrology, terrain, rainfall data | DEM, flow accumulation, return periods | Real-time flood warning for Kigali |
+| 233 | Urban Heat Island Analyzer | Urbanization heat islands, risk zones | spatial analysis, temperature modeling, GIS | Recommend green space placement in Kigali |
+| 234 | Biodiversity Tracker | Species monitoring, habitat analysis, conservation | species classification, GIS, population modeling | Add poaching risk prediction for African parks |
+| 235 | Lake Kivu Methane Monitor | Geothermal/limnological monitoring | sensor data, gas dynamics, anomaly detection | Build early-warning system for limnic eruption |
 
-### Governance, Economics & Space (Math: Optimization, Game Theory, Orbital Mechanics)
+### Healthcare, Education & Society (Math: Statistics, Epidemiology, ML)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 256 | Public Service Complaint Analyzer | NLP categorization, priority routing | text classification, sentiment, topic modeling | Add trend analysis and department performance scoring |
-| 257 | Election Claims Fact-Triage | Speech analysis, claim extraction, flagging | NER, claim detection, source matching | Add real-time live debate analysis |
-| 258 | Local Job Market Predictor | Economic analysis, trend forecasting | time series, economic indicators, sector analysis | Add skills gap analysis and training recommendations |
-| 259 | Entrepreneur Opportunity Map | Business gap analysis, location intelligence | spatial analysis, demand modeling, competition | Add startup success probability scoring |
-| 260 | Poverty-Reduction Simulator | Policy intervention modeling, outcomes | agent-based model, income distribution, Gini | Compare cash transfer vs education investment |
-| 261 | Smart City Traffic Predictor | Road patterns, congestion, AI optimization | graph neural networks, flow optimization | Design optimal bus routes for Kigali |
-| 262 | Infrastructure Failure Warning | Risk detection, predictive maintenance | sensor fusion, degradation models, alerts | Add bridge/road inspection prioritization |
-| 263 | Orbital Mechanics + AI Planner | Spacecraft trajectory optimization | Hohmann transfers, delta-v, fuel optimization | Plan multi-planet mission (gravity assists) |
-| 264 | Satellite Collision Prediction | Orbital simulation, conjunction analysis | TLE data, propagation, probability of collision | Propose avoidance maneuver and fuel cost |
-| 265 | AI Space Weather Predictor | Solar activity, radiation forecasting | NASA data, time series, solar cycle patterns | Add satellite vulnerability assessment |
-| 266 | Multi-Agent Disaster Simulator | Pre/post disaster response modeling | multi-agent systems, resource allocation, triage | Optimize evacuation for Kigali flood scenario |
-| 267 | Earth Evolution Simulator | Planetary modeling, geological time | plate tectonics, climate models, extinction events | Add human civilization impact modeling |
+| 236 | Disease Outbreak Predictor | Outbreak detection, spatial spread tracking | SEIR model, R0 estimation, anomaly detection | Build early-warning system for malaria outbreaks |
+| 237 | Medical Image Classifier | X-ray/scan analysis, CNN application | transfer learning, data augmentation, sensitivity | Tuberculosis detection from chest X-rays (high African burden) |
+| 238 | Student Dropout Predictor | Attendance, grades, early warning | classification, feature engineering, intervention | Apply to ALU student data with privacy protections |
+| 239 | Education Platform (Offline-first) | Resilient learning system for low connectivity | PWA, sync, content caching | Physics simulator that works offline for rural schools |
+| 240 | Telemedicine Platform Prototype | Remote consultation, scheduling, records | WebRTC, appointment system, medical records | Add AI symptom pre-screening triage |
+| 241 | Mental Health Screening Tool | Questionnaire, scoring, referral | validated instruments, scoring algorithms, privacy | Add multilingual support (Kinyarwanda, French) |
+| 242 | Nutrition Planner (Local Foods) | African foods database, diet optimization | nutritional data, linear programming, meal plans | Add budget constraints and local market prices |
+| 243 | Public Service Complaint Analyzer | NLP categorization, priority routing | text classification, sentiment, topic modeling | Add Kinyarwanda language support |
+| 244 | Smart City Traffic Predictor | Road patterns, congestion, AI optimization | graph neural networks, flow optimization | Design optimal bus routes for Kigali |
+| 245 | Local Job Market Predictor | Economic analysis, trend forecasting | time series, economic indicators, sector analysis | Add skills gap analysis for ALU graduates |
+
+### Open Science & African Space Initiatives (Math: Research Methods, Data Science)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 246 | Scientific Paper Parser | Extract data, citations, structure from PDFs | PDF parsing, NER, citation graphs | Build arXiv astro-ph monitor |
+| 247 | Citation Network Analyzer | Graph analysis of research papers | graph algorithms, centrality, communities | Map African space research network |
+| 248 | Reproducible Research Workflow | Notebooks, environments, version control | Jupyter, conda, Docker, DVC | Create a fully reproducible space simulation paper |
+| 249 | Open Data Aggregator | Combine multiple open scientific datasets | API integration, ETL, schemas | Aggregate African earth observation data sources |
+| 250 | Lab Notebook System | Electronic experiment tracking | version control, metadata, collaboration | Build for ALU physics/CS research groups |
+| 251 | African Space Education Platform | Interactive simulations for schools | interactive viz, educational design, accessibility | Orbital mechanics tutorials in Kinyarwanda + French |
+| 252 | Hackathon Project Showcase | Platform for African tech competitions | social features, voting, project hosting | Host real ALU hackathon on it |
+| 253 | Mentorship Matching Platform | Connect students with industry mentors | matching algorithms, profiles, scheduling | Match African students with diaspora STEM mentors |
+| 254 | Open Source Contribution Tracker | Track impact of open contributions | GitHub API, metrics, dashboards | Showcase African contributions to space software |
+| 255 | Africa-Focused Research Search | Search engine for African scientific output | indexing, ranking, geographic filters | Build the 'Google Scholar' for African research |
 
 ---
 
-## Phase 8: Advanced Math & Scientific Computing (20 projects)
+## Phase 8: Advanced Math & Computational Physics (30 projects)
 
-### Advanced Mathematics (Math: Everything)
+### Advanced Numerical Methods (Math: PDEs, Spectral Methods)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 268 | Finite Element Method (FEM) | Mesh generation, weak formulation, solving | triangulation, basis functions, stiffness matrix | Simulate stress in a bridge structure |
-| 269 | Computational Fluid Dynamics | Navier-Stokes 2D, pressure correction | staggered grid, SIMPLE algorithm, vorticity | Simulate airflow around an airfoil |
-| 270 | FFT Exploration | Frequency domain, filtering, analysis | DFT, butterfly, convolution theorem | Build an audio equalizer |
-| 271 | Spectral Methods for PDEs | Fourier basis, high-order accuracy | spectral differentiation, Chebyshev polynomials | Solve Burgers equation with shock |
-| 272 | Adaptive Mesh Refinement | Dynamic grid refinement, error estimation | error indicators, h-refinement, tree structures | Track shock wave with adaptive resolution |
-| 273 | Particle-in-Cell Simulation | Plasma dynamics, electromagnetic fields | charge deposition, field solve, particle push | Simulate plasma wake in accelerator |
-| 274 | Stochastic Differential Equations | Brownian motion, noise, financial modeling | Wiener process, Ito calculus, Euler-Maruyama | Model stock prices with geometric Brownian motion |
-| 275 | Optimization Algorithms | Gradient descent, Newton, BFGS, convergence | line search, Hessian, quasi-Newton, constraints | Optimize a real engineering design problem |
-| 276 | Symbolic Math Engine | Computer algebra, simplification | expression trees, differentiation rules, pattern matching | Build a step-by-step equation solver with explanations |
-| 277 | Differential Geometry Viz | Curvature, geodesics, manifolds | Gaussian curvature, parallel transport, surfaces | Visualize shortest paths on a torus |
-| 278 | Quantum Mechanics Simulator | Schrodinger equation, probability densities | wave function, potential wells, tunneling | Simulate quantum tunneling through a barrier |
-| 279 | Graph Theory Algorithms | Advanced graph problems, network analysis | max flow, min cut, matching, centrality | Analyze a real social network dataset |
-| 280 | N-Body (Barnes-Hut) | O(n log n) gravity simulation | octree, multipole expansion, approximation | Simulate galaxy cluster with 100k+ particles |
-| 281 | Multigrid Solver | Hierarchical refinement, fast PDE solving | restriction, prolongation, V-cycle, smoothing | Solve Poisson equation on 1M+ grid |
-| 282 | Tensor Calculus Visualizer | Tensors, contraction, transformation | index notation, metric tensor, Christoffel symbols | Visualize spacetime curvature near a mass |
-| 283 | Bayesian Inference Engine | Prior, likelihood, posterior, MCMC sampling | Bayes theorem, conjugate priors, Metropolis-Hastings | Apply to real-world A/B testing with decision framework |
-| 284 | Topological Data Analysis | Persistent homology, shape of data | simplicial complexes, Betti numbers, persistence diagrams | Find hidden structure in high-dimensional African census data |
-| 285 | Wavelet Transform Analyzer | Time-frequency analysis, signal processing | Haar, Daubechies wavelets, multiresolution, denoising | Denoise and analyze seismic data from East African Rift |
-| 286 | Numerical Relativity (Simple) | Einstein field equations, spacetime curvature | metric tensor, geodesics, Schwarzschild solution | Simulate light bending around a black hole |
-| 287 | Category Theory Visualizer | Functors, morphisms, composition | objects, arrows, commutative diagrams, natural transformations | Map category theory concepts to programming patterns |
+| 256 | Finite Element Method (FEM) | Mesh generation, weak formulation, solving | triangulation, basis functions, stiffness matrix | Simulate stress in a satellite truss structure |
+| 257 | Computational Fluid Dynamics | Navier-Stokes 2D, pressure correction | staggered grid, SIMPLE algorithm, vorticity | Simulate atmosphere flow around a reentry capsule |
+| 258 | Spectral Methods for PDEs | Fourier basis, high-order accuracy | spectral differentiation, Chebyshev polynomials | Solve wave equation with spectral accuracy |
+| 259 | Adaptive Mesh Refinement | Dynamic grid refinement, error estimation | error indicators, h-refinement, tree structures | Resolve shock waves in supersonic flow |
+| 260 | Multigrid Solver | Hierarchical refinement, fast PDE solving | restriction, prolongation, V-cycle, smoothing | Solve Poisson equation on 1M+ grid in seconds |
+| 261 | Particle-in-Cell Simulation | Plasma dynamics, electromagnetic fields | charge deposition, field solve, particle push | Simulate ion thruster physics |
+| 262 | Finite Volume Method | Conservation laws, flux schemes | fluxes, Riemann solvers, conservation | Simulate shock tube experiment |
+| 263 | Stochastic Differential Equations | Brownian motion, noise, modeling | Wiener process, Ito calculus, Euler-Maruyama | Model cosmic ray particle transport |
+
+### Linear Algebra & Optimization for Physics (Math: Matrix Methods, Optimization)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 264 | Quaternions & 3D Rotations | Rotation representation without gimbal lock | quaternion algebra, slerp, axis-angle | Smoothly rotate spacecraft in 3D viz |
+| 265 | Tensor Calculus Visualizer | Tensors, contraction, transformation | index notation, metric tensor, Christoffel symbols | Visualize spacetime curvature near a mass |
+| 266 | Optimization Algorithms | Gradient descent, Newton, BFGS, convergence | line search, Hessian, quasi-Newton, constraints | Optimize orbital transfer for minimum delta-v |
+| 267 | Sparse Matrix Operations | Efficient large matrix computation | CSR/CSC formats, sparse solvers, iterative methods | Solve large structural mechanics problem |
+| 268 | SVD & Matrix Decomposition | Singular value, QR, LU decomposition | decomposition algorithms, applications, stability | Image compression via low-rank SVD |
+
+### Modern Physics & Relativity (Math: Relativity, Quantum Mechanics)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 269 | Special Relativity Calculator | Time dilation, length contraction, Lorentz | Lorentz transformation, four-vectors, Minkowski space | Simulate light-speed travel effects (twin paradox) |
+| 270 | Geodesics in Curved Spacetime | Numerical GR, light paths near masses | Christoffel symbols, geodesic equation, Schwarzschild | Simulate light bending around a black hole |
+| 271 | Black Hole Visualization | Schwarzschild metric, photon sphere, shadows | ray tracing in curved spacetime, accretion disk | Reproduce Event Horizon Telescope-style image |
+| 272 | Numerical Relativity (Simple) | Einstein field equations, simple cases | metric tensor, geodesics, Schwarzschild solution | Simulate orbits around rotating (Kerr) black hole |
+| 273 | Schrodinger Equation Solver | Wave function, potential wells, probability | 1D/2D Schrodinger, eigenstates, time evolution | Visualize quantum tunneling through a barrier |
+| 274 | Quantum Harmonic Oscillator | Eigenstates, ladder operators | Hermite polynomials, energy levels, coherent states | Animate transition between energy states |
+| 275 | Hydrogen Atom Solver | 3D Schrodinger for Coulomb potential | spherical harmonics, radial wave function, orbitals | Visualize all hydrogen orbitals (1s through 3d) |
+| 276 | Cosmology Simulator (Friedmann) | Universe expansion, dark energy, dark matter | Friedmann equations, scale factor, density parameters | Reproduce Lambda-CDM expansion history |
+| 277 | Stellar Evolution Simulator | Birth, life, death of stars | hydrostatic equilibrium, nuclear burning, HR diagram | Simulate Sun's evolution from now to red giant |
+| 278 | Gravitational Wave Detector Sim | LIGO-like detector, signal processing | interferometer, strain, matched filtering | Detect simulated binary black hole merger |
+
+### Applied Mathematics & Topology (Math: Diverse Advanced Topics)
+
+| # | Project | Description | Key Concepts | Exercise Twist |
+|---|---------|-------------|--------------|----------------|
+| 279 | Symbolic Math Engine | Computer algebra, simplification | expression trees, differentiation rules, pattern matching | Build a step-by-step physics equation solver |
+| 280 | Differential Geometry Viz | Curvature, geodesics, manifolds | Gaussian curvature, parallel transport, surfaces | Visualize geodesics on Earth's surface |
+| 281 | Wavelet Transform Analyzer | Time-frequency analysis, signal processing | Haar, Daubechies wavelets, multiresolution, denoising | Denoise gravitational wave signals |
+| 282 | Topological Data Analysis | Persistent homology, shape of data | simplicial complexes, Betti numbers, persistence diagrams | Find structure in cosmic web data |
+| 283 | Graph Theory Algorithms (Advanced) | Max flow, min cut, matching, centrality | advanced graph algorithms, network analysis | Analyze planetary system stability via graph theory |
+| 284 | Information Theory Toolkit | Entropy, mutual information, channels | Shannon entropy, KL divergence, coding | Quantify information in space data streams |
+| 285 | Group Theory Visualizer | Symmetries, representations | groups, generators, Cayley diagrams | Visualize crystal symmetries (used in mineralogy) |
 
 ---
 
-## Phase 9: Personal Capstones (13 projects)
+## Phase 9: Capstone Projects (Space-Focused) (15 projects)
 
-### AI Me - Personal AI Avatar (Math: Deep Learning, Signal Processing)
-
-| # | Project | Description | Key Concepts | Exercise Twist |
-|---|---------|-------------|--------------|----------------|
-| 288 | AI Me: Voice Synthesis | Clone your voice, text-to-speech | voice cloning, TTS, audio processing | Test with 10 people, measure recognition rate |
-| 289 | AI Me: Visual Avatar | Deepfake/avatar generation from photos | face generation, expression mapping, rendering | Real-time avatar that mirrors your expressions |
-| 290 | AI Me: Personality Engine | Fine-tuned LLM with your personality | personal data training, style transfer, guardrails | Blind test: can friends tell AI from real you? |
-| 291 | AI Me: Full Integration | Voice + visual + personality combined | multimodal integration, latency, coherence | Deploy and have it handle a real conversation |
-
-### African Life Game - GTA/Sims Style (Math: Procedural Generation, Agent AI, Economics)
+### Mission-Class Space Capstones (Math: Everything)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 292 | African Game: World Generation | Procedural Africa, countries, regions | PCG, terrain, population distribution, culture | Generate 5 distinct African regions with unique feel |
-| 293 | African Game: Character System | Birth, status, identity, traits | character generation, social systems, randomization | Create 100 unique characters with believable backgrounds |
-| 294 | African Game: Economy & Society | Jobs, money, relationships, daily life | economic simulation, social networks, time system | Simulate one game-year with emergent stories |
-| 295 | African Game: Full Prototype | Playable vertical slice, 30 min gameplay | all systems integrated, polish, testing | 5 playtesters give feedback, iterate |
+| 286 | Capstone 1: Complete Satellite Simulator | Full 6-DOF dynamics, sensors, control, comms, power, viz | Integrating everything from Phases 3, 5, 6, 8 | Final: Simulate a complete CubeSat mission end-to-end |
+| 287 | Capstone 2: Mars Mission Planner | Launch window, trajectory, life support, risk | interdisciplinary mission design, trade studies | Final: Design a complete Mars mission (Earth to surface) |
+| 288 | Capstone 3: Real-Time ISS Dashboard | Live position, ground stations, photo integration | real-time data, prediction, full-stack engineering | Final: Public-facing tool used by ALU community |
+| 289 | Capstone 4: Exoplanet Atmosphere Analyzer | Spectroscopic analysis, habitability, biosignatures | scientific computing, ML, visualization | Final: Analyze JWST exoplanet data and publish findings |
+| 290 | Capstone 5: Lunar Base Simulator | Terrain, resources, solar power, construction planning | GIS, resource modeling, thermal/dust modeling | Final: Identify and plan optimal lunar base site |
+| 291 | Capstone 6: Space Debris Avoidance System | TLE parsing, collision probability, maneuver planning | live data, real-time ML, decision support | Final: Production-ready debris avoidance for hypothetical operator |
+| 292 | Capstone 7: Asteroid Impact Risk Assessor | Orbit calculation, impact probability, hazard mapping | orbital mechanics, statistics, public communication | Final: Tool for public planetary defense awareness |
+| 293 | Capstone 8: Solar Storm Predictor | Solar wind, magnetosphere, geomagnetic forecasts | space weather ML, real-time data, alerts | Final: Operational space weather alert system |
 
-### Ashes of Ikarra - Ultimate Game Project (Math: Everything)
+### Research & African Space Capstones (Math: Everything)
 
 | # | Project | Description | Key Concepts | Exercise Twist |
 |---|---------|-------------|--------------|----------------|
-| 296 | Ashes of Ikarra: Custom Physics | Your physics engine integrated into game | rigid body, collision, particles, environment | Physics puzzle that showcases your engine |
-| 297 | Ashes of Ikarra: AI Systems | NPC behavior, combat AI, world AI | behavior trees, utility AI, GOAP, faction AI | NPCs that players describe as 'alive' |
-| 298 | Ashes of Ikarra: Procedural World | Terrain, dungeons, encounters, weather | noise, BSP, biomes, dynamic events | World that feels different each playthrough |
-| 299 | Ashes of Ikarra: Narrative Engine | Branching story, memory mechanic, choices | story graph, consequence tracking, player agency | Story that players discuss and debate |
-| 300 | Ashes of Ikarra: Playable Chapter 1 | 30-60 min gameplay, full experience | all systems, polish, audio, UI, testing | Ship it. Get real player feedback. |
+| 294 | Capstone 9: African Earth Observation Platform | Multi-source satellite data, analysis, public access | data engineering, GIS, public service | Final: Open platform for African Earth observation |
+| 295 | Capstone 10: Climate Adaptation Dashboard (Africa) | Real-time climate data, adaptation strategies, decision support | climate science, ML, policy interface | Final: Tool for African policymakers and farmers |
+| 296 | Capstone 11: Radio Astronomy Pipeline | Signal processing, RFI mitigation, source detection | DSP, ML, distributed processing | Final: Process real SARAO/SKA-precursor data |
+| 297 | Capstone 12: Interactive Astronomy Education | Interactive simulations for African schools | education design, viz, multilingual support | Final: Deploy in real Rwandan classrooms |
+| 298 | Capstone 13: Open Source Space Software Contribution | Major contribution to existing space project (Astropy, GMAT, etc.) | open source workflow, code review, community | Final: Get a substantive PR merged into a major space tool |
+| 299 | Capstone 14: Personal Research Paper | Original research with publishable results | scientific method, writing, peer review | Final: Submit to arXiv and a real journal/workshop |
+| 300 | Capstone 15: AI Me + Space Mission Companion | Personal AI avatar trained on your space knowledge, helps run sims | LLM fine-tuning, multimodal, integration with simulators | Final: Your personal AI that can run space simulations from natural language |
 
 ---
 
@@ -475,17 +502,33 @@
 
 | Phase | Focus | Projects | Math Thread |
 |-------|-------|----------|-------------|
-| 1 | Foundations | 50 | Logic, Algorithms, Number Theory, Linear Algebra |
-| 2 | Web & Data | 40 | State Machines, Set Theory, Graph Theory |
-| 3 | Scientific Computing | 45 | Calculus, Trigonometry, PDEs, Dynamical Systems |
-| 4 | Mobile & Game Dev | 35 | Vectors, Matrices, Physics, Optimization |
-| 5 | AI & Machine Learning | 40 | Statistics, Linear Algebra, Calculus, Information Theory |
-| 6 | Systems & Infrastructure | 25 | Queueing Theory, Distributed Systems |
-| 7 | African Impact & Research | 32 | PDEs, Statistics, Optimization, Game Theory |
-| 8 | Advanced Math | 20 | Everything |
-| 9 | Personal Capstones | 13 | Everything |
+| P1 | Foundations | 50 | Logic, Algorithms, Number Theory, Linear Algebra |
+| P2 | Web & Data (Essentials) | 20 | State Machines, Set Theory, Graph Theory |
+| P3 | Physics & Space | 65 | Calculus, Vectors, ODEs, Numerical Methods, Orbital Mechanics |
+| P4 | Game Dev (Strategic 15) | 15 | Vectors, Matrices, Game Loop, Procedural Gen |
+| P5 | AI / ML & Space ML | 50 | Statistics, Linear Algebra, Calculus, Information Theory |
+| P6 | Systems & Infrastructure | 25 | Queueing Theory, Control Systems, Distributed Systems |
+| P7 | African Impact & Research | 30 | Statistics, Remote Sensing, Epidemiology, ML |
+| P8 | Advanced Math & Computational Physics | 30 | PDEs, Spectral Methods, Relativity, Quantum Mechanics |
+| P9 | Capstone Projects (Space-Focused) | 15 | Everything |
 | **Total** | | **300** | |
 
 ---
 
-*Built for a future African tech leader. Every project counts.*
+## Why This Curriculum
+
+This is not a generic CS curriculum. It is built around **one specific career path**: doing meaningful work at the frontier of space exploration, then bringing that knowledge home to develop Africa.
+
+**Phase 3 (Physics & Space)** is the heart of the program — 65 projects covering everything from numerical methods to orbital mechanics to real space data analysis. By the time these are done, the portfolio shows hands-on experience with the actual problems SpaceX, NASA, and ESA engineers solve daily.
+
+**Phase 5 (AI/ML)** focuses heavily on space applications: exoplanet classification, satellite imagery, RL for spacecraft control, autonomous landing. Modern space tech is ML-powered.
+
+**Phase 4 (Games)** is intentionally minimal — only 15 strategically chosen projects that teach skills directly transferable to simulations and visualizations: shaders, physics engines, procedural generation. No platformers or RPGs for their own sake.
+
+**Phase 7 (African Impact)** keeps the mission grounded. Projects address real Rwandan and African problems: climate, agriculture, healthcare, education, infrastructure.
+
+**Phase 9 (Capstones)** are mission-class projects: complete satellite simulators, Mars mission planners, exoplanet analyzers — the kind of work that makes a portfolio undeniable.
+
+---
+
+*Built for a future African space scientist. Every project counts.*
