@@ -168,7 +168,10 @@ while True:
         elif choice == 3:
             print("Goodbye!")
             break  # exit the while loop, ending the program
-
+        
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+            continue
     except ValueError:
         # ValueError is raised when int() receives something that isn't a number e.g. "abc"
         print("Wrong Input. Try again")
