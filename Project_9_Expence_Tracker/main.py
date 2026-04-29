@@ -21,12 +21,32 @@ def save_data(filepath, data):
 
 def add_expense(expenses, budgets):
     """Add new expense with validation + budget warning"""
-    # Get amount, category, date, description
-    # Validate inputs
-    # Append to expenses list
-    # Check budget warning
-    # Save
-    pass
+    try:
+       amount = float(input("Amount: "))
+       if amount <= 0:
+           print("Amount must be positive.")
+           return
+    except ValueError:
+       print("Invalid amount. Enter a number.")
+       return
+    category = input("Category:(Food/Transport/Entertainment/Bills/Other)\n").lower()
+    if category not in CATEGORIES:
+       print(f"Invalid category. Choose from: {', '.join(CATEGORIES)}")
+       return
+    date = input("date(YYYY-MM-DD or press 'Enter' if today):\n")
+    if date == "":
+        date = datetime.today().strftime("%Y-%m-%d")
+    description = input("Description: \n")
+    expenses.append(
+        {
+            "amount": amount,
+            "category": category,
+            "date":date,
+            "description":description
+        }
+    )
+    save_data(EXPENSES_FILE, expenses)
+    print("✓ Expense added!")
 
 def view_all(expenses):
     """Display all expenses formatted"""
@@ -70,7 +90,7 @@ def main():
                 elif choice == 3:
                     view_by_category(expenses)
                 elif choice == 4:
-                    monthly_report(budgets)
+                    monthly_report(expenses,budgets)
                 elif choice == 5:
                     print("Goodbye!")
                     break 
