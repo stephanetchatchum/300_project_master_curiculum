@@ -30,7 +30,7 @@ def add_expense(expenses, budgets):
        print("Invalid amount. Enter a number.")
        return
     category = input("Category:(Food/Transport/Entertainment/Bills/Other)\n").lower()
-    if category not in CATEGORIES:
+    if category not in [c.lower() for c in CATEGORIES]:
        print(f"Invalid category. Choose from: {', '.join(CATEGORIES)}")
        return
     date = input("date(YYYY-MM-DD or press 'Enter' if today):\n")
@@ -46,15 +46,40 @@ def add_expense(expenses, budgets):
         }
     )
     save_data(EXPENSES_FILE, expenses)
+    category_total = sum(e["amount"] for e in expenses if e["category"] == category)
+    if category in budgets:
+        if category_total > budgets[category]:
+            print(f"⚠️ WARNING: You exceeded your {category} budget!")
+            print(f"Spent: {category_total} | Budget: {budgets[category]}")
     print("✓ Expense added!")
 
 def view_all(expenses):
     """Display all expenses formatted"""
-    pass
+    if not expenses:
+        print("No expenses found")
+    else:
+        print("\n--- All Expenses ---")
+        print("Date       | Category      | Amount | Description")
+        print("-" * 60)
+        for i, expense in enumerate(expenses, 1):
+            print(f"[{expense['date']}] - {expense['category']} - {expense["amount"]} - {expense['description']}")
 
 def view_by_category(expenses):
-    """Filter expenses by category"""
-    pass
+    category = input("Category:(Food/Transport/Entertainment/Bills/Other)\n").lower()
+    if category not in [c.lower() for c in CATEGORIES]:
+        print(f"Invalid category. Choose from: {', '.join(CATEGORIES)}")
+        return
+    
+    filtered = [e for e in expenses if e['category'] == category]
+
+    if not filtered:
+        print(f"No expenses found in {category}")
+    else:
+        print(f"\n--- {category.capitalize()} Expenses ---")
+        print("Date       | Amount | Description")
+        print("-" * 60)
+        for expense in filtered:
+            print(f"[{expense['date']}] - {expense['amount']} - {expense['description']}")
 
 def monthly_report(expenses, budgets):
     """Show breakdown for current month"""
