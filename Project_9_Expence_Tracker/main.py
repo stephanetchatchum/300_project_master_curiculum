@@ -46,13 +46,13 @@ def add_expense(expenses, budgets):
         return
 
     # Ask for date — if user presses enter, default to today's date
-    date = input("date(YYYY-MM-DD or press 'Enter' if today):\n")
+    date = input("Date (YYYY-MM-DD or press Enter for today):\n")
     if date == "":
         # strftime formats today's date as a string e.g. "2026-04-28"
         date = datetime.today().strftime("%Y-%m-%d")
 
     # Ask for a short description of the expense
-    description = input("Description: \n")
+    description = input("Description:\n")
 
     # Add the new expense as a dict to the expenses list
     expenses.append(
@@ -67,15 +67,28 @@ def add_expense(expenses, budgets):
     # Save immediately so the expense isn't lost if the program closes
     save_data(EXPENSES_FILE, expenses)
 
-    # Calculate how much has been spent in this category across all expenses
-    # sum() adds up amounts where the category matches
-    category_total = sum(e["amount"] for e in expenses if e["category"] == category)
+    # Get current month and year for monthly budget check
+    now = datetime.today()
+
+    # Calculate how much has been spent in this category THIS MONTH ONLY
+    # This fixes the all-time bug — budget warnings now reflect monthly spending
+    category_total = sum(
+        e["amount"] for e in expenses
+        if e["category"] == category
+        and datetime.fromisoformat(e["date"]).month == now.month
+        and datetime.fromisoformat(e["date"]).year == now.year
+    )
 
     # Check if a budget exists for this category and if it has been exceeded
     if category in budgets:
-        if category_total > budgets[category]:
-            print(f"⚠️ WARNING: You exceeded your {category} budget!")
-            print(f"Spent: {category_total} | Budget: {budgets[category]}")
+        budget_limit = budgets[category]
+        # Warn at 80% of budget
+        if category_total >= budget_limit * 0.8 and category_total < budget_limit:
+            print(f"⚠️ WARNING: You've used {(category_total/budget_limit)*100:.0f}% of your {category} budget!")
+        # Warn when fully exceeded
+        elif category_total >= budget_limit:
+            print(f"🚨 ALERT: You exceeded your {category} budget!")
+            print(f"Spent: {category_total:,.0f} RWF | Budget: {budget_limit:,.0f} RWF")
 
     print("✓ Expense added!")
 
@@ -83,15 +96,16 @@ def view_all(expenses):
     """Display all expenses formatted"""
     # If there are no expenses yet, let the user know
     if not expenses:
-        print("No expenses found")
+        print("No expenses yet.")
     else:
         print("\n--- All Expenses ---")
-        print("Date       | Category      | Amount | Description")
+        print(f"{'#':<4} {'Date':<12} {'Category':<15} {'Amount':>10} Description")
         print("-" * 60)
 
         # Loop through every expense with a 1-based index and print each one
-        for i, expense in enumerate(expenses, 1):
-            print(f"[{expense['date']}] - {expense['category']} - {expense['amount']} - {expense['description']}")
+        # :,.0f formats numbers with commas e.g. 15000 → 15,000
+        for i, e in enumerate(expenses, 1):
+            print(f"{i:<4} [{e['date']}] {e['category']:<15} {e['amount']:>8,.0f} RWF  {e['description']}")
 
 def view_by_category(expenses):
     """Filter and display expenses for a specific category"""
@@ -105,69 +119,128 @@ def view_by_category(expenses):
         return
 
     # Filter expenses to only those matching the chosen category
-    # This is a list comprehension — it builds a new list from matching items
     filtered = [e for e in expenses if e['category'] == category]
 
     # If no expenses match, let the user know
     if not filtered:
-        print(f"No expenses found in {category}")
+        print(f"No expenses found in {category.capitalize()}")
     else:
-        # .capitalize() makes the first letter uppercase for display e.g. "food" → "Food"
+        # .capitalize() makes first letter uppercase for display
         print(f"\n--- {category.capitalize()} Expenses ---")
-        print("Date       | Amount | Description")
+        print(f"{'Date':<12} {'Amount':>10} Description")
+        print("-" * 50)
+
+        # Print each matching expense
+        for e in filtered:
+            print(f"[{e['date']}] {e['amount']:>8,.0f} RWF  {e['description']}")
+
+        # Show total for this category
+        total = sum(e['amount'] for e in filtered)
+        print(f"\nTotal: {total:,.0f} RWF")
+
+def view_last_7_days(expenses):
+    """Filter and display expenses from the last 7 days"""
+
+    # Calculate the cutoff date — 7 days ago from today
+    # timedelta(days=7) subtracts 7 days from today's date
+    seven_days_ago = datetime.today() - timedelta(days=7)
+
+    # Filter expenses where the date is on or after 7 days ago
+    filtered = [
+        e for e in expenses
+        if datetime.fromisoformat(e['date']) >= seven_days_ago
+    ]
+
+    # If no expenses in the last 7 days, let the user know
+    if not filtered:
+        print("No expenses in the last 7 days.")
+    else:
+        print("\n--- Last 7 Days ---")
+        print(f"{'Date':<12} {'Category':<15} {'Amount':>10} Description")
         print("-" * 60)
 
         # Print each matching expense
-        for expense in filtered:
-            print(f"[{expense['date']}] - {expense['amount']} - {expense['description']}")
+        for e in filtered:
+            print(f"[{e['date']}] {e['category']:<15} {e['amount']:>8,.0f} RWF  {e['description']}")
+
+        # Show total for the last 7 days
+        total = sum(e['amount'] for e in filtered)
+        print(f"\nTotal (last 7 days): {total:,.0f} RWF")
 
 def monthly_report(expenses, budgets):
-    """Show breakdown for current month"""
+    """Show full breakdown for current month"""
 
-    # Get today's date and extract the current month and year numbers
+    # Get today's date and extract month and year
     now = datetime.today()
     current_month = now.month  # e.g. 4 for April
-    current_year = now.year   # e.g. 2026
+    current_year = now.year    # e.g. 2026
 
     # Filter expenses to only those from the current month and year
-    # datetime.fromisoformat() converts the stored string "2026-04-28" back to a date object
-    # so we can compare .month and .year
-    filtered = [e for e in expenses if datetime.fromisoformat(e['date']).month == current_month and datetime.fromisoformat(e['date']).year == current_year]
+    # Parse date once per expense to avoid calling fromisoformat() twice
+    filtered = []
+    for e in expenses:
+        expense_date = datetime.fromisoformat(e['date'])  # parse once
+        if expense_date.month == current_month and expense_date.year == current_year:
+            filtered.append(e)
 
-    # Dict to hold total spending per category e.g. {"food": 15000, "transport": 8000}
-    totals = {}
+    # If no expenses found this month, let the user know and stop
+    if not filtered:
+        print(f"No expenses found in {now.strftime('%B %Y')}")
+        return
 
     # Calculate grand total of all expenses this month
     grand_total = sum(e['amount'] for e in filtered)
 
-    # If no expenses found this month, let the user know
-    if not filtered:
-        print(f"No expenses found on {current_month}")
-    else:
-        # Group expenses by category and sum up amounts
-        for e in filtered:
-            cat = e['category']
-            if cat not in totals:
-                totals[cat] = 0  # initialize the category if first time seeing it
-            totals[cat] += e['amount']  # add this expense's amount to the category total
+    # Calculate daily average — how many days have elapsed so far this month
+    # datetime.today().day gives the current day number e.g. 28 for April 28th
+    days_elapsed = datetime.today().day
+    daily_avg = grand_total / days_elapsed  # total divided by days elapsed
 
-        # Print the breakdown for each category
-        for cat, amount in totals.items():
-            # Calculate what percentage of total spending this category represents
-            percentage = (amount / grand_total) * 100
-            print(f"{cat}: {amount} RWF ({percentage:.1f}%)")
+    # Find the single highest expense using max() with a key function
+    # lambda e: e['amount'] means "compare expenses by their amount field"
+    highest = max(filtered, key=lambda e: e['amount'])
 
-            # If a budget is set for this category, show how much is remaining or if exceeded
-            if cat in budgets:
-                remaining = budgets[cat] - amount
-                if remaining < 0:
-                    # abs() converts negative number to positive for display
-                    print(f"  ⚠️ Over budget by {abs(remaining)} RWF!")
-                else:
-                    print(f"  ✓ {remaining} RWF remaining")
+    # Print the report header
+    print(f"\n=== {now.strftime('%B %Y')} Report ===")
+    print(f"Total:         {grand_total:>10,.0f} RWF")
+    print(f"Daily average: {daily_avg:>10,.0f} RWF")
+    print(f"Highest:       {highest['amount']:>10,.0f} RWF ({highest['category'].capitalize()} - {highest['description']})")
 
-        # Print the grand total at the bottom of the report
-        print(f"\nTotal: {grand_total} RWF")
+    # Build totals dict — group expenses by category and sum amounts
+    totals = {}
+    for e in filtered:
+        cat = e['category']
+        if cat not in totals:
+            totals[cat] = 0  # initialize category if first time seeing it
+        totals[cat] += e['amount']
+
+    # Print the category breakdown
+    print("\nBreakdown:")
+    for cat, amount in totals.items():
+        # Calculate percentage of total spending this category represents
+        percentage = (amount / grand_total) * 100
+
+        # Print category line with right-aligned amounts and percentage
+        print(f"  {cat.capitalize():<16} {amount:>8,.0f} RWF ({percentage:>3.0f}%)")
+
+        # If a budget is set for this category, show remaining or overspend
+        if cat in budgets:
+            budget_limit = budgets[cat]
+            remaining = budget_limit - amount
+            used_pct = (amount / budget_limit) * 100
+
+            # Build a simple text progress bar — 10 blocks total
+            filled = int(used_pct / 10)
+            bar = "█" * filled + "░" * (10 - filled)
+
+            if remaining < 0:
+                # abs() converts negative to positive for display
+                print(f"  Budget:  [{bar}] {used_pct:.0f}% — ⚠️ Over by {abs(remaining):,.0f} RWF")
+            else:
+                print(f"  Budget:  [{bar}] {used_pct:.0f}% — {remaining:,.0f} RWF remaining")
+
+    # Print grand total at the bottom
+    print(f"\n{'Total':<16} {grand_total:>10,.0f} RWF")
 
 def set_budget(budgets):
     """Set monthly budget per category"""
@@ -176,7 +249,7 @@ def set_budget(budgets):
     print(f"Categories: {', '.join(CATEGORIES)}")
 
     # Ask which category to set a budget for and normalize to lowercase
-    cat_chosen = input("Choose your category...").lower()
+    cat_chosen = input("Choose your category: ").lower()
 
     # Validate the chosen category
     if cat_chosen not in [c.lower() for c in CATEGORIES]:
@@ -185,18 +258,17 @@ def set_budget(budgets):
 
     try:
         # Ask for the budget amount and convert to float
-        amount = float(input("Enter the Budget Amount: "))
-        if amount < 0:
-            print("Enter a Positive number...")
+        amount = float(input("Enter the budget amount (RWF): "))
+        if amount <= 0:
+            print("Budget must be positive.")
             return
 
         # Store the budget in the budgets dict with the category as the key
-        # e.g. budgets["food"] = 20000
         budgets[cat_chosen] = amount
 
         # Save immediately so the budget persists after the program closes
         save_data(BUDGETS_FILE, budgets)
-        print("✓ Budget added!")
+        print(f"✓ Budget set: {cat_chosen.capitalize()} → {amount:,.0f} RWF/month")
 
     except ValueError:
         print("Invalid amount. Enter a number.")
@@ -214,31 +286,34 @@ def main():
         print("1. Add Expense")
         print("2. View All")
         print("3. View by Category")
-        print("4. Monthly Report")
-        print("5. Set Budget")
-        print("6. Quit")
+        print("4. View Last 7 Days")
+        print("5. Monthly Report")
+        print("6. Set Budget")
+        print("7. Quit")
 
         try:
             # Get the user's choice and convert to integer
             choice = int(input("Choice: "))
 
-            # Check the choice is within valid range
-            if choice >= 1 and choice <= 6:
+            # Check the choice is within the valid range
+            if choice >= 1 and choice <= 7:
                 if choice == 1:
-                    add_expense(expenses, budgets)  # pass both lists so function can read and update them
+                    add_expense(expenses, budgets)
                 elif choice == 2:
                     view_all(expenses)
                 elif choice == 3:
                     view_by_category(expenses)
                 elif choice == 4:
-                    monthly_report(expenses, budgets)
+                    view_last_7_days(expenses)  # new function
                 elif choice == 5:
-                    set_budget(budgets)  # pass budgets dict so function can update it
+                    monthly_report(expenses, budgets)
                 elif choice == 6:
+                    set_budget(budgets)
+                elif choice == 7:
                     print("Goodbye!")
                     break  # exit the while loop, ending the program
             else:
-                print("Wrong input. Enter a number between 1 and 6.")
+                print("Wrong input. Enter a number between 1 and 7.")
 
         except ValueError:
             # ValueError is raised when int() receives something that isn't a number
