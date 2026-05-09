@@ -109,6 +109,20 @@ questions = [
 
 def pick_category(questions):
     """Let user pick a category or mixed, return filtered list"""
+    try:
+        category = int(input("Pick a category?\n1. Geography\n2. Math\n3. Science\n4. All"))
+        if category == 1:
+            pass
+        elif category == 2:
+            pass
+        elif category == 3:
+            pass
+        elif category == 4:
+            filtered = [q for q in questions]
+
+        return filtered
+    except ValueError:
+        print("Invalid Input.")
     pass
 
 def display_question(question_num, total, question):
