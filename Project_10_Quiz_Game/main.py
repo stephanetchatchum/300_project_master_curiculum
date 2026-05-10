@@ -136,7 +136,7 @@ def display_question(question_num, total, question):
 def get_answer():
     """Get and validate user answer (A/B/C/D only), return uppercased answer"""
     while True:
-        ans = input("Anwer(A,B,C,D): ").upper()
+        ans = input("Answer(A,B,C,D): ").upper()
         if ans in ["A", "B", "C", "D"]:
             return ans
         print("Invalid! Enter A, B, C or D.")
@@ -162,8 +162,9 @@ def run_quiz(questions):
 
 def show_results(score, total):
     """Display final score, percentage and feedback message"""
-
-    pass
+    print("=== Final Score ===")
+    print(f"You got {score} out of {total} ({(score/total)*100:.1f}%)")
+    print("Great job!")
 
 # -------------------------
 # MAIN
@@ -171,11 +172,11 @@ def show_results(score, total):
 
 def main():
     # pick category
-    pick_category(questions)
+    q = pick_category(questions)
     # run quiz
-    run_quiz(questions)
+    s, t = run_quiz(q)
     # show results
-    show_results()
+    show_results(s, t)
 
 if __name__ == "__main__":
     main()
