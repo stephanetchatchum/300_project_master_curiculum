@@ -144,7 +144,21 @@ def get_answer():
 
 def run_quiz(questions):
     """Main quiz loop — shuffle, ask questions, track score"""
-    pass
+    if not questions:
+        print("No questions")
+        return
+    random.shuffle(questions)
+    score = 0
+    for i, question in enumerate(questions, 1):
+        display_question(i, len(questions), question)
+        ans = get_answer()
+        if ans == question['correct_answer']:
+            score += 1
+            print("Correct")
+        else:
+            print(f"Wrong the answer was: {question['correct_answer']}")
+
+    return score, len(questions)
 
 def show_results(score, total):
     """Display final score, percentage and feedback message"""
