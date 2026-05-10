@@ -193,18 +193,22 @@ def show_results(score, total):
 
 def main():
     while True:
-        p = int(input("Welcome to the Quiz game\npress 1 to play, 2 to quit"))
-        if p == 1:
-            # Get user's category choice and filter questions accordingly
-            q = pick_category(questions)
-            # Run the quiz and get back score and total questions
-            s, t = run_quiz(q)
-            # Display final results
-            show_results(s, t)
-        elif p == 2:
-            break
-        else:
-            print("Invalid Input, please try again and enter  either 1 or 2")
+        try:
+            p = int(input("Welcome to the Quiz game\npress 1 to play, 2 to quit: "))
+            if p == 1:
+                # Get user's category choice and filter questions accordingly
+                q = pick_category(questions)
+                # Run the quiz and get back score and total questions
+                s, t = run_quiz(q)
+                # Display final results
+                show_results(s, t)
+            elif p == 2:
+                break
+            else:
+                print("Invalid Input, please try again and enter  either 1 or 2")
+        except ValueError:
+            print("Invalid Input, please try again and enter either 1 or 2")
+
 
 # Standard Python pattern to ensure this file can be imported or run directly
 if __name__ == "__main__":
