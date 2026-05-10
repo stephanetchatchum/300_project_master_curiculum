@@ -130,12 +130,17 @@ def pick_category(questions):
 def display_question(question_num, total, question):
     """Display a single question with A/B/C/D options"""
     print(f"Question {question_num}/{total}: {question['question']}")
-    for i, option in enumerate(question['option']):
+    for i, option in enumerate(question['options']):
         print(f" {chr(65+i)}. {option}")
 
 def get_answer():
     """Get and validate user answer (A/B/C/D only), return uppercased answer"""
-    pass
+    while True:
+        ans = input("Anwer(A,B,C,D): ").upper()
+        if ans in ["A", "B", "C", "D"]:
+            return ans
+        print("Invalid! Enter A, B, C or D.")
+        
 
 def run_quiz(questions):
     """Main quiz loop — shuffle, ask questions, track score"""
