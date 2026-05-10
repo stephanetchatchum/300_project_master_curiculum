@@ -112,18 +112,20 @@ def pick_category(questions):
     try:
         category = int(input("Pick a category?\n1. Geography\n2. Math\n3. Science\n4. All"))
         if category == 1:
-            pass
+            filtered = [q for q in questions if q['category'] == "Geography"]
         elif category == 2:
-            pass
+            filtered = [q for q in questions if q['category'] == "Math"]
         elif category == 3:
-            pass
+            filtered = [q for q in questions if q['category'] == "Science"]
         elif category == 4:
             filtered = [q for q in questions]
+        else:
+            print("Invalid choice, defaulting to All")
+            filtered = questions
 
         return filtered
     except ValueError:
         print("Invalid Input.")
-    pass
 
 def display_question(question_num, total, question):
     """Display a single question with A/B/C/D options"""
