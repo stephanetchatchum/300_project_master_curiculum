@@ -162,6 +162,7 @@ def run_quiz(questions):
 
 def show_results(score, total):
     """Display final score, percentage and feedback message"""
+
     pass
 
 # -------------------------
@@ -170,9 +171,11 @@ def show_results(score, total):
 
 def main():
     # pick category
+    pick_category(questions)
     # run quiz
+    run_quiz(questions)
     # show results
-    pass
+    show_results()
 
 if __name__ == "__main__":
     main()
