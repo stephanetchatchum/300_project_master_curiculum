@@ -129,7 +129,9 @@ def pick_category(questions):
 
 def display_question(question_num, total, question):
     """Display a single question with A/B/C/D options"""
-    pass
+    print(f"Question {question_num}/{total}: {question['question']}")
+    for i, option in enumerate(question['option']):
+        print(f" {chr(65+i)}. {option}")
 
 def get_answer():
     """Get and validate user answer (A/B/C/D only), return uppercased answer"""
