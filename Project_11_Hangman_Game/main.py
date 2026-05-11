@@ -1,6 +1,11 @@
 import random
 
-words = []
+words = [
+    "python", "hangman", "programming", "computer", "algorithm", 
+    "function", "variable", "keyboard", "monitor", "network",
+    "database", "software", "hardware", "internet", "password",
+    "encryption", "server", "client", "protocol", "framework"
+]
 def get_random_word(word_list):
     # pick and return a random word
     pass
@@ -15,6 +20,10 @@ def display_state(word, guessed_letters, wrong_guesses):
 
 def get_guess(guessed_letters):
     # get a valid single letter that hasn't been guessed yet
+    pass
+
+def is_word_complete(word, guessed_letters):
+    # return True if all letters in word have been guessed
     pass
 
 def play_game():
