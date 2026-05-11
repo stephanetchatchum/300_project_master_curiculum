@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Companion · Physics · Maths · CS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
   /* ============================================================
      Design tokens
@@ -756,9 +757,451 @@
     .welcome h1 { font-size: 34px; }
     .viz-stage { padding: 14px; min-height: 220px; }
   }
+
+  /* ============================================================
+     PDF READER + MODE SWITCHER (additions)
+  ============================================================ */
+  body { padding-top: 48px; }
+
+  /* Top mode bar */
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 48px;
+    background: #0d0f15;
+    border-bottom: 1px solid #2a2f3e;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .mode-btn {
+    background: transparent;
+    color: var(--text-soft);
+    border: 1px solid var(--border);
+    padding: 7px 16px;
+    border-radius: var(--r-sm);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .mode-btn:hover { color: var(--text); border-color: var(--surface-3); }
+  .mode-btn.active {
+    background: var(--accent);
+    color: #0f1117;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Mode toggling */
+  body.mode-book .app { display: none; }
+  body.mode-book #pdfReader { display: flex; }
+  body.mode-book #audioPlayer { display: flex; }
+  body.mode-lab #pdfReader { display: none; }
+  body.mode-lab #audioPlayer { display: none; }
+
+  /* PDF reader layout */
+  #pdfReader {
+    display: none;
+    position: fixed;
+    top: 48px;
+    left: 0;
+    right: 0;
+    bottom: 64px;
+    background: var(--bg);
+  }
+  .pdf-left {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border-soft);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .pdf-progress-wrap {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .pdf-progress-bar {
+    height: 4px;
+    background: var(--surface-2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .pdf-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.2s ease;
+  }
+  .pdf-progress-text {
+    font-size: 11px;
+    color: var(--text-faint);
+    font-family: var(--mono);
+    letter-spacing: 0.4px;
+  }
+  .pdf-left-head {
+    padding: 18px 20px 8px;
+  }
+  .pdf-left-head h2 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+  .pdf-left-head .sub {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .pdf-upload-row {
+    padding: 0 20px 14px;
+  }
+  .pdf-upload-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--accent);
+    color: #0f1117;
+    border: none;
+    padding: 9px 14px;
+    border-radius: var(--r-sm);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .pdf-upload-btn:hover { filter: brightness(1.08); }
+  .pdf-filename {
+    padding: 0 20px 12px;
+    font-size: 12px;
+    color: var(--text-soft);
+    font-family: var(--mono);
+    word-break: break-all;
+    line-height: 1.4;
+  }
+  .pdf-resume-banner {
+    margin: 0 20px 14px;
+    padding: 10px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--r-sm);
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .pdf-page-indicator {
+    padding: 8px 20px 10px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12px;
+    color: var(--text-soft);
+    font-family: var(--mono);
+  }
+  .pdf-page-indicator .current { color: var(--accent); font-weight: 600; }
+  .pdf-page-list-label {
+    padding: 4px 20px;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+  .pdf-page-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 12px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    align-content: start;
+  }
+  .pdf-page-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    padding: 6px 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .pdf-page-btn:hover { background: var(--surface-2); color: var(--text); border-color: var(--accent); }
+  .pdf-page-btn.active {
+    background: var(--accent);
+    color: #0f1117;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* PDF right column */
+  .pdf-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .pdf-canvas-area {
+    flex: 1;
+    overflow: auto;
+    padding: 28px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    background: #0a0c12;
+  }
+  #pdfCanvas {
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    max-width: 100%;
+    display: block;
+  }
+  .pdf-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 8px;
+  }
+  .pdf-controls button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 14px;
+    border-radius: var(--r-sm);
+    font-family: var(--sans);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .pdf-controls button:hover { background: var(--surface-3); border-color: var(--accent); }
+  .pdf-controls button:disabled { opacity: 0.45; cursor: not-allowed; }
+  .pdf-font-controls {
+    display: inline-flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    margin-left: 8px;
+  }
+  .pdf-font-controls button {
+    border: none;
+    border-radius: 0;
+    padding: 7px 12px;
+    background: var(--surface-2);
+    color: var(--text-soft);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .pdf-font-controls button.active {
+    background: var(--accent);
+    color: #0f1117;
+    font-weight: 600;
+  }
+  .pdf-empty-state {
+    color: var(--text-faint);
+    font-family: var(--serif);
+    font-size: 18px;
+    text-align: center;
+    padding: 80px 30px;
+    line-height: 1.6;
+  }
+  .pdf-empty-state .hint {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--text-soft);
+    margin-top: 12px;
+  }
+
+  /* Now Reading strip */
+  .now-reading-strip {
+    background: #1c2030;
+    border-top: 1px solid #2a2f3e;
+    padding: 14px 20px;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    color: #e7e9ee;
+    min-height: 50px;
+    line-height: 1.6;
+    flex-shrink: 0;
+  }
+  .now-reading-strip.idle {
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  /* Audio player bar (bottom) */
+  #audioPlayer {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 64px;
+    background: #0d0f15;
+    border-top: 1px solid #2a2f3e;
+    padding: 0 24px;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    font-family: var(--sans);
+  }
+  .ap-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 36px; height: 36px;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ap-btn:hover { background: var(--surface-3); border-color: var(--accent); color: var(--accent); }
+  .ap-btn.play {
+    background: var(--accent);
+    color: #0f1117;
+    border-color: var(--accent);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .ap-btn.play:hover { background: var(--accent); color: #0f1117; filter: brightness(1.08); }
+  .ap-speed {
+    display: inline-flex;
+    gap: 2px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 2px;
+    background: var(--surface-2);
+    flex-shrink: 0;
+  }
+  .ap-speed button {
+    background: transparent;
+    border: none;
+    color: var(--text-soft);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .ap-speed button.active {
+    background: var(--accent);
+    color: #0f1117;
+    font-weight: 600;
+  }
+  .ap-voice {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 10px;
+    border-radius: var(--r-sm);
+    font-family: var(--sans);
+    font-size: 12px;
+    max-width: 200px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .ap-now-label {
+    margin-left: auto;
+    color: var(--text-soft);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 360px;
+  }
+
+  @media (max-width: 880px) {
+    #pdfReader { flex-direction: column; }
+    .pdf-left { width: 100%; max-height: 200px; border-right: none; border-bottom: 1px solid var(--border-soft); }
+    .pdf-page-list { grid-template-columns: repeat(8, 1fr); }
+    #audioPlayer { padding: 0 12px; gap: 8px; flex-wrap: wrap; height: auto; min-height: 64px; padding-top: 8px; padding-bottom: 8px; }
+    .ap-now-label { width: 100%; margin-left: 0; }
+  }
+
 </style>
 </head>
 <body data-subject="physics">
+
+<!-- Top mode switcher bar -->
+<div class="top-bar">
+  <button class="mode-btn" id="modeBookBtn">📖 Book Reader</button>
+  <button class="mode-btn active" id="modeLabBtn">🧪 Interactive Lab</button>
+</div>
+
+<!-- PDF reader panel (hidden in Lab mode) -->
+<div id="pdfReader">
+  <aside class="pdf-left">
+    <div class="pdf-progress-wrap">
+      <div class="pdf-progress-bar"><div class="pdf-progress-fill" id="pdfProgressFill"></div></div>
+      <div class="pdf-progress-text" id="pdfProgressText">0% complete</div>
+    </div>
+    <div class="pdf-left-head">
+      <h2>Your Book</h2>
+      <div class="sub">PDF reader</div>
+    </div>
+    <div class="pdf-upload-row">
+      <input type="file" id="pdfFileInput" accept=".pdf" style="display:none">
+      <button class="pdf-upload-btn" id="pdfUploadBtn">Upload PDF</button>
+    </div>
+    <div class="pdf-filename" id="pdfFilename"></div>
+    <div id="pdfResumeBanner"></div>
+    <div class="pdf-page-indicator" id="pdfPageIndicator">No PDF loaded</div>
+    <div class="pdf-page-list-label">Pages</div>
+    <div class="pdf-page-list" id="pdfPageList"></div>
+  </aside>
+  <div class="pdf-right">
+    <div class="pdf-canvas-area" id="pdfCanvasArea">
+      <div class="pdf-empty-state" id="pdfEmptyState">
+        Upload a PDF on the left to start reading.
+        <div class="hint">It stays on your device — nothing is uploaded anywhere.</div>
+      </div>
+      <canvas id="pdfCanvas" style="display:none"></canvas>
+      <div class="pdf-controls" id="pdfControls" style="display:none">
+        <button id="pdfPrevPage">← Previous</button>
+        <button id="pdfNextPage">Next →</button>
+        <div class="pdf-font-controls">
+          <button data-scale="1.2">A−</button>
+          <button data-scale="1.5" class="active">A</button>
+          <button data-scale="1.8">A+</button>
+        </div>
+      </div>
+    </div>
+    <div class="now-reading-strip idle" id="nowReadingStrip">Press ▶ Play to listen to this page</div>
+  </div>
+</div>
+
+<!-- Audio player bar (bottom, only in Book mode) -->
+<div id="audioPlayer">
+  <button class="ap-btn" id="apRestart" title="Restart current page">⏮</button>
+  <button class="ap-btn" id="apPrevSent" title="Previous sentence">⏪</button>
+  <button class="ap-btn play" id="apPlayPause" title="Play / Pause (Space)">▶</button>
+  <button class="ap-btn" id="apNextSent" title="Next sentence">⏩</button>
+  <button class="ap-btn" id="apNextPage" title="Skip to next page">⏭</button>
+  <div class="ap-speed" id="apSpeed">
+    <button data-rate="0.75">0.75×</button>
+    <button data-rate="1" class="active">1×</button>
+    <button data-rate="1.25">1.25×</button>
+    <button data-rate="1.5">1.5×</button>
+    <button data-rate="2">2×</button>
+  </div>
+  <select class="ap-voice" id="apVoice" title="Voice"></select>
+  <div class="ap-now-label" id="apNowLabel">No PDF loaded yet</div>
+</div>
 
 <div class="app">
   <aside class="sidebar">
@@ -5873,6 +6316,7 @@ document.querySelectorAll('.subject-tab').forEach(t => {
   });
 });
 
+
 // Fix sidebar ordering: sort each subject's topic array by canonical order
 const ORDER = {
   physics: ['kinematics','forces','energy','waves','optics','circuits','magnetism','thermo','quantum','relativity','blackholes','nuclear'],
@@ -5884,6 +6328,504 @@ for (const k of Object.keys(TOPICS)) {
 }
 
 setSubject('physics');
+
+/* ============================================================
+   PDF READER + AUDIO PLAYER (additions)
+   ============================================================ */
+(function() {
+  // ---------- PDF.js worker ----------
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  // ---------- Mode switcher ----------
+  const modeBookBtn = document.getElementById('modeBookBtn');
+  const modeLabBtn  = document.getElementById('modeLabBtn');
+  function setMode(mode) {
+    if (mode === 'book') {
+      document.body.classList.add('mode-book');
+      document.body.classList.remove('mode-lab');
+      modeBookBtn.classList.add('active');
+      modeLabBtn.classList.remove('active');
+    } else {
+      document.body.classList.add('mode-lab');
+      document.body.classList.remove('mode-book');
+      modeLabBtn.classList.add('active');
+      modeBookBtn.classList.remove('active');
+      // Stop any speech when leaving Book mode
+      stopSpeaking();
+    }
+    localStorage.setItem('pdfMode', mode);
+  }
+  modeBookBtn.addEventListener('click', () => setMode('book'));
+  modeLabBtn.addEventListener('click',  () => setMode('lab'));
+  // Default: Interactive Lab
+  setMode(localStorage.getItem('pdfMode') === 'book' ? 'book' : 'lab');
+
+  // ---------- PDF state ----------
+  let pdfDoc = null;
+  let pdfFilename = '';
+  let currentPage = 1;
+  let totalPages  = 0;
+  let currentScale = parseFloat(localStorage.getItem('pdfScale')) || 1.5;
+
+  // ---------- Speech state ----------
+  let sentences = [];
+  let sentenceIdx = 0;
+  let isPlaying = false;
+  let isPaused  = false;
+  let currentRate = parseFloat(localStorage.getItem('pdfSpeed')) || 1;
+  let selectedVoiceName = localStorage.getItem('pdfVoice') || '';
+  let voices = [];
+  let keepAliveTimer = null;
+  let pendingUtterances = []; // utterances we've queued but not yet finished
+  let advanceAfterPage = true; // auto-advance to next page when sentences finish
+
+  // ---------- DOM refs ----------
+  const fileInput     = document.getElementById('pdfFileInput');
+  const uploadBtn     = document.getElementById('pdfUploadBtn');
+  const filenameEl    = document.getElementById('pdfFilename');
+  const resumeBanner  = document.getElementById('pdfResumeBanner');
+  const pageIndicator = document.getElementById('pdfPageIndicator');
+  const pageList      = document.getElementById('pdfPageList');
+  const progressFill  = document.getElementById('pdfProgressFill');
+  const progressText  = document.getElementById('pdfProgressText');
+  const canvas        = document.getElementById('pdfCanvas');
+  const emptyState    = document.getElementById('pdfEmptyState');
+  const pdfControls   = document.getElementById('pdfControls');
+  const prevPageBtn   = document.getElementById('pdfPrevPage');
+  const nextPageBtn   = document.getElementById('pdfNextPage');
+  const fontControls  = document.querySelectorAll('.pdf-font-controls button');
+  const nowReadingStrip = document.getElementById('nowReadingStrip');
+
+  const apPlayPause   = document.getElementById('apPlayPause');
+  const apRestart     = document.getElementById('apRestart');
+  const apPrevSent    = document.getElementById('apPrevSent');
+  const apNextSent    = document.getElementById('apNextSent');
+  const apNextPage    = document.getElementById('apNextPage');
+  const apSpeed       = document.getElementById('apSpeed');
+  const apVoice       = document.getElementById('apVoice');
+  const apNowLabel    = document.getElementById('apNowLabel');
+
+  // ---------- Saved-page banner (no file) ----------
+  const savedPage = parseInt(localStorage.getItem('pdfPage'));
+  if (savedPage && savedPage > 0) {
+    resumeBanner.innerHTML =
+      '<div class="pdf-resume-banner">Last session: page <strong>' + savedPage +
+      '</strong>. Re-upload your PDF to continue.</div>';
+  }
+
+  // ---------- Voice setup ----------
+  function loadVoices() {
+    voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+    populateVoices();
+  }
+  function populateVoices() {
+    if (!voices || voices.length === 0) {
+      apVoice.innerHTML = '<option value="">Default voice</option>';
+      return;
+    }
+    const english = voices.filter(v => /^en/i.test(v.lang));
+    const others  = voices.filter(v => !/^en/i.test(v.lang));
+    const ordered = [...english, ...others];
+    const preferred = ['Samantha', 'Google US English', 'Microsoft Aria', 'Microsoft Jenny', 'Daniel', 'Alex'];
+    let defaultVoice = null;
+    for (const name of preferred) {
+      const v = ordered.find(x => x.name.includes(name));
+      if (v) { defaultVoice = v; break; }
+    }
+    if (!defaultVoice) defaultVoice = ordered[0];
+
+    apVoice.innerHTML = '';
+    ordered.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = v.name + ' (' + v.lang + ')';
+      apVoice.appendChild(opt);
+    });
+    if (selectedVoiceName && ordered.find(v => v.name === selectedVoiceName)) {
+      apVoice.value = selectedVoiceName;
+    } else if (defaultVoice) {
+      apVoice.value = defaultVoice.name;
+      selectedVoiceName = defaultVoice.name;
+    }
+  }
+  if (window.speechSynthesis) {
+    loadVoices();
+    speechSynthesis.addEventListener('voiceschanged', loadVoices);
+  }
+
+  // ---------- Speed UI restore ----------
+  function refreshSpeedUI() {
+    apSpeed.querySelectorAll('button').forEach(b => {
+      b.classList.toggle('active', parseFloat(b.dataset.rate) === currentRate);
+    });
+  }
+  refreshSpeedUI();
+
+  // ---------- Font/scale restore ----------
+  fontControls.forEach(b => {
+    b.classList.toggle('active', parseFloat(b.dataset.scale) === currentScale);
+    b.addEventListener('click', () => {
+      currentScale = parseFloat(b.dataset.scale);
+      localStorage.setItem('pdfScale', currentScale.toString());
+      fontControls.forEach(x => x.classList.toggle('active', x === b));
+      if (pdfDoc) renderPage(currentPage);
+    });
+  });
+
+  // ---------- File upload ----------
+  uploadBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    pdfFilename = file.name;
+    filenameEl.textContent = pdfFilename;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const arrayBuffer = ev.target.result;
+      loadPdf(arrayBuffer);
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  function loadPdf(arrayBuffer) {
+    if (!window.pdfjsLib) {
+      filenameEl.textContent = 'PDF.js not loaded. Check your internet connection.';
+      return;
+    }
+    stopSpeaking();
+    pdfjsLib.getDocument({ data: arrayBuffer }).promise
+      .then(doc => {
+        pdfDoc = doc;
+        totalPages = doc.numPages;
+        // Restore last page if it fits this PDF
+        const saved = parseInt(localStorage.getItem('pdfPage'));
+        currentPage = (saved && saved >= 1 && saved <= totalPages) ? saved : 1;
+        resumeBanner.innerHTML = '';
+        emptyState.style.display = 'none';
+        canvas.style.display = 'block';
+        pdfControls.style.display = 'flex';
+        buildPageList();
+        renderPage(currentPage);
+      })
+      .catch(err => {
+        filenameEl.textContent = 'Could not read this PDF: ' + (err && err.message ? err.message : 'unknown error');
+      });
+  }
+
+  function buildPageList() {
+    pageList.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const b = document.createElement('button');
+      b.className = 'pdf-page-btn' + (i === currentPage ? ' active' : '');
+      b.textContent = i;
+      b.addEventListener('click', () => {
+        if (i !== currentPage) {
+          currentPage = i;
+          renderPage(currentPage);
+        }
+      });
+      pageList.appendChild(b);
+    }
+  }
+
+  function updatePageUI() {
+    pageIndicator.innerHTML = 'Page <span class="current">' + currentPage + '</span> of ' + totalPages;
+    const pct = totalPages > 0 ? Math.round((currentPage / totalPages) * 100) : 0;
+    progressFill.style.width = pct + '%';
+    progressText.textContent = pct + '% complete';
+    pageList.querySelectorAll('.pdf-page-btn').forEach((b, idx) => {
+      b.classList.toggle('active', (idx + 1) === currentPage);
+    });
+    // Scroll active page button into view
+    const active = pageList.querySelector('.pdf-page-btn.active');
+    if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    prevPageBtn.disabled = currentPage <= 1;
+    nextPageBtn.disabled = currentPage >= totalPages;
+  }
+
+  // ---------- Render a page ----------
+  function renderPage(pageNum) {
+    if (!pdfDoc) return;
+    const wasPlaying = isPlaying;
+    stopSpeaking(true); // silent stop — we may restart shortly
+    pdfDoc.getPage(pageNum).then(page => {
+      const viewport = page.getViewport({ scale: currentScale });
+      const ctx = canvas.getContext('2d');
+      canvas.width  = viewport.width;
+      canvas.height = viewport.height;
+      const renderTask = page.render({ canvasContext: ctx, viewport });
+      renderTask.promise.then(() => {
+        updatePageUI();
+        localStorage.setItem('pdfPage', currentPage.toString());
+        // Reset speech state for this page
+        sentences = [];
+        sentenceIdx = 0;
+        if (!wasPlaying) setNowReading(null);
+        // Pre-extract sentences in background so audio is ready
+        extractPageSentences(page).then(sents => {
+          sentences = sents;
+          sentenceIdx = 0;
+          if (wasPlaying) {
+            playFromIndex(0);
+          }
+        });
+      });
+    });
+  }
+
+  // ---------- Text extraction + sentence splitting ----------
+  function extractPageSentences(page) {
+    return page.getTextContent().then(tc => {
+      // Join items, gluing words that are split across lines
+      let raw = '';
+      let lastY = null;
+      tc.items.forEach(item => {
+        const y = item.transform ? item.transform[5] : null;
+        if (lastY != null && y != null && Math.abs(y - lastY) > 4) {
+          // new line — add a space (or join hyphenated)
+          if (raw.endsWith('-')) raw = raw.slice(0, -1);
+          else if (!raw.endsWith(' ')) raw += ' ';
+        }
+        raw += item.str;
+        if (!item.str.endsWith(' ') && !item.str.endsWith('-')) raw += ' ';
+        lastY = y;
+      });
+      // Clean up whitespace
+      raw = raw.replace(/\s+/g, ' ').trim();
+      // Split into sentences
+      const parts = raw.match(/[^.!?]+[.!?]+(?:\s+|$)/g) || [raw];
+      const cleaned = parts
+        .map(s => s.trim())
+        .filter(s => s.length >= 8);
+      return cleaned;
+    }).catch(() => []);
+  }
+
+  // ---------- Speech playback ----------
+  function setNowReading(text) {
+    if (text) {
+      nowReadingStrip.textContent = text;
+      nowReadingStrip.classList.remove('idle');
+      // Player bar label (truncated)
+      const short = text.length > 60 ? text.slice(0, 60) + '…' : text;
+      apNowLabel.textContent = 'Page ' + currentPage + ' — ' + short;
+    } else {
+      nowReadingStrip.textContent = 'Press ▶ Play to listen to this page';
+      nowReadingStrip.classList.add('idle');
+      if (pdfDoc) apNowLabel.textContent = 'Page ' + currentPage + ' of ' + totalPages + ' — ready';
+      else apNowLabel.textContent = 'No PDF loaded yet';
+    }
+  }
+  setNowReading(null);
+
+  function getSelectedVoice() {
+    if (!voices || voices.length === 0) return null;
+    if (selectedVoiceName) {
+      const v = voices.find(x => x.name === selectedVoiceName);
+      if (v) return v;
+    }
+    return voices.find(v => /^en/i.test(v.lang)) || voices[0];
+  }
+
+  function startKeepAlive() {
+    stopKeepAlive();
+    keepAliveTimer = setInterval(() => {
+      if (window.speechSynthesis && speechSynthesis.speaking && !speechSynthesis.paused) {
+        speechSynthesis.pause();
+        speechSynthesis.resume();
+      }
+    }, 10000);
+  }
+  function stopKeepAlive() {
+    if (keepAliveTimer) { clearInterval(keepAliveTimer); keepAliveTimer = null; }
+  }
+
+  function playFromIndex(startIdx) {
+    if (!window.speechSynthesis) return;
+    if (!sentences || sentences.length === 0) {
+      setNowReading(null);
+      return;
+    }
+    speechSynthesis.cancel();
+    pendingUtterances = [];
+    sentenceIdx = Math.max(0, Math.min(startIdx, sentences.length - 1));
+    isPlaying = true;
+    isPaused = false;
+    apPlayPause.textContent = '⏸';
+    startKeepAlive();
+    const voice = getSelectedVoice();
+    for (let i = sentenceIdx; i < sentences.length; i++) {
+      const u = new SpeechSynthesisUtterance(sentences[i]);
+      if (voice) u.voice = voice;
+      u.rate = currentRate;
+      u.pitch = 1.0;
+      u.volume = 1.0;
+      const idxCaptured = i;
+      u.onstart = () => {
+        sentenceIdx = idxCaptured;
+        setNowReading(sentences[idxCaptured]);
+      };
+      u.onend = () => {
+        if (idxCaptured === sentences.length - 1) {
+          // Last sentence on this page finished
+          isPlaying = false;
+          isPaused = false;
+          apPlayPause.textContent = '▶';
+          stopKeepAlive();
+          if (advanceAfterPage && currentPage < totalPages) {
+            const wasPlaying = true;
+            currentPage++;
+            // Render next page and auto-resume playback
+            pdfDoc.getPage(currentPage).then(page => {
+              const viewport = page.getViewport({ scale: currentScale });
+              const ctx = canvas.getContext('2d');
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              page.render({ canvasContext: ctx, viewport }).promise.then(() => {
+                updatePageUI();
+                localStorage.setItem('pdfPage', currentPage.toString());
+                extractPageSentences(page).then(sents => {
+                  sentences = sents;
+                  sentenceIdx = 0;
+                  if (wasPlaying && sentences.length > 0) playFromIndex(0);
+                  else setNowReading(null);
+                });
+              });
+            });
+          } else {
+            setNowReading(null);
+          }
+        }
+      };
+      u.onerror = () => { /* normal on cancel */ };
+      pendingUtterances.push(u);
+      speechSynthesis.speak(u);
+    }
+  }
+
+  function stopSpeaking(silent) {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    pendingUtterances = [];
+    isPlaying = false;
+    isPaused = false;
+    stopKeepAlive();
+    apPlayPause.textContent = '▶';
+    if (!silent) setNowReading(null);
+  }
+
+  function togglePlayPause() {
+    if (!pdfDoc) return;
+    if (!isPlaying) {
+      // Start from scratch (or current sentence) on this page
+      if (sentences.length === 0) {
+        // We may have just navigated and not yet extracted — try to extract now
+        pdfDoc.getPage(currentPage).then(page => {
+          extractPageSentences(page).then(sents => {
+            sentences = sents;
+            if (sentences.length > 0) playFromIndex(0);
+          });
+        });
+      } else {
+        playFromIndex(sentenceIdx);
+      }
+      return;
+    }
+    if (isPaused) {
+      speechSynthesis.resume();
+      isPaused = false;
+      apPlayPause.textContent = '⏸';
+      startKeepAlive();
+    } else {
+      speechSynthesis.pause();
+      isPaused = true;
+      apPlayPause.textContent = '▶';
+      stopKeepAlive();
+    }
+  }
+
+  // ---------- Player bar wiring ----------
+  apPlayPause.addEventListener('click', togglePlayPause);
+  apRestart.addEventListener('click', () => {
+    if (!pdfDoc) return;
+    if (sentences.length > 0) playFromIndex(0);
+  });
+  apPrevSent.addEventListener('click', () => {
+    if (!pdfDoc || sentences.length === 0) return;
+    playFromIndex(Math.max(0, sentenceIdx - 1));
+  });
+  apNextSent.addEventListener('click', () => {
+    if (!pdfDoc || sentences.length === 0) return;
+    if (sentenceIdx + 1 >= sentences.length) {
+      // Advance to next page
+      if (currentPage < totalPages) { currentPage++; renderPage(currentPage); }
+      return;
+    }
+    playFromIndex(sentenceIdx + 1);
+  });
+  apNextPage.addEventListener('click', () => {
+    if (!pdfDoc || currentPage >= totalPages) return;
+    currentPage++;
+    renderPage(currentPage);
+  });
+  apSpeed.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      currentRate = parseFloat(b.dataset.rate);
+      localStorage.setItem('pdfSpeed', currentRate.toString());
+      refreshSpeedUI();
+      if (isPlaying && !isPaused) playFromIndex(sentenceIdx);
+    });
+  });
+  apVoice.addEventListener('change', () => {
+    selectedVoiceName = apVoice.value;
+    localStorage.setItem('pdfVoice', selectedVoiceName);
+    if (isPlaying && !isPaused) playFromIndex(sentenceIdx);
+  });
+
+  // ---------- Page nav buttons under canvas ----------
+  prevPageBtn.addEventListener('click', () => {
+    if (currentPage > 1) { currentPage--; renderPage(currentPage); }
+  });
+  nextPageBtn.addEventListener('click', () => {
+    if (currentPage < totalPages) { currentPage++; renderPage(currentPage); }
+  });
+
+  // ---------- Keyboard shortcuts (Book mode only) ----------
+  document.addEventListener('keydown', (e) => {
+    if (!document.body.classList.contains('mode-book')) return;
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    if (e.target && e.target.isContentEditable) return;
+    if (e.code === 'Space' && tag === 'BUTTON') return; // avoid double-fire on focused buttons
+
+    if (e.code === 'Space') {
+      e.preventDefault();
+      togglePlayPause();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      if (pdfDoc && currentPage < totalPages) { currentPage++; renderPage(currentPage); }
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      if (pdfDoc && currentPage > 1) { currentPage--; renderPage(currentPage); }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentRate = Math.min(3, Math.round((currentRate + 0.25) * 100) / 100);
+      localStorage.setItem('pdfSpeed', currentRate.toString());
+      refreshSpeedUI();
+      if (isPlaying && !isPaused) playFromIndex(sentenceIdx);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      currentRate = Math.max(0.25, Math.round((currentRate - 0.25) * 100) / 100);
+      localStorage.setItem('pdfSpeed', currentRate.toString());
+      refreshSpeedUI();
+      if (isPlaying && !isPaused) playFromIndex(sentenceIdx);
+    } else if (e.key === 'r' || e.key === 'R') {
+      if (sentences.length > 0) playFromIndex(0);
+    }
+  });
+})();
 </script>
 
 </body>
