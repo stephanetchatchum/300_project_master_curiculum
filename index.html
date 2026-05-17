@@ -6643,6 +6643,10 @@ setSubject('physics');
     if (keepAliveTimer) { clearInterval(keepAliveTimer); keepAliveTimer = null; }
   }
 
+  // Play-session counter — each new play queue gets a unique ID so that
+  // cancelled utterances' stale onend callbacks can't trigger advance logic.
+  let playSession = 0;
+
   function playFromIndex(startIdx) {
     if (!window.speechSynthesis) return;
     if (!sentences || sentences.length === 0) {
@@ -6651,12 +6655,15 @@ setSubject('physics');
     }
     speechSynthesis.cancel();
     pendingUtterances = [];
+    playSession++;
+    const mySession = playSession;
     sentenceIdx = Math.max(0, Math.min(startIdx, sentences.length - 1));
     isPlaying = true;
     isPaused = false;
     apPlayPause.textContent = '⏸';
     startKeepAlive();
     const voice = getSelectedVoice();
+    const lastIdx = sentences.length - 1;
     for (let i = sentenceIdx; i < sentences.length; i++) {
       const u = new SpeechSynthesisUtterance(sentences[i]);
       if (voice) u.voice = voice;
@@ -6665,48 +6672,40 @@ setSubject('physics');
       u.volume = 1.0;
       const idxCaptured = i;
       u.onstart = () => {
+        // Stale callback from a cancelled session — ignore
+        if (mySession !== playSession) return;
         sentenceIdx = idxCaptured;
         setNowReading(sentences[idxCaptured]);
       };
       u.onend = () => {
-        if (idxCaptured === sentences.length - 1) {
-          // Last sentence on this page finished
+        // Stale callback — this utterance was cancelled by a newer session
+        if (mySession !== playSession) return;
+        if (idxCaptured === lastIdx) {
+          // Last sentence on this page finished naturally — STOP here.
+          // Don't auto-advance; user can press ⏭ or → to go to next page.
           isPlaying = false;
           isPaused = false;
+          sentenceIdx = 0; // reset so next ▶ starts from the top of this page
           apPlayPause.textContent = '▶';
           stopKeepAlive();
-          if (advanceAfterPage && currentPage < totalPages) {
-            const wasPlaying = true;
-            currentPage++;
-            // Render next page and auto-resume playback
-            pdfDoc.getPage(currentPage).then(page => {
-              const viewport = page.getViewport({ scale: currentScale });
-              const ctx = canvas.getContext('2d');
-              canvas.width = viewport.width;
-              canvas.height = viewport.height;
-              page.render({ canvasContext: ctx, viewport }).promise.then(() => {
-                updatePageUI();
-                localStorage.setItem('pdfPage', currentPage.toString());
-                extractPageSentences(page).then(sents => {
-                  sentences = sents;
-                  sentenceIdx = 0;
-                  if (wasPlaying && sentences.length > 0) playFromIndex(0);
-                  else setNowReading(null);
-                });
-              });
-            });
+          nowReadingStrip.classList.add('idle');
+          if (currentPage < totalPages) {
+            nowReadingStrip.textContent = 'Finished page ' + currentPage + '. Press ⏭ for the next page, or ▶ to read this one again.';
+            apNowLabel.textContent = 'Page ' + currentPage + ' done — ⏭ for next page';
           } else {
-            setNowReading(null);
+            nowReadingStrip.textContent = 'Finished — end of book.';
+            apNowLabel.textContent = 'End of book';
           }
         }
       };
-      u.onerror = () => { /* normal on cancel */ };
+      u.onerror = () => { /* fires on cancel — ignored via session check above */ };
       pendingUtterances.push(u);
       speechSynthesis.speak(u);
     }
   }
 
   function stopSpeaking(silent) {
+    playSession++; // invalidate any pending callbacks
     if (window.speechSynthesis) speechSynthesis.cancel();
     pendingUtterances = [];
     isPlaying = false;
