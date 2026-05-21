@@ -15,10 +15,17 @@ nav{
 
 nav a {
     color: white;
+    text-decoration: none;
+    
 }
 
 nav span{
     color: #f8f9fa;
     font-size: 25px;
     font-weight: 700;
+}
+
+nav div{
+    display: flex;
+    gap: 30px;
 }
