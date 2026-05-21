@@ -1,0 +1,24 @@
+body{
+    font-family: Arial;
+    background-color: #f8f9fa;
+    color: #2d2d2d;
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: #0a2463;
+    padding: 16px 32px;
+}
+
+nav a {
+    color: white;
+}
+
+nav span{
+    color: #f8f9fa;
+    font-size: 25px;
+    font-weight: 700;
+}
