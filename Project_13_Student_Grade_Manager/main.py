@@ -23,7 +23,7 @@ class Student:
         return s.mean(self.grades)
 
     def get_letter_grade(self):
-        avg = self.get_average(self.grades)
+        avg = self.get_average()
         letter_grade = None
         if avg>=90:
             letter_grade = "A"
@@ -50,13 +50,21 @@ def menu():
     print("Welcome to Student grade Manager!\n")
     choice = int(input("1. Add Student\n2. "))
 def main():
-    student = {}
+    students = {}
     while True:
         print("Welcome to Student grade Manager!\n")
         try:
             choice = int(input("1. Add Student\n2. Add grade\n3. View Student\n4. View all\n5. Class Average\n6. Quit\n"))
             if choice == 1:
-                pass
+                st_name = input("What is the student Name: ")
+                st_id = int(input("Enter the Student ID(Make sure it doesn't exist already): "))
+                if st_id in students:
+                    print("Sorry this ID already exist")
+                else:
+                    new_student = Student(st_name, st_id)
+                    students[st_id] = new_student
+                    print(f"Sucessfully added {st_name} with ID: {st_id}")
+                
             elif choice == 2:
                 pass
             elif choice == 3:
