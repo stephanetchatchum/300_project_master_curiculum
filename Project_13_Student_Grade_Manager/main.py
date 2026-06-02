@@ -47,10 +47,29 @@ class student:
 
 def menu():
     print("Welcome to Student grade Manager!\n")
-    print("1. ")
+    choice = int(input("1. Add Student\n2. "))
 def main():
     student = {}
-    
+    while True:
+        print("Welcome to Student grade Manager!\n")
+        try:
+            choice = int(input("1. Add Student\n2. Add grade\n3. View Student\n4. View all\n5. Class Average\n6. Quit\n"))
+            if choice == 1:
+                pass
+            elif choice == 2:
+                pass
+            elif choice == 3:
+                pass
+            elif choice == 4:
+                pass
+            elif choice == 5:
+                pass
+            elif choice == 6:
+                return False
+            else:
+                print("Enter a number in th range 1-5")
+        except TypeError:
+            print("Enter a number")
 
 
 if __name__ == "__main__":
