@@ -1,5 +1,5 @@
 import statistics as s
-class student:
+class Student:
     def __init__(self, name, student_id, grades=None):
         self.name = name 
         self.student_id = student_id
@@ -23,24 +23,25 @@ class student:
         return s.mean(self.grades)
 
     def get_letter_grade(self):
+        avg = self.get_average(self.grades)
         letter_grade = None
-        if self.grades<=50 and self.grades>40:
-            letter_grade = "E"
-        elif self.grades<=60 and self.grades>50:
-            letter_grade = "D"
-        elif self.grades<=70 and self.grades>60:
-            letter_grade = "C"
-        elif self.grades<=80 and self.grades>70:
-            letter_grade = "B"
-        elif self.grades<=90 and self.grades>80:
+        if avg>=90:
             letter_grade = "A"
+        elif avg>=80 and avg<90:
+            letter_grade = "B"
+        elif avg>=70 and avg<80:
+            letter_grade = "C"
+        elif avg>=60 and avg<70:
+            letter_grade = "D"
+        elif avg>=50 and avg<60:
+            letter_grade = "E"
         else:
             letter_grade = "F"
 
         return letter_grade
     
-    # def to_dict(self):
-    #     pass
+    def to_dict(self):
+        pass
 
     def __str__(self):
         return f"{self.name} ({self.student_id}): {len(self.grades)} grades"
@@ -68,7 +69,7 @@ def main():
                 return False
             else:
                 print("Enter a number in th range 1-5")
-        except TypeError:
+        except ValueError:
             print("Enter a number")
 
 
