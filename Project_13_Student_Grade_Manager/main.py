@@ -51,9 +51,6 @@ class Student:
     def __str__(self):
         return f"{self.name} ({self.student_id}): {len(self.grades)} grades"
 
-def menu():
-    print("Welcome to Student grade Manager!\n")
-    choice = int(input("1. Add Student\n2. "))
 def main():
     students = {}
     while True:
@@ -71,6 +68,13 @@ def main():
                     print(f"Sucessfully added {st_name} with ID: {st_id}")
                 
             elif choice == 2:
+                st_id = int(input("Enter the Student ID: "))
+                if st_id in students:
+                    grade = input("Enter grade")
+                    students[st_id].add_grade(grade)
+                    print(f"Successfully added {grade}")
+                else:
+                    print("No student Found")
                 pass
             elif choice == 3:
                 pass
