@@ -75,9 +75,14 @@ def main():
                     print(f"Successfully added {grade}")
                 else:
                     print("No student Found")
-                pass
+                
             elif choice == 3:
-                pass
+                st_id = int(input("Enter the Student ID: "))
+                if st_id in students:
+                    print(students[st_id])
+                    print(f"Average of {students[st_id].name} is {students[st_id].get_average()} and the grade is {students[st_id].get_letter_grade()}")
+                else:
+                    print("Student not Found")
             elif choice == 4:
                 pass
             elif choice == 5:
