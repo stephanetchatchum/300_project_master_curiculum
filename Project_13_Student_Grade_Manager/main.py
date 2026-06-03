@@ -41,7 +41,12 @@ class Student:
         return letter_grade
     
     def to_dict(self):
-        pass
+        return {
+            "name": self.name,
+            "student_id": self.student_id,
+            "grades": self.grades
+
+        }
 
     def __str__(self):
         return f"{self.name} ({self.student_id}): {len(self.grades)} grades"
