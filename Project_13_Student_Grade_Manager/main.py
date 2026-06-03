@@ -84,9 +84,20 @@ def main():
                 else:
                     print("Student not Found")
             elif choice == 4:
-                pass
+                if students:
+                    for student in students.values():
+                        print(f"{student} - {student.get_average()} - {student.get_letter_grade()}")
+                else:
+                    print("No students yet")
             elif choice == 5:
-                pass
+                if students:
+                    total = 0
+                    for student in students.values():
+                        total += student.get_average()
+                    class_av = total/len(students)
+                    print(f"Class averager is {class_av:.2f}")
+                else:
+                    print("No students yet")
             elif choice == 6:
                 return False
             else:
