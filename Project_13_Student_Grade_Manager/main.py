@@ -1,4 +1,5 @@
 import statistics as s
+import json
 class Student:
     def __init__(self, name, student_id, grades=None):
         self.name = name 
@@ -51,8 +52,25 @@ class Student:
     def __str__(self):
         return f"{self.name} ({self.student_id}): {len(self.grades)} grades"
 
+def save_students(students):
+    data = [student.to_dict() for student in students.values()]
+    with open("Project_13_Student_Grade_Manager/students.json", "w") as f:
+        json.dump(data, f)
+
+def load_student():
+    try:
+        with open("Project_13_Student_Grade_Manager/students.json", "r") as f:
+            data = json.load(f)
+        students = {}
+        for d in data:
+            student = Student(d["name"], d["student_id"], d["grades"])
+            students[d["student_id"]] = student
+        return students
+    except FileNotFoundError:
+        return {}
+
 def main():
-    students = {}
+    students = load_student()
     while True:
         print("Welcome to Student grade Manager!\n")
         try:
@@ -66,6 +84,7 @@ def main():
                     new_student = Student(st_name, st_id)
                     students[st_id] = new_student
                     print(f"Sucessfully added {st_name} with ID: {st_id}")
+                    save_students(students)
                 
             elif choice == 2:
                 st_id = int(input("Enter the Student ID: "))
@@ -73,6 +92,7 @@ def main():
                     grade = input("Enter grade")
                     students[st_id].add_grade(grade)
                     print(f"Successfully added {grade}")
+                    save_students(students)
                 else:
                     print("No student Found")
                 
@@ -99,12 +119,12 @@ def main():
                 else:
                     print("No students yet")
             elif choice == 6:
+                print("Bye!")
                 return False
             else:
                 print("Enter a number in th range 1-5")
         except ValueError:
             print("Enter a number")
-
 
 if __name__ == "__main__":
     main()
