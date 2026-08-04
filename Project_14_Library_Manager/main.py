@@ -1,6 +1,6 @@
 class LibraryItem:
-    is_available = True
     def __init__(self, title, author, item_id):
+        self.is_available = True
         self.item_id = item_id
         self.title = title
         self.author = author
@@ -16,8 +16,26 @@ class LibraryItem:
         return f"Title: {self.title}\nAuthor: {self.author}\n Available: {"Yes" if self.is_available == True else "No"}"
 
 class Book(LibraryItem):
-    def __init__(self, title, author, item_id):
+    def __init__(self, title, author, item_id, pages, genre):
         super().__init__(title, author, item_id)
+        self.pages = pages
+        self.genre = genre
+
+    def display_info(self):
+        info = super().display_info()
+        new_info = info + f"Number of Pages: {self.pages}\nGenre: {self.genre}\n"
+
+        return new_info
+
+class Magazine(LibraryItem):
+    def __init__(self, title, author, item_id, issue_number):
+        super().__init__(title, author, item_id)
+        self.issue_number = issue_number
+
+    def display_info(self):
+        info = super().display_info()
+        new_info = info + f"Issue Number: {self.issue_number}\n"
+        return new_info
 
 def menu():
     """Main Menu"""
